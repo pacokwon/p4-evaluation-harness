@@ -1,0 +1,8 @@
+[submodule "petr4"]
+	path = petr4
+	url = https://github.com/pacokwon/petr4
+	branch = harness
+[submodule "hol4p4"]
+	path = hol4p4
+	url = https://github.com/pacokwon/hol4p4
+	branch = harness
