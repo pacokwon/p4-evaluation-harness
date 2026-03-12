@@ -6,3 +6,7 @@
 	path = hol4p4
 	url = https://github.com/pacokwon/hol4p4
 	branch = harness
+[submodule "p4-spectec"]
+	path = p4-spectec
+	url = https://github.com/kaist-plrg/p4-spectec
+	branch = concrete

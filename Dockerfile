@@ -35,10 +35,22 @@ WORKDIR /petr4/
 RUN apt-get update && \
     apt-get install -y --no-install-recommends $PETR4_DEPS
 
-RUN opam switch create . 4.14.0 && \
+RUN opam switch create . --empty && \
     eval $(opam env) && \
     opam switch import petr4-013.export -y && \
+    eval $(opam env) && \
     dune build && \
     dune install
+
+# ========= P4-SpecTec =========
+COPY ./p4-spectec /p4-spectec
+WORKDIR /p4-spectec
+
+RUN opam switch create . 5.1.0 && \
+    eval $(opam env) && \
+    opam update && \
+    opam install dune bignum 'menhir=20240715' 'menhirLib=20240715' core core_unix bisect_ppx yojson ppx_deriving_yojson -y && \
+    eval $(opam env) && \
+    make release
 
 ENTRYPOINT ["/bin/bash", "--login"]
