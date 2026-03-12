@@ -15,7 +15,7 @@ RUN ./HOL4P4/scripts/install.sh
 WORKDIR /HOL4P4/hol/p4_from_json
 
 # Copy additional include headers used by test suite
-COPY /HOL4P4/p4include/ /HOL4P4/hol/p4_from_json/p4include/
+COPY ./hol4p4/p4include/ /HOL4P4/hol/p4_from_json/p4include/
 
 # ========= PETR4 =========
 ENV PETR4_DEPS="pkg-config \
