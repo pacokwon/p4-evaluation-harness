@@ -53,4 +53,6 @@ RUN opam switch create 5.1.0 && \
     eval $(opam env) && \
     make release
 
+WORKDIR /
+
 ENTRYPOINT ["/bin/bash", "--login"]
