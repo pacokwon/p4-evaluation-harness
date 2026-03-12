@@ -46,7 +46,7 @@ RUN opam switch create . --empty && \
 COPY ./p4-spectec /p4-spectec
 WORKDIR /p4-spectec
 
-RUN opam switch create . 5.1.0 && \
+RUN opam switch create 5.1.0 && \
     eval $(opam env) && \
     opam update && \
     opam install dune bignum 'menhir=20240715' 'menhirLib=20240715' core core_unix bisect_ppx yojson ppx_deriving_yojson -y && \
