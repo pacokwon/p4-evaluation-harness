@@ -55,4 +55,7 @@ RUN opam switch create 5.1.0 && \
 
 WORKDIR /
 
+# ========= Test Suite =========
+RUN wget 'https://raw.githubusercontent.com/pacokwon/testgen-history/refs/heads/main/testdata.tar.gz' && \
+    tar xzf testdata.tar.gz
 ENTRYPOINT ["/bin/bash", "--login"]
