@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:54.102
+# Date generated: 2026-02-19-08:34:54.109
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -21,6 +21,7 @@
 # [P4Testgen MethodCall]: *.copy_in("vc");
 # [Control vc start]
 # [MethodCall]: verify_checksum<tuple_0, bit<16>>(true, {  f0:hdr.ipv4.version;  f1:hdr.ipv4.ihl;  f2:hdr.ipv4.diffserv;  f3:hdr.ipv4.totalLen;  f4:hdr.ipv4.identification;  f5:hdr.ipv4.flags;  f6:hdr.ipv4.fragOffset;  f7:hdr.ipv4.ttl;  f8:hdr.ipv4.protocol;  f9:hdr.ipv4.srcAddr;  f10:hdr.ipv4.dstAddr;  f11:hdr.ipv4.options; }, hdr.ipv4.hdrChecksum, 6);
+# [P4Testgen AssignmentStatement]: *standard_metadata.checksum_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("vc");
 # [P4Testgen MethodCall]: *.copy_in("cIngress");
 # [Control cIngress start]
@@ -55,6 +56,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000800C700000000000000000038FF000000000000000000000000000000000000
-expect 0 0000000000000000000000000800C700000000000000FF0038FF000000000000000400000000000000000000$
+packet 0 0000000000000000000000000800C70000000000000000000000000000000000000000000000000000000000
+expect 0 0000000000000000000000000800C700000000000000FF000000000000000000000400000000000000000000$
 

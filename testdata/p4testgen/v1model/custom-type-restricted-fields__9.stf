@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:28.863
+# Date generated: 2026-02-19-08:34:28.867
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserImpl");
@@ -25,10 +25,12 @@
 # [P4Testgen MethodCall]: *.copy_in("ingressImpl");
 # [Control ingressImpl start]
 # [MethodCall]: t1_0/t1.apply();
-# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_14(bit<32>)|| Chosen action: NoAction]
-# [MethodCall]: NoAction_1/NoAction();
+# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_14(bit<32>)|| Chosen action: ingressImpl.my_drop]
+# [MethodCall]: my_drop();
+# [MethodCall]: mark_to_drop(stdmeta);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("ingressImpl");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egressImpl");
 # [Control egressImpl start]
@@ -43,13 +45,13 @@
 # [P4Testgen MethodCall]: *.copy_out("deparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == 0; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == 511; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table ingressImpl.t1
-add "ingressImpl.t1" "hdr.andycustom.srcAddr":0x00000000 "NoAction"()
+add "ingressImpl.t1" "hdr.andycustom.srcAddr":0x00000000 "ingressImpl.my_drop"()
 
 
 packet 111 00000000000000000000000000000000000000006806800000000200000000000000000000000000000000000000000000000000000000
-expect 0 *0000000000000000000000068068000000000000000000000000000000000$
 

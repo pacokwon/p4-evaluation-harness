@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:06.207
+# Date generated: 2026-02-19-08:35:06.120
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("FabricParser");
@@ -18,12 +18,14 @@
 # [ExtractSuccess] hdr.vlan_tag@128 | Condition: |*packetLen_bits(bit<32>)| >= 160; | Extract Size: 32 -> hdr.vlan_tag.pri = 0x0 | hdr.vlan_tag.cfi = 0x0 | hdr.vlan_tag.vlan_id = 0x000 | hdr.vlan_tag.eth_type = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(hdr.ipv4);
-# [ExtractSuccess] hdr.ipv4@160 | Condition: |*packetLen_bits(bit<32>)| >= 320; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.dscp = 0x00 | hdr.ipv4.ecn = 0x0 | hdr.ipv4.total_len = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.frag_offset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x01 | hdr.ipv4.hdr_checksum = 0xFFFE | hdr.ipv4.src_addr = 0x0000_0000 | hdr.ipv4.dst_addr = 0x0000_0000
-# [AssignmentStatement]: fabric_metadata.ip_proto = hdr.ipv4.protocol;| Computed: fabric_metadata.ip_proto = 1;
+# [ExtractSuccess] hdr.ipv4@160 | Condition: |*packetLen_bits(bit<32>)| >= 320; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.dscp = 0x00 | hdr.ipv4.ecn = 0x0 | hdr.ipv4.total_len = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.frag_offset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x06 | hdr.ipv4.hdr_checksum = 0xFFF9 | hdr.ipv4.src_addr = 0x0000_0000 | hdr.ipv4.dst_addr = 0x0000_0000
+# [AssignmentStatement]: fabric_metadata.ip_proto = hdr.ipv4.protocol;| Computed: fabric_metadata.ip_proto = 6;
 # [AssignmentStatement]: fabric_metadata.ip_eth_type = ETHERTYPE_IPV4;| Computed: fabric_metadata.ip_eth_type = 2048;
-# [State] parse_icmp
-# [MethodCall]: packet.extract<icmp_t>(hdr.icmp);
-# [ExtractSuccess] hdr.icmp@320 | Condition: |*packetLen_bits(bit<32>)| >= 448; | Extract Size: 128 -> hdr.icmp.icmp_type = 0x00 | hdr.icmp.icmp_code = 0x00 | hdr.icmp.checksum = 0x0000 | hdr.icmp.identifier = 0x0000 | hdr.icmp.sequence_number = 0x0000 | hdr.icmp.timestamp = 0x0000_0000_0000_0000
+# [State] parse_tcp
+# [MethodCall]: packet.extract<tcp_t>(hdr.tcp);
+# [ExtractSuccess] hdr.tcp@320 | Condition: |*packetLen_bits(bit<32>)| >= 480; | Extract Size: 160 -> hdr.tcp.sport = 0x0000 | hdr.tcp.dport = 0x0000 | hdr.tcp.seq_no = 0x0000_0000 | hdr.tcp.ack_no = 0x0000_0000 | hdr.tcp.data_offset = 0x0 | hdr.tcp.res = 0x0 | hdr.tcp.ecn = 0x0 | hdr.tcp.ctrl = 0x00 | hdr.tcp.window = 0x0000 | hdr.tcp.checksum = 0x0000 | hdr.tcp.urgent_ptr = 0x0000
+# [AssignmentStatement]: fabric_metadata.l4_sport = hdr.tcp.sport;| Computed: fabric_metadata.l4_sport = 0;
+# [AssignmentStatement]: fabric_metadata.l4_dport = hdr.tcp.dport;| Computed: fabric_metadata.l4_dport = 0;
 # [State] accept
 # [P4Testgen MethodCall]: *.copy_out("FabricParser");
 # [P4Testgen MethodCall]: *.copy_in("FabricVerifyChecksum");
@@ -72,13 +74,13 @@
 # [MethodCall]: packet.emit<gtpu_t>(hdr.gtpu);
 # [Invalid emit: { version = TaintedExpression(bit<3>), pt = TaintedExpression(bit<1>), spare = TaintedExpression(bit<1>), ex_flag = TaintedExpression(bit<1>), seq_flag = TaintedExpression(bit<1>), npdu_flag = TaintedExpression(bit<1>), msgtype = TaintedExpression(bit<8>), msglen = TaintedExpression(bit<16>), teid = TaintedExpression(bit<32>) }]
 # [MethodCall]: packet.emit<ipv4_t>(hdr.ipv4);
-# [Emit]: {$headerValid:true;;    version:0;  ihl:0;  dscp:0;  ecn:0;  total_len:0;  identification:0;  flags:0;  frag_offset:0;  ttl:0;  protocol:1;  hdr_checksum:0;  src_addr:0;  dst_addr:0;  }
+# [Emit]: {$headerValid:true;;    version:0;  ihl:0;  dscp:0;  ecn:0;  total_len:0;  identification:0;  flags:0;  frag_offset:0;  ttl:0;  protocol:6;  hdr_checksum:0;  src_addr:0;  dst_addr:0;  }
 # [MethodCall]: packet.emit<tcp_t>(hdr.tcp);
-# [Invalid emit: { sport = TaintedExpression(bit<16>), dport = TaintedExpression(bit<16>), seq_no = TaintedExpression(bit<32>), ack_no = TaintedExpression(bit<32>), data_offset = TaintedExpression(bit<4>), res = TaintedExpression(bit<3>), ecn = TaintedExpression(bit<3>), ctrl = TaintedExpression(bit<6>), window = TaintedExpression(bit<16>), checksum = TaintedExpression(bit<16>), urgent_ptr = TaintedExpression(bit<16>) }]
+# [Emit]: {$headerValid:true;;    sport:0;  dport:0;  seq_no:0;  ack_no:0;  data_offset:0;  res:0;  ecn:0;  ctrl:0;  window:0;  checksum:0;  urgent_ptr:0;  }
 # [MethodCall]: packet.emit<udp_t>(hdr.udp);
 # [Invalid emit: { sport = TaintedExpression(bit<16>), dport = TaintedExpression(bit<16>), len = TaintedExpression(bit<16>), checksum = TaintedExpression(bit<16>) }]
 # [MethodCall]: packet.emit<icmp_t>(hdr.icmp);
-# [Emit]: {$headerValid:true;;    icmp_type:0;  icmp_code:0;  checksum:0;  identifier:0;  sequence_number:0;  timestamp:0;  }
+# [Invalid emit: { icmp_type = TaintedExpression(bit<8>), icmp_code = TaintedExpression(bit<8>), checksum = TaintedExpression(bit<16>), identifier = TaintedExpression(bit<16>), sequence_number = TaintedExpression(bit<16>), timestamp = TaintedExpression(bit<64>) }]
 # [P4Testgen MethodCall]: *.copy_out("FabricDeparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -86,6 +88,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 255 000000000000000000000000000081000000080000000000000000000001FFFE000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 00000000000000000000000081000000080000000000000000000001FFFE000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+packet 255 000000000000000000000000000081000000080000000000000000000006FFF9000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000081000000080000000000000000000006FFF9000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:23.935
+# Date generated: 2026-02-19-08:35:23.940
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("TopParser");
@@ -32,7 +32,7 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: drop_tbl_0/drop_tbl.apply();
-# [Table Branch: egress.drop_tbl | Key(s): 0| Chosen action: NoAction]
+# [Table Branch: egress.drop_tbl Choosing default action: NoAction_1/NoAction;]
 # [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
@@ -54,9 +54,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table egress.drop_tbl
-add "egress.drop_tbl" "meta.ingress_metadata.set_drop":0x0 "NoAction"()
 
 
 packet 0 000000000000000000000000080000000000000000000011FFEE0000000000000000000088880000000000000000000000

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:48.475
+# Date generated: 2026-02-19-08:34:48.498
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("packet_parser");
@@ -43,10 +43,10 @@
 # [ExtractSuccess] headers.packet_out_header@0 | Condition: |*packetLen_bits(bit<32>)| >= 16; | Extract Size: 16 -> headers.packet_out_header.egress_port = 0x1FF | headers.packet_out_header.submit_to_ingress = 0x0 | headers.packet_out_header.unused_pad = 0x00
 # [State] parse_ethernet
 # [MethodCall]: packet.extract<ethernet_t>(headers.ethernet);
-# [ExtractSuccess] headers.ethernet@16 | Condition: |*packetLen_bits(bit<32>)| >= 128; | Extract Size: 112 -> headers.ethernet.dst_addr = 0x0000_0000_0000 | headers.ethernet.src_addr = 0x00FF_FFFF_FFFF | headers.ethernet.ether_type = 0x0800
+# [ExtractSuccess] headers.ethernet@16 | Condition: |*packetLen_bits(bit<32>)| >= 128; | Extract Size: 112 -> headers.ethernet.dst_addr = 0x0000_0000_0000 | headers.ethernet.src_addr = 0x0000_0000_0000 | headers.ethernet.ether_type = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(headers.ipv4);
-# [ExtractSuccess] headers.ipv4@128 | Condition: |*packetLen_bits(bit<32>)| >= 288; | Extract Size: 160 -> headers.ipv4.version = 0x0 | headers.ipv4.ihl = 0x0 | headers.ipv4.dscp = 0x00 | headers.ipv4.ecn = 0x0 | headers.ipv4.total_len = 0x0000 | headers.ipv4.identification = 0x0000 | headers.ipv4.reserved = 0x0 | headers.ipv4.do_not_fragment = 0x0 | headers.ipv4.more_fragments = 0x0 | headers.ipv4.frag_offset = 0x0000 | headers.ipv4.ttl = 0x01 | headers.ipv4.protocol = 0x04 | headers.ipv4.header_checksum = 0xFFFB | headers.ipv4.src_addr = 0x0000_0000 | headers.ipv4.dst_addr = 0x0000_0000
+# [ExtractSuccess] headers.ipv4@128 | Condition: |*packetLen_bits(bit<32>)| >= 288; | Extract Size: 160 -> headers.ipv4.version = 0x0 | headers.ipv4.ihl = 0x0 | headers.ipv4.dscp = 0x00 | headers.ipv4.ecn = 0x0 | headers.ipv4.total_len = 0x0000 | headers.ipv4.identification = 0x0000 | headers.ipv4.reserved = 0x0 | headers.ipv4.do_not_fragment = 0x0 | headers.ipv4.more_fragments = 0x0 | headers.ipv4.frag_offset = 0x0000 | headers.ipv4.ttl = 0x01 | headers.ipv4.protocol = 0x04 | headers.ipv4.header_checksum = 0xFEFB | headers.ipv4.src_addr = 0x0000_0000 | headers.ipv4.dst_addr = 0x0000_0000
 # [State] parse_ipv4_in_ip
 # [MethodCall]: packet.extract<ipv4_t>(headers.inner_ipv4);
 # [ExtractSuccess] headers.inner_ipv4@288 | Condition: |*packetLen_bits(bit<32>)| >= 448; | Extract Size: 160 -> headers.inner_ipv4.version = 0x0 | headers.inner_ipv4.ihl = 0x0 | headers.inner_ipv4.dscp = 0x00 | headers.inner_ipv4.ecn = 0x0 | headers.inner_ipv4.total_len = 0x0000 | headers.inner_ipv4.identification = 0x0000 | headers.inner_ipv4.reserved = 0x0 | headers.inner_ipv4.do_not_fragment = 0x0 | headers.inner_ipv4.more_fragments = 0x0 | headers.inner_ipv4.frag_offset = 0x0000 | headers.inner_ipv4.ttl = 0x00 | headers.inner_ipv4.protocol = 0x01 | headers.inner_ipv4.header_checksum = 0x0000 | headers.inner_ipv4.src_addr = 0x0000_0000 | headers.inner_ipv4.dst_addr = 0x0000_0000
@@ -88,12 +88,9 @@
 # [AssignmentStatement]: ip_protocol = headers.ipv4.protocol;| Computed: acl_egress_ip_protocol/ip_protocol = 4;
 # [AssignmentStatement]: headers.ipv4.isValid() || headers.ipv6.isValid(): optional @id(5) @name("is_ip") @sai_field(SAI_ACL_TABLE_ATTR_FIELD_ACL_IP_TYPE / IP);| Computed: key_18 = true;
 # [MethodCall]: acl_egress_acl_egress_table/acl_egress_table.apply();
-# [Table Branch: egress.acl_egress.acl_egress_table | Key(s): |pktvar_17(bit<8>)|, (bit<9>)|pktvar_0(bit<9>)|;, (bit<1>)true;, (bit<1>)true;, (bit<1>)false;, |pktvar_4(bit<48>)|| Chosen action: acl_drop]
-# [MethodCall]: acl_drop_4/acl_drop();
-# [AssignmentStatement]: @proto_id(1) acl_drop(local_metadata);| Computed: local_metadata.acl_drop = true;
-# [P4Testgen If Statement]: Condition: true; Result: true
-# [MethodCall]: mark_to_drop(standard_metadata);
-# [mark_to_drop executed.]
+# [Table Branch: egress.acl_egress.acl_egress_table Choosing default action: NoAction_19/NoAction;]
+# [MethodCall]: NoAction_19/NoAction();
+# [If Statement]: false Condition: false; Result: false
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("compute_ipv4_checksum");
 # [Control compute_ipv4_checksum start]
@@ -116,7 +113,7 @@
 # [MethodCall]: packet.emit<psamp_extended_t>(headers.psamp_extended);
 # [Invalid emit: { template_id = TaintedExpression(bit<16>), length = TaintedExpression(bit<16>), observation_time = TaintedExpression(bit<64>), flowset = TaintedExpression(bit<16>), next_hop_index = TaintedExpression(bit<16>), epoch = TaintedExpression(bit<16>), ingress_port = TaintedExpression(bit<16>), egress_port = TaintedExpression(bit<16>), user_meta_field = TaintedExpression(bit<16>), dlb_id = TaintedExpression(bit<8>), variable_length = TaintedExpression(bit<8>), packet_sampled_length = TaintedExpression(bit<16>) }]
 # [MethodCall]: packet.emit<ethernet_t>(headers.ethernet);
-# [Emit]: {$headerValid:true;;    dst_addr:0;  src_addr:1099511627775;  ether_type:2048;  }
+# [Emit]: {$headerValid:true;;    dst_addr:0;  src_addr:0;  ether_type:2048;  }
 # [MethodCall]: packet.emit<vlan_t>(headers.vlan);
 # [Invalid emit: { priority_code_point = TaintedExpression(bit<3>), drop_eligible_indicator = TaintedExpression(bit<1>), vlan_id = TaintedExpression(bit<12>), ether_type = TaintedExpression(bit<16>) }]
 # [MethodCall]: packet.emit<ipv6_t>(headers.tunnel_encap_ipv6);
@@ -142,13 +139,10 @@
 # [P4Testgen MethodCall]: *.copy_out("packet_deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == 511; Result: true
+# [P4Testgen If Statement]: Condition: 511 == (bit<9>)|pktvar_0(bit<9>)|; Result: true
 # [P4Testgen MethodCall]: *.drop_and_exit();
 # [Packet marked dropped]
 
-# Table egress.acl_egress.acl_egress_table
-add "egress.acl_egress.acl_egress_table" 1 "ip_protocol":0b******** "is_ip":0b* "is_ipv4":0b* "is_ipv6":0b* "out_port":0b********* "src_mac":0b************************************************ "acl_drop"()
 
-
-packet 510 FF8000000000000000FFFFFFFFFF080000000000000000000104FEFB00000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+packet 510 FF80000000000000000000000000080000000000000000000104FEFB00000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 

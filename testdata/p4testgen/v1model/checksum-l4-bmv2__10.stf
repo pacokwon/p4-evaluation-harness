@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:41.031
+# Date generated: 2026-03-06-08:39:41.034
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -38,6 +38,7 @@
 # [P4Testgen MethodCall]: *.copy_in("vc");
 # [Control vc start]
 # [MethodCall]: verify_checksum<tuple_0, bit<16>>(true, {  f0:hdr.ipv4.version;  f1:hdr.ipv4.ihl;  f2:hdr.ipv4.diffserv;  f3:hdr.ipv4.totalLen;  f4:hdr.ipv4.identification;  f5:hdr.ipv4.flags;  f6:hdr.ipv4.fragOffset;  f7:hdr.ipv4.ttl;  f8:hdr.ipv4.protocol;  f9:hdr.ipv4.srcAddr;  f10:hdr.ipv4.dstAddr;  f11:hdr.ipv4.options; }, hdr.ipv4.hdrChecksum, 6);
+# [P4Testgen AssignmentStatement]: *standard_metadata.checksum_error = 1;
 # [MethodCall]: verify_checksum_with_payload<tuple_1, bit<16>>(hdr.tcp.isValid(), {  f0:hdr.ipv4.srcAddr;  f1:hdr.ipv4.dstAddr;  f2:0;  f3:hdr.ipv4.protocol;  f4:meta.l4Len;  f5:hdr.tcp.srcPort;  f6:hdr.tcp.dstPort;  f7:hdr.tcp.seqNo;  f8:hdr.tcp.ackNo;  f9:hdr.tcp.dataOffset;  f10:hdr.tcp.res;  f11:hdr.tcp.ecn;  f12:hdr.tcp.ctrl;  f13:hdr.tcp.window;  f14:hdr.tcp.urgentPtr;  f15:hdr.tcp.options; }, hdr.tcp.checksum, 6);
 # [MethodCall]: verify_checksum_with_payload<tuple_2, bit<16>>(hdr.udp.isValid(), {  f0:hdr.ipv4.srcAddr;  f1:hdr.ipv4.dstAddr;  f2:0;  f3:hdr.ipv4.protocol;  f4:meta.l4Len;  f5:hdr.udp.srcPort;  f6:hdr.udp.dstPort;  f7:hdr.udp.length_; }, hdr.udp.checksum, 6);
 # [P4Testgen MethodCall]: *.copy_out("vc");
@@ -74,6 +75,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000080047000000000000000006B8F90000000000000000000000000000000000000000000000000000000080000000
+packet 0 00000000000000000000000008004700000000000000000601060000000000000000000000000000000000000000000000000000000080000000
 expect 0 000000000000000000000000080047000000000000000006B8F90000000000000000000000000000000000000000000000000000000080000000$
 

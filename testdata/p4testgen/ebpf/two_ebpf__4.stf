@@ -19,14 +19,14 @@
 # [P4Testgen AssignmentStatement]: address_0 = 0;
 # [P4Testgen AssignmentStatement]: pass_0 = true;
 # [MethodCall]: c1_Check_ip/Check_ip.apply();
-# [Table Branch: pipe.c1.Check_ip | Key(s): |pktvar_13(bit<32>)|| Chosen action: pipe.c1.Reject]
-# [MethodCall]: c1_Reject_0/Reject();
-# [AssignmentStatement]: pass = false;| Computed: pass_0 = false;
-# [P4Testgen AssignmentStatement]: pass = false;
+# [Table Branch: pipe.c1.Check_ip | Key(s): |pktvar_13(bit<32>)|| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
+# [P4Testgen AssignmentStatement]: pass = true;
 # [P4Testgen AssignmentStatement]: address_0 = 0;
 # [MethodCall]: c1_Check_ip/Check_ip.apply();
-# [Table Branch: pipe.c1.Check_ip Choosing default action: NoAction_1/NoAction;]
-# [MethodCall]: NoAction_1/NoAction();
+# [Table Branch: pipe.c1.Check_ip | Key(s): |pktvar_14(bit<32>)|| Chosen action: pipe.c1.Reject]
+# [MethodCall]: c1_Reject_0/Reject();
+# [AssignmentStatement]: pass = false;| Computed: pass_0 = false;
 # [P4Testgen AssignmentStatement]: pass = false;
 # [P4Testgen MethodCall]: *.copy_out("pipe");
 # [P4Testgen If Statement]: Condition: !false; Result: true

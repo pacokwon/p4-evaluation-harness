@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:24.378
+# Date generated: 2026-03-06-08:39:24.380
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -8,7 +8,7 @@
 # [MethodCall]: phdr_0_h1.setInvalid();
 # [MethodCall]: packet.extract<data_t>(phdr_0_h1);
 # [ExtractSuccess] phdr_0_h1@0 | Condition: |*packetLen_bits(bit<32>)| >= 8; | Extract Size: 8 -> phdr_0_h1.f = 0x00
-# [State] p0
+# [State] p1
 # [MethodCall]: hdr.h1.setInvalid();
 # [MethodCall]: hdr.h2.setInvalid();
 # [MethodCall]: hdr.h3.setInvalid();
@@ -16,8 +16,17 @@
 # [State] start
 # [MethodCall]: p_shdr_h1.setInvalid();
 # [MethodCall]: packet.extract<data_t>(hdr.h1);
-# [ExtractSuccess] hdr.h1@8 | Condition: |*packetLen_bits(bit<32>)| >= 16; | Extract Size: 8 -> hdr.h1.f = 0x00
-# [State] p0
+# [ExtractSuccess] hdr.h1@8 | Condition: |*packetLen_bits(bit<32>)| >= 16; | Extract Size: 8 -> hdr.h1.f = 0x01
+# [State] sp1
+# [MethodCall]: packet.extract<data_t>(hdr.h3);
+# [ExtractSuccess] hdr.h3@16 | Condition: |*packetLen_bits(bit<32>)| >= 24; | Extract Size: 8 -> hdr.h3.f = 0x00
+# [MethodCall]: packet.extract<data_t>(p_shdr_h1);
+# [ExtractSuccess] p_shdr_h1@24 | Condition: |*packetLen_bits(bit<32>)| >= 32; | Extract Size: 8 -> p_shdr_h1.f = 0x00
+# [State] Subparser_sp1_0_true
+# [MethodCall]: phdr_0_h1.setValid();
+# [AssignmentStatement]: inout_hdr.h1 = shdr.h1;| Computed: phdr_0_h1.f = 0;
+# [State] Subparser_sp1_0_join
+# [State] p1
 # [State] p2
 # [State] p2_true
 # [MethodCall]: hdr.h4.setValid();
@@ -31,10 +40,10 @@
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
 # [P4Testgen If Statement]: Condition: false; Result: false
-# [P4Testgen If Statement]: Condition: false; Result: false
-# [AssignmentStatement]: standard_metadata.egress_spec = 10;| Computed: standard_metadata.egress_spec = 10;
+# [P4Testgen If Statement]: Condition: true; Result: true
+# [AssignmentStatement]: standard_metadata.egress_spec = 3;| Computed: standard_metadata.egress_spec = 3;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 10;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 3;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -45,20 +54,20 @@
 # [P4Testgen MethodCall]: *.copy_in("DeparserImpl");
 # [Control DeparserImpl start]
 # [MethodCall]: packet.emit<data_t>(hdr.h1);
-# [Emit]: {$headerValid:true;;    f:0;  }
+# [Emit]: {$headerValid:true;;    f:1;  }
 # [MethodCall]: packet.emit<data_t16>(hdr.h2);
 # [Invalid emit: { f = TaintedExpression(bit<16>) }]
 # [MethodCall]: packet.emit<data_t>(hdr.h3);
-# [Invalid emit: { f = TaintedExpression(bit<8>) }]
+# [Emit]: {$headerValid:true;;    f:0;  }
 # [MethodCall]: packet.emit<data_t>(hdr.h4);
 # [Emit]: {$headerValid:true;;    f:0;  }
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == 10; Result: false
+# [P4Testgen If Statement]: Condition: 511 == 3; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000
-expect 10 000000$
+packet 1 00010000000000
+expect 3 010000000000$
 

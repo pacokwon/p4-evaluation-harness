@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:18.755
+# Date generated: 2026-02-19-08:34:18.704
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -12,49 +12,17 @@
 # [MethodCall]: hdr.ether.setInvalid();
 # [State] start
 # [MethodCall]: b.extract<ethernet_t>(hdr.ether);
-# [ExtractSuccess] hdr.ether@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ether.dstAddr = 0x0000_0000_0000 | hdr.ether.srcAddr = 0x0000_0000_0000 | hdr.ether.etherType = 0x8100
+# [ExtractSuccess] hdr.ether@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ether.dstAddr = 0x0000_0000_0000 | hdr.ether.srcAddr = 0x0000_0000_0000 | hdr.ether.etherType = 0x0800
 # [State] start
 # [State] start
 # [State] start
-# [AssignmentStatement]: bit<16> etherType = hdr.ether.etherType;| Computed: l3_etherType/etherType = 33024;
-# [State] start_0
-# [State] vlan
-# [MethodCall]: hdr.vlan.setInvalid();
-# [State] start
-# [MethodCall]: b.extract<vlan_t>(hdr.vlan);
-# [ExtractSuccess] hdr.vlan@112 | Condition: |*packetLen_bits(bit<32>)| >= 144; | Extract Size: 32 -> hdr.vlan.pcp = 0x0 | hdr.vlan.cfi = 0x0 | hdr.vlan.vid = 0x000 | hdr.vlan.etherType = 0x8100
-# [State] vlan
-# [AssignmentStatement]: etherType = hdr.vlan.etherType;| Computed: l3_etherType/etherType = 33024;
-# [State] start_0
-# [State] vlan
-# [MethodCall]: hdr.vlan.setInvalid();
-# [State] start
-# [MethodCall]: b.extract<vlan_t>(hdr.vlan);
-# [ExtractSuccess] hdr.vlan@144 | Condition: |*packetLen_bits(bit<32>)| >= 176; | Extract Size: 32 -> hdr.vlan.pcp = 0x0 | hdr.vlan.cfi = 0x0 | hdr.vlan.vid = 0x000 | hdr.vlan.etherType = 0x8100
-# [State] vlan
-# [AssignmentStatement]: etherType = hdr.vlan.etherType;| Computed: l3_etherType/etherType = 33024;
-# [State] start_0
-# [State] vlan
-# [MethodCall]: hdr.vlan.setInvalid();
-# [State] start
-# [MethodCall]: b.extract<vlan_t>(hdr.vlan);
-# [ExtractSuccess] hdr.vlan@176 | Condition: |*packetLen_bits(bit<32>)| >= 208; | Extract Size: 32 -> hdr.vlan.pcp = 0x0 | hdr.vlan.cfi = 0x0 | hdr.vlan.vid = 0x000 | hdr.vlan.etherType = 0x8100
-# [State] vlan
-# [AssignmentStatement]: etherType = hdr.vlan.etherType;| Computed: l3_etherType/etherType = 33024;
-# [State] start_0
-# [State] vlan
-# [MethodCall]: hdr.vlan.setInvalid();
-# [State] start
-# [MethodCall]: b.extract<vlan_t>(hdr.vlan);
-# [ExtractSuccess] hdr.vlan@208 | Condition: |*packetLen_bits(bit<32>)| >= 240; | Extract Size: 32 -> hdr.vlan.pcp = 0x0 | hdr.vlan.cfi = 0x0 | hdr.vlan.vid = 0x000 | hdr.vlan.etherType = 0x0800
-# [State] vlan
-# [AssignmentStatement]: etherType = hdr.vlan.etherType;| Computed: l3_etherType/etherType = 2048;
+# [AssignmentStatement]: bit<16> etherType = hdr.ether.etherType;| Computed: l3_etherType/etherType = 2048;
 # [State] start_0
 # [State] ipv4
 # [MethodCall]: hdr.ipv4.setInvalid();
 # [State] start
 # [MethodCall]: b.extract<ipv4_t>(hdr.ipv4);
-# [ExtractFailure] hdr.ipv4@240 | Condition: !(|*packetLen_bits(bit<32>)| >= 400); | Extract Size: 160
+# [ExtractFailure] hdr.ipv4@112 | Condition: !(|*packetLen_bits(bit<32>)| >= 272); | Extract Size: 160
 # [P4Testgen AssignmentStatement]: std.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("MyVerifyChecksum");
@@ -80,6 +48,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000810000008100000081000000810000000800000000000000000000000000000000
-expect 0 000000000000000000000000000000$
+packet 0 000000000000000000000000080000000000000000
+expect 0 00000000000000$
 

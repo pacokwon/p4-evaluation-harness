@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:09.135
+# Date generated: 2026-02-19-08:34:09.149
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -9,7 +9,7 @@
 # [ExtractSuccess] hdr.ethernet@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ethernet.dstAddr = 0x0000_0000_0000 | hdr.ethernet.srcAddr = 0x0000_0000_0000 | hdr.ethernet.etherType = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(hdr.ipv4);
-# [ExtractSuccess] hdr.ipv4@112 | Condition: |*packetLen_bits(bit<32>)| >= 272; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x5 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x00 | hdr.ipv4.hdrChecksum = 0xF901 | hdr.ipv4.srcAddr = 0x00FF_FFFF | hdr.ipv4.dstAddr = 0x00FF_FFFF
+# [ExtractSuccess] hdr.ipv4@112 | Condition: |*packetLen_bits(bit<32>)| >= 272; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x5 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x00 | hdr.ipv4.hdrChecksum = 0xF901 | hdr.ipv4.srcAddr = 0x00FF_FFFF | hdr.ipv4.dstAddr = 0x0000_0000
 # [State] accept
 # [P4Testgen MethodCall]: *.copy_out("ParserImpl");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
@@ -57,7 +57,7 @@
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: standard_metadata.parser_error = 0;
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: standard_metadata.priority = 0;
 # [MethodCall]: ipv4_da_lpm_0/ipv4_da_lpm.apply();
-# [Table Branch: ingress.ipv4_da_lpm | Key(s): |pktvar_14(bit<32>)|| Chosen action: my_drop]
+# [Table Branch: ingress.ipv4_da_lpm Choosing default action: my_drop_1/my_drop;]
 # [MethodCall]: my_drop_1/my_drop();
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: smeta_0/smeta.ingress_port = 0;
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: smeta_0/smeta.egress_spec = 511;
@@ -108,7 +108,7 @@
 # [MethodCall]: packet.emit<ethernet_t>(hdr.ethernet);
 # [Emit]: {$headerValid:true;;    dstAddr:0;  srcAddr:0;  etherType:2048;  }
 # [MethodCall]: packet.emit<ipv4_t>(hdr.ipv4);
-# [Emit]: {$headerValid:true;;    version:0;  ihl:5;  diffserv:0;  totalLen:0;  identification:0;  flags:0;  fragOffset:0;  ttl:0;  protocol:0;  hdrChecksum:0;  srcAddr:16777215;  dstAddr:16777215;  }
+# [Emit]: {$headerValid:true;;    version:0;  ihl:5;  diffserv:0;  totalLen:0;  identification:0;  flags:0;  fragOffset:0;  ttl:0;  protocol:0;  hdrChecksum:0;  srcAddr:16777215;  dstAddr:0;  }
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -119,9 +119,6 @@
 # Table ingress.ipv4_sa_filter
 add "ingress.ipv4_sa_filter" 1 "hdr.ipv4.srcAddr":0b******************************** "my_drop"()
 
-# Table ingress.ipv4_da_lpm
-add "ingress.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "my_drop"()
 
-
-packet 0 000000000000000000000000080005000000000000000000F90100FFFFFF00FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+packet 0 000000000000000000000000080005000000000000000000FA0000FFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 

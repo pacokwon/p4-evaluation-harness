@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:21.049
+# Date generated: 2026-02-19-08:35:21.052
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserImpl");
@@ -22,8 +22,10 @@
 # [AssignmentStatement]: @name("bar") action suba1 (bit<8> x, bit<8> y) { tmp1 = x; tmp2 = y >> 3; }| Computed: tmp1_0/tmp1 = 0;
 # [AssignmentStatement]: @name("bar") action suba1 (bit<8> x, bit<8> y) { tmp1 = x; tmp2 = y >> 3; }| Computed: tmp2_0/tmp2 = 0;
 # [MethodCall]: t1_0/t1.apply();
-# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_2(bit<16>)|| Chosen action: foo1]
-# [MethodCall]: foo1_0/foo1();
+# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_2(bit<16>)|| Chosen action: ingressImpl.baz]
+# [MethodCall]: a5(|ingressImpl.t1_ingressImpl.baz_arg_x_9(bit<8>)|, |ingressImpl.t1_ingressImpl.baz_arg_y_9(bit<8>)|);
+# [AssignmentStatement]: @name("baz") action a5 (bit<8> x, bit<8> y) { tmp1 = x >> 5; tmp2 = y; }| Computed: tmp1_0/tmp1 = 0;
+# [AssignmentStatement]: @name("baz") action a5 (bit<8> x, bit<8> y) { tmp1 = x >> 5; tmp2 = y; }| Computed: tmp2_0/tmp2 = 0;
 # [AssignmentStatement]: hdr.ethernet.etherType = (bit<16>) (tmp1 - tmp2);| Computed: hdr.ethernet.etherType = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingressImpl");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
@@ -48,7 +50,7 @@
 add "ingressImpl.c1.t2" "hdr.ethernet.srcAddr":0x000000000000 "ingressImpl.c1.bar"("x":0x00,"y":0x00)
 
 # Table ingressImpl.t1
-add "ingressImpl.t1" "hdr.ethernet.etherType":0x0000 "foo1"()
+add "ingressImpl.t1" "hdr.ethernet.etherType":0x0000 "ingressImpl.baz"("x":0x00,"y":0x00)
 
 
 packet 0 000000000000000000000000000000000000000000

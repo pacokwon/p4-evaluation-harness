@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:09.214
+# Date generated: 2026-02-19-08:34:09.219
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -25,9 +25,9 @@
 # [MethodCall]: ipv4_da_lpm_0/ipv4_da_lpm.apply();
 # [Table Branch: ingress.ipv4_da_lpm | Key(s): |pktvar_14(bit<32>)|| Chosen action: ingress.set_output]
 # [MethodCall]: set_output(|ingress.ipv4_da_lpm_ingress.set_output_arg_out_port(bit<9>)|);
-# [AssignmentStatement]: standard_metadata.egress_spec = out_port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = out_port;| Computed: standard_metadata.egress_spec = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -45,13 +45,13 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.ipv4_da_lpm_ingress.set_output_arg_out_port(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |ingress.ipv4_da_lpm_ingress.set_output_arg_out_port(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.ipv4_da_lpm
-add "ingress.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "ingress.set_output"("out_port":0x1FF)
+add "ingress.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "ingress.set_output"("out_port":0x000)
 
 
 packet 0 000000000000000000000000080005000000000000000000FA000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 000000000000000000000000080005000000000000000000FA000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

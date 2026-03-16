@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-04:14:09.297
+# Date generated: 2026-03-12-04:14:09.299
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -30,18 +30,16 @@
 # [MethodCall]: set_nhop(|MyIngress.ecmp_nhop_MyIngress.set_nhop_arg_nhop_dmac(bit<48>)|, |MyIngress.ecmp_nhop_MyIngress.set_nhop_arg_nhop_ipv4(bit<32>)|, |MyIngress.ecmp_nhop_MyIngress.set_nhop_arg_port(bit<9>)|);
 # [AssignmentStatement]: hdr.ethernet.dstAddr = nhop_dmac;| Computed: hdr.ethernet.dstAddr = 0;
 # [AssignmentStatement]: hdr.ipv4.dstAddr = nhop_ipv4;| Computed: hdr.ipv4.dstAddr = 0;
-# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 383;
+# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 511;
 # [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl - 1;| Computed: hdr.ipv4.ttl = 255;
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 383;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("MyEgress");
 # [Control MyEgress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: MyEgress.send_frame | Key(s): |MyIngress.ecmp_nhop_MyIngress.set_nhop_arg_port(bit<9>)|| Chosen action: MyEgress.drop]
-# [MethodCall]: drop_3/drop();
-# [MethodCall]: mark_to_drop(standard_metadata);
-# [mark_to_drop executed.]
+# [Table Branch: MyEgress.send_frame Choosing default action: NoAction_4/NoAction;]
+# [P4Testgen MethodCall]: NoAction_4/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("MyEgress");
 # [P4Testgen MethodCall]: *.copy_in("MyComputeChecksum");
 # [Control MyComputeChecksum start]
@@ -58,7 +56,7 @@
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == 511; Result: true
+# [P4Testgen If Statement]: Condition: 511 == |MyIngress.ecmp_nhop_MyIngress.set_nhop_arg_port(bit<9>)|; Result: true
 # [P4Testgen MethodCall]: *.drop_and_exit();
 # [Packet marked dropped]
 
@@ -66,10 +64,7 @@
 add "MyIngress.ecmp_group" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "MyIngress.drop"()
 
 # Table MyIngress.ecmp_nhop
-add "MyIngress.ecmp_nhop" "meta.ecmp_select":0x0000 "MyIngress.set_nhop"("nhop_dmac":0x000000000000,"nhop_ipv4":0x00000000,"port":0x17F)
-
-# Table MyEgress.send_frame
-add "MyEgress.send_frame" "standard_metadata.egress_port":0x17F "MyEgress.drop"()
+add "MyIngress.ecmp_nhop" "meta.ecmp_select":0x0000 "MyIngress.set_nhop"("nhop_dmac":0x000000000000,"nhop_ipv4":0x00000000,"port":0x1FF)
 
 
 packet 0 00000000000000000000000008000000000000000000000600000000000000FFFFFF0000000000000000000000000000000000000000

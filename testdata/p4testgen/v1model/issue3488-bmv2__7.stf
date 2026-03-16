@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:42.738
+# Date generated: 2026-03-06-08:39:42.739
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("test_parser");
@@ -17,7 +17,7 @@
 # [P4Testgen MethodCall]: *.copy_out("test_verify_checksum");
 # [P4Testgen MethodCall]: *.copy_in("test_ingress");
 # [Control test_ingress start]
-# [AssignmentStatement]: standard_metadata.egress_spec = standard_metadata.ingress_port;| Computed: standard_metadata.egress_spec = 0;
+# [AssignmentStatement]: standard_metadata.egress_spec = standard_metadata.ingress_port;| Computed: standard_metadata.egress_spec = 511;
 # [MethodCall]: pre_tbl1_0/pre_tbl1.apply();
 # [Table Branch: test_ingress.pre_tbl1 | Key(s): |pktvar_14(bit<32>)|| Chosen action: test_ingress.action1]
 # [MethodCall]: action1();
@@ -27,12 +27,11 @@
 # [Table Branch: test_ingress.in_tbl2 Choosing default action: NoAction_2/NoAction;]
 # [P4Testgen MethodCall]: NoAction_2/NoAction();
 # [MethodCall]: post_tbl3_0/post_tbl3.apply();
-# [Table Branch: test_ingress.post_tbl3 | Key(s): |pktvar_13(bit<32>)|| Chosen action: test_ingress.action5]
-# [MethodCall]: action5(|test_ingress.post_tbl3_test_ingress.action5_arg_neighbor_mac(bit<48>)|);
-# [AssignmentStatement]: meta.ethernet_addr = neighbor_mac;| Computed: meta.ethernet_addr = 0;
+# [Table Branch: test_ingress.post_tbl3 Choosing default action: NoAction_3/NoAction;]
+# [P4Testgen MethodCall]: NoAction_3/NoAction();
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen MethodCall]: *.copy_out("test_ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("test_egress");
 # [Control test_egress start]
@@ -49,16 +48,13 @@
 # [P4Testgen MethodCall]: *.copy_out("test_deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |bmv2_ingress_port(bit<9>)|; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == |bmv2_ingress_port(bit<9>)|; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table test_ingress.pre_tbl1
 add "test_ingress.pre_tbl1" "hdr.ipv4.dst_addr":0x00000000 "test_ingress.action1"()
 
-# Table test_ingress.post_tbl3
-add "test_ingress.post_tbl3" "hdr.ipv4.src_addr":0x00000000 "test_ingress.action5"("neighbor_mac":0x000000000000)
 
-
-packet 0 00000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 00000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+packet 511 00000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 

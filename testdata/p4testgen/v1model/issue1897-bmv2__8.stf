@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:10.404
+# Date generated: 2026-02-19-08:35:10.409
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ProtParser");
@@ -28,16 +28,8 @@
 # [State] start
 # [State] ipv4
 # [MethodCall]: packet.extract<addr_ipv4_t>(addr_0.ipv4);
-# [ExtractSuccess] addr_0.ipv4@144 | Condition: |*packetLen_bits(bit<32>)| >= 176; | Extract Size: 32 -> addr_0.ipv4.addr = 0x0000_0000
-# [State] start
-# [State] start_1_true
-# [P4Testgen MethodCall]: hdr.addr_src.ipv4.setValid();
-# [P4Testgen AssignmentStatement]: hdr.addr_src.ipv4.addr = 0;
-# [State] start_1_join
-# [State] start_1_false_0
-# [P4Testgen MethodCall]: hdr.addr_src.ipv6.setInvalid();
-# [State] start_1_join_0
-# [State] accept
+# [ExtractFailure] addr_0.ipv4@144 | Condition: !(|*packetLen_bits(bit<32>)| >= 176); | Extract Size: 32
+# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("ProtParser");
 # [P4Testgen MethodCall]: *.copy_in("ProtVerifyChecksum");
 # [Control ProtVerifyChecksum start]
@@ -62,7 +54,7 @@
 # [MethodCall]: packet.emit<addr_ipv6_t>(hdr.addr_dst.ipv6);
 # [Emit]: {$headerValid:true;;    addr:0;  }
 # [MethodCall]: packet.emit<addr_ipv4_t>(hdr.addr_src.ipv4);
-# [Emit]: {$headerValid:true;;    addr:0;  }
+# [Invalid emit: { addr = TaintedExpression(bit<32>) }]
 # [MethodCall]: packet.emit<addr_ipv6_t>(hdr.addr_src.ipv6);
 # [Invalid emit: { addr = TaintedExpression(bit<128>) }]
 # [P4Testgen MethodCall]: *.copy_out("ProtDeparser");
@@ -72,6 +64,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0201000000000000000000000000000000000000000000000000
-expect 0 0201000000000000000000000000000000000000000000000000$
+packet 0 020100000000000000000000000000000000
+expect 0 020100000000000000000000000000000000$
 

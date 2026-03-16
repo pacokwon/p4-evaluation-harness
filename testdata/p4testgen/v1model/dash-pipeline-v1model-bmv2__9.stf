@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:39.964
+# Date generated: 2026-02-19-08:34:40.065
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("dash_parser");
@@ -753,20 +753,21 @@
 # [If Statement]: ip_addr_family == 0 Condition: |dash_ingress.metering_update_stage.meter_policy_dash_ingress.metering_update_stage.check_ip_addr_family_arg_ip_addr_family_2(bit<32>)| == 0; Result: true
 # [If Statement]: meta.is_overlay_ip_v6 == 1 Condition: 0 == 1; Result: false
 # [MethodCall]: metering_update_stage_meter_rule/meter_rule.apply();
-# [Table Branch: dash_ingress.metering_update_stage.meter_rule | Key(s): |dash_ingress.eni_dash_ingress.set_eni_attrs_arg_v4_meter_policy_id(bit<16>)|, |dash_ingress.eni_dash_ingress.set_eni_attrs_arg_vm_underlay_dip(bit<32>)|| Chosen action: dash_ingress.metering_update_stage.set_policy_meter_class]
-# [MethodCall]: metering_update_stage_set_policy_meter_class_0/set_policy_meter_class(|dash_ingress.metering_update_stage.meter_rule_dash_ingress.metering_update_stage.set_policy_meter_class_arg_meter_class_15(bit<16>)|);
-# [AssignmentStatement]: meta.policy_meter_class = meter_class;| Computed: meta.policy_meter_class = 2048;
+# [Table Branch: dash_ingress.metering_update_stage.meter_rule Choosing default action: NoAction_6/NoAction;]
+# [MethodCall]: NoAction_6/NoAction();
 # [If Statement]: meta.meter_policy_en == 1 Condition: |dash_ingress.outbound.outbound_routing_stage.routing_route_vnet_arg_meter_policy_en_0(bit<1>)| == 1; Result: true
-# [AssignmentStatement]: meta.meter_class = meta.policy_meter_class;| Computed: meta.meter_class = 2048;
-# [If Statement]: meta.meter_class == 0 || meta.mapping_meter_class_override == 1 Condition: |dash_ingress.metering_update_stage.meter_rule_dash_ingress.metering_update_stage.set_policy_meter_class_arg_meter_class_15(bit<16>)| == 0 || |dash_ingress.outbound.outbound_mapping_stage.ca_to_pa_set_tunnel_mapping_arg_meter_class_override(bit<1>)| == 1; Result: false
+# [AssignmentStatement]: meta.meter_class = meta.policy_meter_class;| Computed: meta.meter_class = 0;
+# [If Statement]: meta.meter_class == 0 || meta.mapping_meter_class_override == 1 Condition: 0 == 0 || |dash_ingress.outbound.outbound_mapping_stage.ca_to_pa_set_tunnel_mapping_arg_meter_class_override(bit<1>)| == 1; Result: true
+# [AssignmentStatement]: meta.meter_class = meta.mapping_meter_class;| Computed: meta.meter_class = 0;
 # [MethodCall]: metering_update_stage_meter_bucket/meter_bucket.apply();
-# [Table Branch: dash_ingress.metering_update_stage.meter_bucket Choosing default action: NoAction_7/NoAction;]
-# [MethodCall]: NoAction_7/NoAction();
+# [Table Branch: dash_ingress.metering_update_stage.meter_bucket | Key(s): |dash_ingress.eni_lookup_stage.eni_ether_address_map_dash_ingress.eni_lookup_stage.set_eni_arg_eni_id_1(bit<16>)|, |dash_ingress.outbound.outbound_mapping_stage.ca_to_pa_set_tunnel_mapping_arg_meter_class_13(bit<16>)|| Chosen action: dash_ingress.metering_update_stage.meter_bucket_action]
+# [MethodCall]: metering_update_stage_meter_bucket_action_0/meter_bucket_action(|dash_ingress.metering_update_stage.meter_bucket_dash_ingress.metering_update_stage.meter_bucket_action_arg_meter_bucket_index_1(bit<32>)|);
+# [AssignmentStatement]: meta.meter_bucket_index = meter_bucket_index;| Computed: meta.meter_bucket_index = 0;
 # [If Statement]: meta.direction == dash_direction_t.OUTBOUND Condition: 1 == 1; Result: true
 # [MethodCall]: metering_update_stage_meter_bucket_outbound/meter_bucket_outbound.count(meta.meter_bucket_index);
 # [MethodCall]: metering_update_stage_eni_meter/eni_meter.apply();
-# [Table Branch: dash_ingress.metering_update_stage.eni_meter Choosing default action: NoAction_8/NoAction;]
-# [P4Testgen MethodCall]: NoAction_8/NoAction();
+# [Table Branch: dash_ingress.metering_update_stage.eni_meter | Key(s): |dash_ingress.eni_lookup_stage.eni_ether_address_map_dash_ingress.eni_lookup_stage.set_eni_arg_eni_id_1(bit<16>)|, 1, (bit<1>)true;| Chosen action: NoAction]
+# [MethodCall]: NoAction_8/NoAction();
 # [If Statement]: true Condition: true; Result: true
 # [MethodCall]: drop_action();
 # [MethodCall]: mark_to_drop(standard_metadata);
@@ -852,8 +853,11 @@ add "dash_ingress.underlay.underlay_routing" 1 "meta.dst_ip_addr":0b0***********
 # Table dash_ingress.metering_update_stage.meter_policy
 add "dash_ingress.metering_update_stage.meter_policy" "meta.meter_policy_id":0x0000 "dash_ingress.metering_update_stage.check_ip_addr_family"("ip_addr_family":0x00000000)
 
-# Table dash_ingress.metering_update_stage.meter_rule
-add "dash_ingress.metering_update_stage.meter_rule" 1 "hdr.u0_ipv4.dst_addr":0b******************************** "meta.meter_policy_id":0x0000 "dash_ingress.metering_update_stage.set_policy_meter_class"("meter_class":0x0800)
+# Table dash_ingress.metering_update_stage.meter_bucket
+add "dash_ingress.metering_update_stage.meter_bucket" "meta.eni_id":0x0000 "meta.meter_class":0x0000 "dash_ingress.metering_update_stage.meter_bucket_action"("meter_bucket_index":0x00000000)
+
+# Table dash_ingress.metering_update_stage.eni_meter
+add "dash_ingress.metering_update_stage.eni_meter" "meta.direction":0x0001 "meta.dropped":0x1 "meta.eni_id":0x0000 "NoAction"()
 
 
 packet 0 00000000000000000000000008004500000000000000001100000000000000000000000012B50000000000000000000000000000000000000000000000000800450000000000000000110000FFFFFFFF00000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

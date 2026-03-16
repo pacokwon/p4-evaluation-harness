@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:55.779
+# Date generated: 2026-02-19-08:34:55.782
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -28,9 +28,8 @@
 # [MethodCall]: tables_increment_3/increment();
 # [AssignmentStatement]: h.eth_hdr.dst_addr = h.eth_hdr.dst_addr + 1;| Computed: h.eth_hdr.dst_addr = 1;
 # [MethodCall]: tables_prefix________________simple_table/simple_table_5.apply();
-# [Table Branch: ingress.tables.prefix◕‿◕😀ツsimple_table_1 | Key(s): |pktvar_2(bit<16>)|| Chosen action: ingress.tables.increment]
-# [MethodCall]: tables_increment_4/increment();
-# [AssignmentStatement]: h.eth_hdr.dst_addr = h.eth_hdr.dst_addr + 1;| Computed: h.eth_hdr.dst_addr = 2;
+# [Table Branch: ingress.tables.prefix◕‿◕😀ツsimple_table_1 Choosing default action: NoAction_5/NoAction;]
+# [P4Testgen MethodCall]: NoAction_5/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -43,7 +42,7 @@
 # [P4Testgen MethodCall]: *.copy_in("deparser");
 # [Control deparser start]
 # [MethodCall]: pkt.emit<ethernet_t>(h.eth_hdr);
-# [Emit]: {$headerValid:true;;    dst_addr:2;  src_addr:0;  eth_type:0;  }
+# [Emit]: {$headerValid:true;;    dst_addr:1;  src_addr:0;  eth_type:0;  }
 # [P4Testgen MethodCall]: *.copy_out("deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -62,10 +61,7 @@ add "ingress.tables.<>]{]prefix/simple_table_3" "dummy_name":0x0000 "NoAction"()
 # Table ingress.tables.!@#$%^&*()_+=-prefix^simple_table_1
 add "ingress.tables.!@#$%^&*()_+=-prefix^simple_table_1" "dummy_name":0x0000 "ingress.tables.increment"()
 
-# Table ingress.tables.prefix◕‿◕😀ツsimple_table_1
-add "ingress.tables.prefix◕‿◕😀ツsimple_table_1" "dummy_name":0x0000 "ingress.tables.increment"()
-
 
 packet 0 000000000000000000000000000000000000000000
-expect 0 000000000002000000000000000000000000000000$
+expect 0 000000000001000000000000000000000000000000$
 

@@ -1,12 +1,12 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:33.509
+# Date generated: 2026-03-06-08:39:33.512
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
 # [Parser] parserI
 # [State] start
 # [MethodCall]: pkt.extract<h1_t>(hdr.h1);
-# [ExtractSuccess] hdr.h1@0 | Condition: |*packetLen_bits(bit<32>)| >= 48; | Extract Size: 48 -> hdr.h1.hdr_type = 0x01 | hdr.h1.op1 = 0x00 | hdr.h1.op2 = 0x00 | hdr.h1.op3 = 0x12 | hdr.h1.h2_valid_bits = 0x00 | hdr.h1.next_hdr_type = 0x02
+# [ExtractSuccess] hdr.h1@0 | Condition: |*packetLen_bits(bit<32>)| >= 48; | Extract Size: 48 -> hdr.h1.hdr_type = 0x01 | hdr.h1.op1 = 0x00 | hdr.h1.op2 = 0x00 | hdr.h1.op3 = 0x13 | hdr.h1.h2_valid_bits = 0x00 | hdr.h1.next_hdr_type = 0x02
 # [MethodCall]: verify(hdr.h1.hdr_type == 1, 7);
 # [State] parse_h2
 # [MethodCall]: pkt.extract<h2_t>(hdr.h2[0]);
@@ -42,7 +42,7 @@
 # [P4Testgen AssignmentStatement]: hdr_0_h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -83,7 +83,7 @@
 # [P4Testgen AssignmentStatement]: hdr.h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr.h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr.h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -123,7 +123,7 @@
 # [P4Testgen AssignmentStatement]: hdr_0_h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -164,7 +164,7 @@
 # [P4Testgen AssignmentStatement]: hdr.h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr.h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr.h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -204,7 +204,7 @@
 # [P4Testgen AssignmentStatement]: hdr_0_h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr_0_h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -242,8 +242,9 @@
 # [If Statement]: op == 0x00 Condition: |pktvar_3(bit<8>)| == 0; Result: false
 # [If Statement]: op[7:4] == 1 Condition: |pktvar_3(bit<8>)|[7:4] == 1; Result: true
 # [If Statement]: op[3:0] == 1 Condition: |pktvar_3(bit<8>)|[3:0] == 1; Result: false
-# [If Statement]: op[3:0] == 2 Condition: |pktvar_3(bit<8>)|[3:0] == 2; Result: true
-# [MethodCall]: hdr_0_h2.push_front(2);
+# [If Statement]: op[3:0] == 2 Condition: |pktvar_3(bit<8>)|[3:0] == 2; Result: false
+# [If Statement]: op[3:0] == 3 Condition: |pktvar_3(bit<8>)|[3:0] == 3; Result: true
+# [MethodCall]: hdr_0_h2.push_front(3);
 # [P4Testgen MethodCall]: hdr_0_h2[4].setValid();
 # [P4Testgen AssignmentStatement]: hdr_0_h2[4].hdr_type = 2;
 # [P4Testgen AssignmentStatement]: hdr_0_h2[4].f1 = 0;
@@ -254,11 +255,7 @@
 # [P4Testgen AssignmentStatement]: hdr_0_h2[3].f1 = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h2[3].f2 = 0;
 # [P4Testgen AssignmentStatement]: hdr_0_h2[3].next_hdr_type = 2;
-# [P4Testgen MethodCall]: hdr_0_h2[2].setValid();
-# [P4Testgen AssignmentStatement]: hdr_0_h2[2].hdr_type = 2;
-# [P4Testgen AssignmentStatement]: hdr_0_h2[2].f1 = 0;
-# [P4Testgen AssignmentStatement]: hdr_0_h2[2].f2 = 0;
-# [P4Testgen AssignmentStatement]: hdr_0_h2[2].next_hdr_type = 2;
+# [P4Testgen MethodCall]: hdr_0_h2[2].setInvalid();
 # [P4Testgen MethodCall]: hdr_0_h2[1].setInvalid();
 # [P4Testgen MethodCall]: hdr_0_h2[0].setInvalid();
 # [P4Testgen If Statement]: Condition: true; Result: true
@@ -266,19 +263,15 @@
 # [P4Testgen AssignmentStatement]: hdr.h1.hdr_type = 1;
 # [P4Testgen AssignmentStatement]: hdr.h1.op1 = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.op2 = 0;
-# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 18;
+# [P4Testgen AssignmentStatement]: hdr.h1.op3 = 19;
 # [P4Testgen AssignmentStatement]: hdr.h1.h2_valid_bits = 0;
 # [P4Testgen AssignmentStatement]: hdr.h1.next_hdr_type = 2;
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen MethodCall]: hdr.h2[0].setInvalid();
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen MethodCall]: hdr.h2[1].setInvalid();
-# [P4Testgen If Statement]: Condition: true; Result: true
-# [P4Testgen MethodCall]: hdr.h2[2].setValid();
-# [P4Testgen AssignmentStatement]: hdr.h2[2].hdr_type = 2;
-# [P4Testgen AssignmentStatement]: hdr.h2[2].f1 = 0;
-# [P4Testgen AssignmentStatement]: hdr.h2[2].f2 = 0;
-# [P4Testgen AssignmentStatement]: hdr.h2[2].next_hdr_type = 2;
+# [P4Testgen If Statement]: Condition: false; Result: false
+# [P4Testgen MethodCall]: hdr.h2[2].setInvalid();
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [P4Testgen MethodCall]: hdr.h2[3].setValid();
 # [P4Testgen AssignmentStatement]: hdr.h2[3].hdr_type = 2;
@@ -296,12 +289,11 @@
 # [AssignmentStatement]: hdr.h1.h2_valid_bits = 0;| Computed: hdr.h1.h2_valid_bits = 0;
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen If Statement]: Condition: false; Result: false
+# [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen If Statement]: Condition: true; Result: true
-# [AssignmentStatement]: hdr.h1.h2_valid_bits[2:2] = 1;| Computed: hdr.h1.h2_valid_bits = 4;
+# [AssignmentStatement]: hdr.h1.h2_valid_bits[3:3] = 1;| Computed: hdr.h1.h2_valid_bits = 8;
 # [P4Testgen If Statement]: Condition: true; Result: true
-# [AssignmentStatement]: hdr.h1.h2_valid_bits[3:3] = 1;| Computed: hdr.h1.h2_valid_bits = 12;
-# [P4Testgen If Statement]: Condition: true; Result: true
-# [AssignmentStatement]: hdr.h1.h2_valid_bits[4:4] = 1;| Computed: hdr.h1.h2_valid_bits = 28;
+# [AssignmentStatement]: hdr.h1.h2_valid_bits[4:4] = 1;| Computed: hdr.h1.h2_valid_bits = 24;
 # [P4Testgen MethodCall]: *.copy_out("cIngress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -314,13 +306,13 @@
 # [P4Testgen MethodCall]: *.copy_in("DeparserI");
 # [Control DeparserI start]
 # [MethodCall]: packet.emit<h1_t>(hdr.h1);
-# [Emit]: {$headerValid:true;;    hdr_type:1;  op1:0;  op2:0;  op3:18;  h2_valid_bits:28;  next_hdr_type:2;  }
+# [Emit]: {$headerValid:true;;    hdr_type:1;  op1:0;  op2:0;  op3:19;  h2_valid_bits:24;  next_hdr_type:2;  }
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[0]);
 # [Invalid emit: { hdr_type = TaintedExpression(bit<8>), f1 = TaintedExpression(bit<8>), f2 = TaintedExpression(bit<8>), next_hdr_type = TaintedExpression(bit<8>) }]
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[1]);
 # [Invalid emit: { hdr_type = TaintedExpression(bit<8>), f1 = TaintedExpression(bit<8>), f2 = TaintedExpression(bit<8>), next_hdr_type = TaintedExpression(bit<8>) }]
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[2]);
-# [Emit]: {$headerValid:true;;    hdr_type:2;  f1:0;  f2:0;  next_hdr_type:2;  }
+# [Invalid emit: { hdr_type = TaintedExpression(bit<8>), f1 = TaintedExpression(bit<8>), f2 = TaintedExpression(bit<8>), next_hdr_type = TaintedExpression(bit<8>) }]
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[3]);
 # [Emit]: {$headerValid:true;;    hdr_type:2;  f1:0;  f2:0;  next_hdr_type:2;  }
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[4]);
@@ -334,6 +326,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 010000120002020000020200000202000002020000020200000200000000000000000000000000000000000000000000000000000000
-expect 0 010000121C0202000002020000020200000200000000000000000000000000000000000000000000000000000000$
+packet 0 010000130002020000020200000202000002020000020200000200000000000000000000000000000000000000000000000000000000
+expect 0 010000131802020000020200000200000000000000000000000000000000000000000000000000000000$
 

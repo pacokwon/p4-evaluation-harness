@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:30.450
+# Date generated: 2026-02-19-08:34:30.453
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -35,9 +35,10 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egress.send_frame | Key(s): |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|| Chosen action: rewrite_mac]
-# [MethodCall]: rewrite_mac(|egress.send_frame_rewrite_mac_arg_smac(bit<48>)|);
-# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
+# [Table Branch: egress.send_frame | Key(s): |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|| Chosen action: egress._drop]
+# [MethodCall]: _drop();
+# [MethodCall]: mark_to_drop(standard_metadata);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -51,8 +52,9 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == 511; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table ingress.ipv4_lpm
 add "ingress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "set_nhop"("nhop_ipv4":0x00000000,"port":0x17F)
@@ -61,9 +63,8 @@ add "ingress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "
 add "ingress.forward" "meta.routing_metadata.nhop_ipv4":0x00000000 "set_dmac"("dmac":0x000000000000)
 
 # Table egress.send_frame
-add "egress.send_frame" "standard_metadata.egress_port":0x17F "rewrite_mac"("smac":0x000000000000)
+add "egress.send_frame" "standard_metadata.egress_port":0x17F "egress._drop"()
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 383 00000000000000000000000008000000000000000000FF0000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

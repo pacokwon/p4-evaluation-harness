@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:18.378
+# Date generated: 2026-02-19-08:35:18.381
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -21,8 +21,8 @@
 # [AssignmentStatement]: standard_metadata.egress_spec = 9w1;| Computed: standard_metadata.egress_spec = 1;
 # [MethodCall]: my_meter_0/my_meter.read(meta.meta.meter_tag);
 # [MethodCall]: m_filter_0/m_filter.apply();
-# [Table Branch: ingress.m_filter | Key(s): 0| Chosen action: NoAction]
-# [MethodCall]: NoAction_1/NoAction();
+# [Table Branch: ingress.m_filter | Key(s): 0| Chosen action: ingress._nop]
+# [MethodCall]: _nop();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 1;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -46,7 +46,7 @@
 add "ingress.m_table" "hdr.ethernet.srcAddr":0x000000000000 "ingress.m_action_2"("meter_idx":0x000)
 
 # Table ingress.m_filter
-add "ingress.m_filter" "meta.meta.meter_tag":0x00000000 "NoAction"()
+add "ingress.m_filter" "meta.meta.meter_tag":0x00000000 "ingress._nop"()
 
 
 packet 0 000000000000000000000000000000000000000000

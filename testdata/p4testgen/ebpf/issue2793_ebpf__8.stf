@@ -21,18 +21,15 @@
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [AssignmentStatement]: pass = false;| Computed: pass = false;
 # [MethodCall]: Check_src_ip_0/Check_src_ip.apply();
-# [Table Branch: pipe.Check_src_ip | Key(s): |pktvar_13(bit<32>)|| Chosen action: pipe.Reject]
-# [MethodCall]: Reject(|pipe.Check_src_ip_pipe.Reject_arg_add_1(bit<32>)|);
-# [AssignmentStatement]: pass = false;| Computed: pass = false;
-# [AssignmentStatement]: headers.ipv4.srcAddr = add;| Computed: headers.ipv4.srcAddr = 0;
-# [SwitchCase]: Reject
-# [AssignmentStatement]: pass = false;| Computed: pass = false;
+# [Table Branch: pipe.Check_src_ip | Key(s): |pktvar_13(bit<32>)|| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
+# [SwitchCase]: NoAction
 # [P4Testgen MethodCall]: *.copy_out("pipe");
 # [P4Testgen If Statement]: Condition: !false; Result: true
 # [P4Testgen MethodCall]: *.drop_and_exit();
 # [Packet marked dropped]
 
 # Table pipe.Check_src_ip
-add pipe.Check_src_ip headers.ipv4.srcAddr:0x00000000 pipe.Reject(add:0x00000000)
+add pipe.Check_src_ip headers.ipv4.srcAddr:0x00000000 NoAction()
 
 packet 0 000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

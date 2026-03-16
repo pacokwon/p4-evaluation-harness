@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:00.581
+# Date generated: 2026-02-19-08:35:00.588
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -57,8 +57,10 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egress.send_frame | Key(s): 511| Chosen action: NoAction]
-# [MethodCall]: NoAction_2/NoAction();
+# [Table Branch: egress.send_frame | Key(s): 511| Chosen action: egress._drop]
+# [MethodCall]: _drop();
+# [MethodCall]: mark_to_drop(standard_metadata);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -92,7 +94,7 @@ add "ingress.ecmp_nhop" "meta.ingress_metadata.ecmp_offset":0x0000 "ingress._dro
 add "ingress.forward" "meta.ingress_metadata.nhop_ipv4":0x00000000 "ingress.set_dmac"("dmac":0x000000000000)
 
 # Table egress.send_frame
-add "egress.send_frame" "standard_metadata.egress_port":0x1FF "NoAction"()
+add "egress.send_frame" "standard_metadata.egress_port":0x1FF "egress._drop"()
 
 
 packet 0 000000000000000000000000080000000000000000000006FEFA0000000000FFFFFF0000000000000000000000000000000000000000

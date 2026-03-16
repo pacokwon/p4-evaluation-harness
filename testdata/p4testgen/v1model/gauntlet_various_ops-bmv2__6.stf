@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:25.399
+# Date generated: 2026-03-06-08:39:25.402
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -14,9 +14,7 @@
 # [MethodCall]: pkt.extract<RSH>(hdr.rshift);
 # [ExtractSuccess] hdr.rshift@152 | Condition: |*packetLen_bits(bit<32>)| >= 184; | Extract Size: 32 -> hdr.rshift.a = 0x0 | hdr.rshift.b = 0x0 | hdr.rshift.c = 0x0 | hdr.rshift.d = 0x0 | hdr.rshift.e = 0x0 | hdr.rshift.g = 0x0 | hdr.rshift.h = 0x00
 # [MethodCall]: pkt.extract<LSH>(hdr.lshift);
-# [ExtractSuccess] hdr.lshift@184 | Condition: |*packetLen_bits(bit<32>)| >= 224; | Extract Size: 40 -> hdr.lshift.a = 0x00 | hdr.lshift.b = 0x00 | hdr.lshift.c = 0x00 | hdr.lshift.d = 0x00 | hdr.lshift.e = 0x00
-# [MethodCall]: pkt.extract<MOD>(hdr.mod);
-# [ExtractFailure] hdr.mod@224 | Condition: !(|*packetLen_bits(bit<32>)| >= 240); | Extract Size: 16
+# [ExtractFailure] hdr.lshift@184 | Condition: !(|*packetLen_bits(bit<32>)| >= 224); | Extract Size: 40
 # [P4Testgen AssignmentStatement]: sm.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -72,7 +70,7 @@
 # [MethodCall]: pkt.emit<RSH>(h.rshift);
 # [Emit]: {$headerValid:true;;    a:7;  b:1;  c:3;  d:-2;  e:3;  g:0;  h:15;  }
 # [MethodCall]: pkt.emit<LSH>(h.lshift);
-# [Emit]: {$headerValid:true;;    a:0;  b:0;  c:2;  d:0;  e:1;  }
+# [Invalid emit: { a = TaintedExpression(bit<8>), b = TaintedExpression(bit<8>), c = TaintedExpression(bit<8>), d = TaintedExpression(bit<8>), e = TaintedExpression(bit<8>) }]
 # [MethodCall]: pkt.emit<MOD>(h.mod);
 # [Invalid emit: { a = TaintedExpression(bit<4>), b = TaintedExpression(bit<4>), c = TaintedExpression(bit<4>), d = TaintedExpression(bit<4>) }]
 # [MethodCall]: pkt.emit<COMPARE>(h.comp);
@@ -88,6 +86,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000000000000000000000000000000000000
-expect 0 0000000000000000000000000000FF03000300713E300F000002000100$
+packet 0 0000000000000000000000000000000000000000000000
+expect 0 0000000000000000000000000000FF03000300713E300F$
 

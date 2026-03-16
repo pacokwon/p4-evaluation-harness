@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:21.354
+# Date generated: 2026-02-19-08:34:21.380
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -10,7 +10,7 @@
 # [ExtractSuccess] hdr.packet_out@0 | Condition: |*packetLen_bits(bit<32>)| >= 8; | Extract Size: 8 -> hdr.packet_out.reserved = 0x00
 # [State] parse_ethernet
 # [MethodCall]: packet.extract<ethernet_t>(hdr.ethernet);
-# [ExtractSuccess] hdr.ethernet@8 | Condition: |*packetLen_bits(bit<32>)| >= 120; | Extract Size: 112 -> hdr.ethernet.dst_addr = 0xFFFF_FFFF_FFFF | hdr.ethernet.src_addr = 0xFFFF_FFFF_FFFF | hdr.ethernet.ether_type = 0x0800
+# [ExtractSuccess] hdr.ethernet@8 | Condition: |*packetLen_bits(bit<32>)| >= 120; | Extract Size: 112 -> hdr.ethernet.dst_addr = 0xFFFF_FFFF_FFFF | hdr.ethernet.src_addr = 0xFFFF_FBFF_FFFF | hdr.ethernet.ether_type = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(hdr.ipv4);
 # [ExtractSuccess] hdr.ipv4@120 | Condition: |*packetLen_bits(bit<32>)| >= 280; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.dscp = 0x00 | hdr.ipv4.ecn = 0x0 | hdr.ipv4.total_len = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.frag_offset = 0x0000 | hdr.ipv4.ttl = 0x01 | hdr.ipv4.proto = 0x11 | hdr.ipv4.checksum = 0xFEEE | hdr.ipv4.src_addr = 0xFFFF_FFFF | hdr.ipv4.dst_addr = 0xFFFF_FFFF
@@ -66,8 +66,11 @@
 # [mark_to_drop executed.]
 # [If Statement]: hdr.ethernet.isValid() && hdr.ipv4.isValid() Condition: true && true; Result: true
 # [MethodCall]: Acl_acls/acls.apply();
-# [Table Branch: PreQosPipe.Acl.acls | Key(s): |bmv2_ingress_port(bit<9>)|, 0, |pktvar_2(bit<48>)|, |pktvar_1(bit<48>)|, |pktvar_3(bit<16>)|, |pktvar_15(bit<32>)|, |pktvar_16(bit<32>)|, |pktvar_13(bit<8>)|, |pktvar_27(bit<16>)|, |pktvar_28(bit<16>)|| Chosen action: NoAction]
-# [MethodCall]: NoAction_4/NoAction();
+# [Table Branch: PreQosPipe.Acl.acls | Key(s): |bmv2_ingress_port(bit<9>)|, 0, |pktvar_2(bit<48>)|, |pktvar_1(bit<48>)|, |pktvar_3(bit<16>)|, |pktvar_15(bit<32>)|, |pktvar_16(bit<32>)|, |pktvar_13(bit<8>)|, |pktvar_27(bit<16>)|, |pktvar_28(bit<16>)|| Chosen action: PreQosPipe.Acl.drop]
+# [MethodCall]: Acl_drop_0/drop();
+# [MethodCall]: mark_to_drop(std_meta);
+# [mark_to_drop executed.]
+# [Exit]
 # [P4Testgen MethodCall]: *.copy_out("PreQosPipe");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -86,7 +89,7 @@
 # [MethodCall]: packet.emit<packet_in_t>(hdr.packet_in);
 # [Invalid emit: { ingress_port = TaintedExpression(bit<9>), _pad = TaintedExpression(bit<7>) }]
 # [MethodCall]: packet.emit<ethernet_t>(hdr.ethernet);
-# [Emit]: {$headerValid:true;;    dst_addr:281474976710655;  src_addr:281474976710655;  ether_type:2048;  }
+# [Emit]: {$headerValid:true;;    dst_addr:281474976710655;  src_addr:281474909601791;  ether_type:2048;  }
 # [MethodCall]: packet.emit<ipv4_t>(hdr.ipv4);
 # [Emit]: {$headerValid:true;;    version:0;  ihl:0;  dscp:0;  ecn:0;  total_len:0;  identification:0;  flags:0;  frag_offset:0;  ttl:0;  proto:17;  checksum:0;  src_addr:4294967295;  dst_addr:4294967295;  }
 # [MethodCall]: packet.emit<udp_t>(hdr.udp);
@@ -117,8 +120,8 @@
 # [Packet marked dropped]
 
 # Table PreQosPipe.Acl.acls
-add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "NoAction"()
+add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "PreQosPipe.Acl.drop"()
 
 
-packet 255 00FFFFFFFFFFFFFFFFFFFFFFFF080000000000000000000111FEEEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+packet 255 00FFFFFFFFFFFFFFFFFBFFFFFF080000000000000000000111FEEEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 

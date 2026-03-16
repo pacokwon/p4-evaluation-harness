@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:18.751
+# Date generated: 2026-02-19-08:34:18.755
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -54,10 +54,8 @@
 # [MethodCall]: hdr.ipv4.setInvalid();
 # [State] start
 # [MethodCall]: b.extract<ipv4_t>(hdr.ipv4);
-# [ExtractSuccess] hdr.ipv4@240 | Condition: |*packetLen_bits(bit<32>)| >= 400; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x00 | hdr.ipv4.hdrChecksum = 0x0000 | hdr.ipv4.srcAddr = 0x0000_0000 | hdr.ipv4.dstAddr = 0x0000_0000
-# [State] ipv4
-# [State] start
-# [State] accept
+# [ExtractFailure] hdr.ipv4@240 | Condition: !(|*packetLen_bits(bit<32>)| >= 400); | Extract Size: 160
+# [P4Testgen AssignmentStatement]: std.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("MyVerifyChecksum");
 # [Control MyVerifyChecksum start]
@@ -82,6 +80,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 00000000000000000000000081000000810000008100000081000000080000000000000000000000000000000000000000000000000000000000000000
-expect 0 0000000000000000000000$
+packet 0 000000000000000000000000810000008100000081000000810000000800000000000000000000000000000000
+expect 0 000000000000000000000000000000$
 

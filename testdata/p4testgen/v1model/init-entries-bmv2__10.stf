@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-04:14:09.495
+# Date generated: 2026-03-12-04:14:09.497
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ingressParserImpl");
@@ -33,13 +33,13 @@
 # [Table Branch: ingressImpl.t3b | Key(s): |pktvar_1(bit<48>)|, |pktvar_2(bit<16>)|| Chosen action: ingressImpl.a]
 # [MethodCall]: a_5/a();
 # [MethodCall]: t4_0/t4.apply();
-# [Table Branch: ingressImpl.t4 | Key(s): |pktvar_1(bit<48>)|, |pktvar_2(bit<16>)|| Chosen action: ingressImpl.a]
-# [MethodCall]: a_6/a();
+# [Table Branch: ingressImpl.t4 | Key(s): |pktvar_1(bit<48>)|, |pktvar_2(bit<16>)|| Chosen action: ingressImpl.a_params]
+# [MethodCall]: a_params_6/a_params(|ingressImpl.t4_ingressImpl.a_params_arg_param_6(bit<32>)|);
 # [MethodCall]: t4b_0/t4b.apply();
-# [Table Branch: ingressImpl.t4b Choosing default action: a_7/a;]
+# [Table Branch: ingressImpl.t4b | Key(s): |pktvar_1(bit<48>)|, |pktvar_2(bit<16>)|| Chosen action: ingressImpl.a]
 # [MethodCall]: a_7/a();
 # [MethodCall]: t5_0/t5.apply();
-# [Table Branch: ingressImpl.t5 Choosing default action: a_8/a;]
+# [Table Branch: ingressImpl.t5 | Key(s): |pktvar_1(bit<48>)|, |pktvar_2(bit<16>)|| Chosen action: ingressImpl.a]
 # [MethodCall]: a_8/a();
 # [P4Testgen MethodCall]: *.copy_out("ingressImpl");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
@@ -79,7 +79,13 @@ add "ingressImpl.t3" 1 "hdr.ethernet.ether_type":0b**************** "hdr.etherne
 add "ingressImpl.t3b" 1 "hdr.ethernet.ether_type":0b**************** "hdr.ethernet.src_addr":0x000000000000 "ingressImpl.a"()
 
 # Table ingressImpl.t4
-add "ingressImpl.t4" 1 "hdr.ethernet.ether_type":0b**************** "hdr.ethernet.src_addr":0x000000000000 "ingressImpl.a"()
+add "ingressImpl.t4" 1 "hdr.ethernet.ether_type":0b**************** "hdr.ethernet.src_addr":0x000000000000 "ingressImpl.a_params"("param":0x00000000)
+
+# Table ingressImpl.t4b
+add "ingressImpl.t4b" 1 "hdr.ethernet.ether_type":0b**************** "hdr.ethernet.src_addr":0x000000000000 "ingressImpl.a"()
+
+# Table ingressImpl.t5
+add "ingressImpl.t5" 1 "hdr.ethernet.ether_type":0b**************** "hdr.ethernet.src_addr":0x000000000000 "ingressImpl.a"()
 
 
 packet 0 000000000000000000000000FFFF00000000000000

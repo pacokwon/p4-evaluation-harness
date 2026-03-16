@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:41.855
+# Date generated: 2026-02-19-08:35:41.859
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -10,11 +10,11 @@
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[0]);
 # [ExtractSuccess] hdr.h[0]@112 | Condition: |*packetLen_bits(bit<32>)| >= 144; | Extract Size: 32 -> hdr.h[0].a = 0x0000_0000
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[1]);
-# [ExtractSuccess] hdr.h[1]@144 | Condition: |*packetLen_bits(bit<32>)| >= 176; | Extract Size: 32 -> hdr.h[1].a = 0x0000_000A
+# [ExtractSuccess] hdr.h[1]@144 | Condition: |*packetLen_bits(bit<32>)| >= 176; | Extract Size: 32 -> hdr.h[1].a = 0x0000_0000
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[2]);
 # [ExtractSuccess] hdr.h[2]@176 | Condition: |*packetLen_bits(bit<32>)| >= 208; | Extract Size: 32 -> hdr.h[2].a = 0x0000_0000
 # [MethodCall]: pkt.extract<h_index>(hdr.i);
-# [ExtractSuccess] hdr.i@208 | Condition: |*packetLen_bits(bit<32>)| >= 240; | Extract Size: 32 -> hdr.i.index = 0x0000_0001
+# [ExtractSuccess] hdr.i@208 | Condition: |*packetLen_bits(bit<32>)| >= 240; | Extract Size: 32 -> hdr.i.index = 0x0000_0002
 # [State] accept
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -22,17 +22,18 @@
 # [P4Testgen MethodCall]: *.copy_out("vrfy");
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
-# [AssignmentStatement]: if (h.h[h.i.index].isValid()) {| Computed: hsiVar = 1;
+# [AssignmentStatement]: if (h.h[h.i.index].isValid()) {| Computed: hsiVar = 2;
 # [If Statement]: h.h[h.i.index].isValid() Condition: |pktvar_6(bit<32>)| == 0 && true; Result: false
-# [If Statement]: h.h[h.i.index].isValid() Condition: |pktvar_6(bit<32>)| == 1 && true; Result: true
-# [AssignmentStatement]: h.h[h.h[h.i.index].a].a = 1;| Computed: hsiVar_1 = 10;
-# [If Statement]: h.h[h.h[h.i.index].a] Condition: |pktvar_4(bit<32>)| == 0; Result: false
-# [If Statement]: h.h[h.h[h.i.index].a] Condition: |pktvar_4(bit<32>)| == 1; Result: false
-# [If Statement]: h.h[h.h[h.i.index].a] Condition: |pktvar_4(bit<32>)| == 2; Result: false
-# [AssignmentStatement]: h.h[h.i.index].setInvalid();| Computed: hsiVar = 1;
+# [If Statement]: h.h[h.i.index].isValid() Condition: |pktvar_6(bit<32>)| == 1 && true; Result: false
+# [If Statement]: h.h[h.i.index].isValid() Condition: |pktvar_6(bit<32>)| == 2 && true; Result: true
+# [AssignmentStatement]: h.h[h.h[h.i.index].a].a = 1;| Computed: hsiVar_2 = 0;
+# [If Statement]: h.h[h.h[h.i.index].a] Condition: |pktvar_5(bit<32>)| == 0; Result: true
+# [AssignmentStatement]: h.h[h.h[h.i.index].a].a = 1;| Computed: h.h[0].a = 1;
+# [AssignmentStatement]: h.h[h.i.index].setInvalid();| Computed: hsiVar = 2;
 # [If Statement]: h.h[h.i.index] Condition: |pktvar_6(bit<32>)| == 0; Result: false
-# [If Statement]: h.h[h.i.index] Condition: |pktvar_6(bit<32>)| == 1; Result: true
-# [MethodCall]: h.h[1].setInvalid();
+# [If Statement]: h.h[h.i.index] Condition: |pktvar_6(bit<32>)| == 1; Result: false
+# [If Statement]: h.h[h.i.index] Condition: |pktvar_6(bit<32>)| == 2; Result: true
+# [MethodCall]: h.h[2].setInvalid();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -47,13 +48,13 @@
 # [MethodCall]: pkt.emit<ethernet_t>(h.eth_hdr);
 # [Emit]: {$headerValid:true;;    dst_addr:0;  src_addr:0;  eth_type:0;  }
 # [MethodCall]: pkt.emit<h_stack>(h.h[0]);
-# [Emit]: {$headerValid:true;;    a:0;  }
+# [Emit]: {$headerValid:true;;    a:1;  }
 # [MethodCall]: pkt.emit<h_stack>(h.h[1]);
-# [Invalid emit: { a = TaintedExpression(bit<32>) }]
-# [MethodCall]: pkt.emit<h_stack>(h.h[2]);
 # [Emit]: {$headerValid:true;;    a:0;  }
+# [MethodCall]: pkt.emit<h_stack>(h.h[2]);
+# [Invalid emit: { a = TaintedExpression(bit<32>) }]
 # [MethodCall]: pkt.emit<h_index>(h.i);
-# [Emit]: {$headerValid:true;;    index:1;  }
+# [Emit]: {$headerValid:true;;    index:2;  }
 # [P4Testgen MethodCall]: *.copy_out("deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -61,6 +62,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000000000000000000000A0000000000000001
-expect 0 0000000000000000000000000000000000000000000000000001$
+packet 0 000000000000000000000000000000000000000000000000000000000002
+expect 0 0000000000000000000000000000000000010000000000000002$
 

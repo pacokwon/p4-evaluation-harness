@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:55.407
+# Date generated: 2026-02-19-08:34:55.429
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -123,7 +123,7 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egress.send_frame | Key(s): 0| Chosen action: my_drop]
+# [Table Branch: egress.send_frame Choosing default action: my_drop_4/my_drop;]
 # [MethodCall]: my_drop_4/my_drop();
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: smeta_4/smeta.ingress_port = 0;
 # [AssignmentStatement]: my_drop(standard_metadata);| Computed: smeta_4/smeta.egress_spec = 511;
@@ -285,9 +285,6 @@ add "ingress.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b0000000011111111111111111111111
 
 # Table ingress.mac_da
 add "ingress.mac_da" "meta.fwd_metadata.l2ptr":0x00000000 "my_drop"()
-
-# Table egress.send_frame
-add "egress.send_frame" "meta.fwd_metadata.out_bd":0x000000 "my_drop"()
 
 
 packet 0 00000000000000000000000008000000000000000000000600000000000000FFFFFF0000000000000000000000005000000000000000

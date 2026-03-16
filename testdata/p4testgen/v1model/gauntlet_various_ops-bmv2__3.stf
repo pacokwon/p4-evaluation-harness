@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:25.388
+# Date generated: 2026-03-06-08:39:25.391
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -20,9 +20,7 @@
 # [MethodCall]: pkt.extract<COMPARE>(hdr.comp);
 # [ExtractSuccess] hdr.comp@240 | Condition: |*packetLen_bits(bit<32>)| >= 280; | Extract Size: 40 -> hdr.comp.a = 0x00 | hdr.comp.b = 0x00 | hdr.comp.c = 0x00 | hdr.comp.d = 0x00 | hdr.comp.e = 0x00
 # [MethodCall]: pkt.extract<DIV>(hdr.div);
-# [ExtractSuccess] hdr.div@280 | Condition: |*packetLen_bits(bit<32>)| >= 304; | Extract Size: 24 -> hdr.div.a = 0x00 | hdr.div.b = 0x00 | hdr.div.c = 0x00
-# [MethodCall]: pkt.extract<BOOL>(hdr.b);
-# [ExtractFailure] hdr.b@304 | Condition: !(|*packetLen_bits(bit<32>)| >= 312); | Extract Size: 8
+# [ExtractFailure] hdr.div@280 | Condition: !(|*packetLen_bits(bit<32>)| >= 304); | Extract Size: 24
 # [P4Testgen AssignmentStatement]: sm.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -84,7 +82,7 @@
 # [MethodCall]: pkt.emit<COMPARE>(h.comp);
 # [Emit]: {$headerValid:true;;    a:1;  b:1;  c:1;  d:0;  e:0;  }
 # [MethodCall]: pkt.emit<DIV>(h.div);
-# [Emit]: {$headerValid:true;;    a:0;  b:2;  c:254;  }
+# [Invalid emit: { a = TaintedExpression(bit<8>), b = TaintedExpression(bit<8>), c = TaintedExpression(bit<8>) }]
 # [MethodCall]: pkt.emit<BOOL>(h.b);
 # [Invalid emit: { a = TaintedExpression(bool), padding = TaintedExpression(bit<7>) }]
 # [P4Testgen MethodCall]: *.copy_out("deparser");
@@ -94,6 +92,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 0000000000000000000000000000FF03000300713E300F0000020001111101010100000002FE$
+packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 0000000000000000000000000000FF03000300713E300F0000020001111101010100000000$
 

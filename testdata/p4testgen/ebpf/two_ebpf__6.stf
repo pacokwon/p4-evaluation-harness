@@ -24,7 +24,7 @@
 # [P4Testgen AssignmentStatement]: pass = true;
 # [P4Testgen AssignmentStatement]: address_0 = 0;
 # [MethodCall]: c1_Check_ip/Check_ip.apply();
-# [Table Branch: pipe.c1.Check_ip | Key(s): |pktvar_14(bit<32>)|| Chosen action: NoAction]
+# [Table Branch: pipe.c1.Check_ip Choosing default action: NoAction_1/NoAction;]
 # [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen AssignmentStatement]: pass = true;
 # [P4Testgen MethodCall]: *.copy_out("pipe");

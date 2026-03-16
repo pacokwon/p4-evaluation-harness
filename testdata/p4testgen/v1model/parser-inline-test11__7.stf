@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:24.238
+# Date generated: 2026-03-06-08:39:24.239
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -21,18 +21,8 @@
 # [MethodCall]: packet.extract<data_t>(hdr.h3);
 # [ExtractSuccess] hdr.h3@16 | Condition: |*packetLen_bits(bit<32>)| >= 24; | Extract Size: 8 -> hdr.h3.f = 0x00
 # [MethodCall]: packet.extract<data_t>(subp2_shdr_h1);
-# [ExtractSuccess] subp2_shdr_h1@24 | Condition: |*packetLen_bits(bit<32>)| >= 32; | Extract Size: 8 -> subp2_shdr_h1.f = 0x00
-# [State] Subparser_sp1_0_true
-# [MethodCall]: phdr_0_h1.setValid();
-# [AssignmentStatement]: inout_hdr.h1 = shdr.h1;| Computed: phdr_0_h1.f = 0;
-# [State] Subparser_sp1_0_join
-# [State] p1
-# [State] p2
-# [State] p2_true
-# [MethodCall]: hdr.h4.setValid();
-# [AssignmentStatement]: hdr.h4 = phdr.h1;| Computed: hdr.h4.f = 0;
-# [State] p2_join
-# [State] accept
+# [ExtractFailure] subp2_shdr_h1@24 | Condition: !(|*packetLen_bits(bit<32>)| >= 32); | Extract Size: 8
+# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("ParserImpl");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -60,7 +50,7 @@
 # [MethodCall]: packet.emit<data_t>(hdr.h3);
 # [Emit]: {$headerValid:true;;    f:0;  }
 # [MethodCall]: packet.emit<data_t>(hdr.h4);
-# [Emit]: {$headerValid:true;;    f:0;  }
+# [Invalid emit: { f = TaintedExpression(bit<8>) }]
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -68,6 +58,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 1 00010000000000
-expect 3 010000000000$
+packet 1 000100
+expect 3 0100$
 

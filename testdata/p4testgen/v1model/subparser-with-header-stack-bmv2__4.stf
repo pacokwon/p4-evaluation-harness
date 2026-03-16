@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:30.873
+# Date generated: 2026-03-06-08:39:30.876
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -33,8 +33,8 @@
 # [MethodCall]: verify(hdr.h2[4].hdr_type == 2, 7);
 # [State] parse_h3
 # [MethodCall]: pkt.extract<h3_t>(hdr.h3);
-# [ExtractSuccess] hdr.h3@208 | Condition: |*packetLen_bits(bit<32>)| >= 224; | Extract Size: 16 -> hdr.h3.hdr_type = 0x00 | hdr.h3.data = 0x00
-# [MethodCall]: verify(hdr.h3.hdr_type == 3, 7);
+# [ExtractFailure] hdr.h3@208 | Condition: !(|*packetLen_bits(bit<32>)| >= 224); | Extract Size: 16
+# [P4Testgen AssignmentStatement]: stdmeta.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("parserI");
 # [P4Testgen MethodCall]: *.copy_in("vc");
 # [Control vc start]
@@ -76,7 +76,7 @@
 # [MethodCall]: packet.emit<h2_t>(hdr.h2[4]);
 # [Emit]: {$headerValid:true;;    hdr_type:2;  f1:0;  f2:0;  next_hdr_type:3;  }
 # [MethodCall]: packet.emit<h3_t>(hdr.h3);
-# [Emit]: {$headerValid:true;;    hdr_type:0;  data:0;  }
+# [Invalid emit: { hdr_type = TaintedExpression(bit<8>), data = TaintedExpression(bit<8>) }]
 # [P4Testgen MethodCall]: *.copy_out("DeparserI");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
@@ -84,6 +84,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 01000000000202000002020000020200000202000002020000030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 010000001F0202000002020000020200000202000002020000030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+packet 0 0100000000020200000202000002020000020200000202000003
+expect 0 010000001F020200000202000002020000020200000202000003$
 

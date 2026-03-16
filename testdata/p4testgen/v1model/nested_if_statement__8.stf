@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:24.721
+# Date generated: 2026-02-19-08:34:24.724
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -18,8 +18,8 @@
 # [P4Testgen MethodCall]: *.copy_in("MyIngress");
 # [Control MyIngress start]
 # [MethodCall]: ipv4_lpm_0/ipv4_lpm.apply();
-# [Table Branch: MyIngress.ipv4_lpm | Key(s): TaintedExpression(bit<32>)| Chosen action: NoAction]
-# [MethodCall]: NoAction_1/NoAction();
+# [Table Branch: MyIngress.ipv4_lpm | Key(s): TaintedExpression(bit<32>)| Chosen action: MyIngress.drop]
+# [MethodCall]: drop();
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -42,7 +42,7 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table MyIngress.ipv4_lpm
-add "MyIngress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b******************************** "NoAction"()
+add "MyIngress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b******************************** "MyIngress.drop"()
 
 
 packet 0 000000000000000000000000080000000000000000

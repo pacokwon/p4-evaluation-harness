@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:19.144
+# Date generated: 2026-02-19-08:34:19.151
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -43,10 +43,8 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: rewrite_mac_0/rewrite_mac.apply();
-# [Table Branch: egress.rewrite_mac | Key(s): 0| Chosen action: egress.rewrite_src_dst_mac]
-# [MethodCall]: rewrite_src_dst_mac(|egress.rewrite_mac_egress.rewrite_src_dst_mac_arg_smac(bit<48>)|, |egress.rewrite_mac_egress.rewrite_src_dst_mac_arg_dmac(bit<48>)|);
-# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
-# [AssignmentStatement]: hdr.ethernet.dstAddr = dmac;| Computed: hdr.ethernet.dstAddr = 0;
+# [Table Branch: egress.rewrite_mac Choosing default action: NoAction_2/NoAction;]
+# [P4Testgen MethodCall]: NoAction_2/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -78,9 +76,6 @@ add "ingress.ipv4_fib_lpm" 1 "hdr.ipv4.dstAddr":0b111111111111111111111111111111
 
 # Table ingress.nexthop
 add "ingress.nexthop" "meta.ingress_metadata.nexthop_index":0x0000 "ingress.on_miss"()
-
-# Table egress.rewrite_mac
-add "egress.rewrite_mac" "meta.ingress_metadata.nexthop_index":0x0000 "egress.rewrite_src_dst_mac"("smac":0x000000000000,"dmac":0x000000000000)
 
 
 packet 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

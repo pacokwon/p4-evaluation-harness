@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:40.688
+# Date generated: 2026-02-19-08:34:40.696
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -25,34 +25,8 @@
 # [Control ingress start]
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [MethodCall]: custom_table_0/custom_table.apply();
-# [Table Branch: ingress.custom_table | Key(s): |pktvar_28(bit<48>)|, |pktvar_29(bit<48>)|, |pktvar_30(bit<48>)|, |pktvar_31(bit<8>)|, |pktvar_32(bit<8>)|, |pktvar_33(bit<8>)|, |pktvar_34(bit<8>)|, |pktvar_35(bit<8>)|, |pktvar_36(bit<8>)|, |pktvar_37(bit<8>)|, |pktvar_38(bit<8>)|, |pktvar_39(bit<8>)|, |pktvar_40(bit<8>)|, |pktvar_41(bit<8>)|, |pktvar_42(bit<8>)|, |pktvar_43(bit<8>)|, |pktvar_44(bit<8>)|, |pktvar_45(bit<8>)|, |pktvar_46(bit<8>)|, |pktvar_47(bit<8>)|, |pktvar_48(bit<8>)|, |pktvar_49(bit<8>)|, |pktvar_50(bit<8>)|, |pktvar_51(bit<8>)|, |pktvar_52(bit<8>)|, (int<8>)|pktvar_56(bit<8>)|;| Chosen action: ingress.set_headers]
-# [MethodCall]: set_headers(|ingress.custom_table_ingress.set_headers_arg_addr0_1(bit<48>)|, |ingress.custom_table_ingress.set_headers_arg_addr1_1(bit<48>)|, |ingress.custom_table_ingress.set_headers_arg_addr2_1(bit<48>)|, |ingress.custom_table_ingress.set_headers_arg_e_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e0_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e1_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e2_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e00_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e01_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e02_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e10_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e11_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e12_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e20_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e21_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e22_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e001_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e002_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e101_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e102_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e201_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e202_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e220_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e0020010_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_e0020020_1(bit<8>)|, |ingress.custom_table_ingress.set_headers_arg_s0_1(int<8>)|);
-# [AssignmentStatement]: hdr.custom.addr0 = addr0;| Computed: hdr.custom._addr00 = 0;
-# [AssignmentStatement]: hdr.custom.addr1 = addr1;| Computed: hdr.custom._addr11 = 0;
-# [AssignmentStatement]: hdr.custom.addr2 = addr2;| Computed: hdr.custom._addr22 = 0;
-# [AssignmentStatement]: hdr.custom.e = e;| Computed: hdr.custom._e3 = 0;
-# [AssignmentStatement]: hdr.custom.e0 = e0;| Computed: hdr.custom._e04 = 0;
-# [AssignmentStatement]: hdr.custom.e1 = e1;| Computed: hdr.custom._e15 = 0;
-# [AssignmentStatement]: hdr.custom.e2 = e2;| Computed: hdr.custom._e26 = 0;
-# [AssignmentStatement]: hdr.custom.e00 = e00;| Computed: hdr.custom._e007 = 0;
-# [AssignmentStatement]: hdr.custom.e01 = e01;| Computed: hdr.custom._e018 = 0;
-# [AssignmentStatement]: hdr.custom.e02 = e02;| Computed: hdr.custom._e029 = 0;
-# [AssignmentStatement]: hdr.custom.e10 = e10;| Computed: hdr.custom._e1010 = 0;
-# [AssignmentStatement]: hdr.custom.e11 = e11;| Computed: hdr.custom._e1111 = 0;
-# [AssignmentStatement]: hdr.custom.e12 = e12;| Computed: hdr.custom._e1212 = 0;
-# [AssignmentStatement]: hdr.custom.e20 = e20;| Computed: hdr.custom._e2013 = 0;
-# [AssignmentStatement]: hdr.custom.e21 = e21;| Computed: hdr.custom._e2114 = 0;
-# [AssignmentStatement]: hdr.custom.e22 = e22;| Computed: hdr.custom._e2215 = 0;
-# [AssignmentStatement]: hdr.custom.e001 = e001;| Computed: hdr.custom._e00116 = 0;
-# [AssignmentStatement]: hdr.custom.e002 = e002;| Computed: hdr.custom._e00217 = 0;
-# [AssignmentStatement]: hdr.custom.e101 = e101;| Computed: hdr.custom._e10118 = 0;
-# [AssignmentStatement]: hdr.custom.e102 = e102;| Computed: hdr.custom._e10219 = 0;
-# [AssignmentStatement]: hdr.custom.e201 = e201;| Computed: hdr.custom._e20120 = 0;
-# [AssignmentStatement]: hdr.custom.e202 = e202;| Computed: hdr.custom._e20221 = 0;
-# [AssignmentStatement]: hdr.custom.e220 = e220;| Computed: hdr.custom._e22022 = 0;
-# [AssignmentStatement]: hdr.custom.e0020010 = e0020010;| Computed: hdr.custom._e002001023 = 0;
-# [AssignmentStatement]: hdr.custom.e0020020 = e0020020;| Computed: hdr.custom._e002002024 = 0;
-# [AssignmentStatement]: hdr.custom.s0 = s0;| Computed: hdr.custom._s028 = 0;
+# [Table Branch: ingress.custom_table Choosing default action: my_drop;]
+# [MethodCall]: my_drop();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -74,9 +48,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table ingress.custom_table
-add "ingress.custom_table" "hdr.custom.addr0":0x000000000000 "hdr.custom.addr1":0x000000000000 "hdr.custom.addr2":0x000000000000 "hdr.custom.e":0x00 "hdr.custom.e0":0x00 "hdr.custom.e00":0x00 "hdr.custom.e001":0x00 "hdr.custom.e002":0x00 "hdr.custom.e0020010":0x00 "hdr.custom.e0020020":0x00 "hdr.custom.e01":0x00 "hdr.custom.e02":0x00 "hdr.custom.e1":0x00 "hdr.custom.e10":0x00 "hdr.custom.e101":0x00 "hdr.custom.e102":0x00 "hdr.custom.e11":0x00 "hdr.custom.e12":0x00 "hdr.custom.e2":0x00 "hdr.custom.e20":0x00 "hdr.custom.e201":0x00 "hdr.custom.e202":0x00 "hdr.custom.e21":0x00 "hdr.custom.e22":0x00 "hdr.custom.e220":0x00 "hdr.custom.s0":0x00 "ingress.set_headers"("addr0":0x000000000000,"addr1":0x000000000000,"addr2":0x000000000000,"e":0x00,"e0":0x00,"e1":0x00,"e2":0x00,"e00":0x00,"e01":0x00,"e02":0x00,"e10":0x00,"e11":0x00,"e12":0x00,"e20":0x00,"e21":0x00,"e22":0x00,"e001":0x00,"e002":0x00,"e101":0x00,"e102":0x00,"e201":0x00,"e202":0x00,"e220":0x00,"e0020010":0x00,"e0020020":0x00,"s0":0x00)
 
 
 packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000DEAD0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

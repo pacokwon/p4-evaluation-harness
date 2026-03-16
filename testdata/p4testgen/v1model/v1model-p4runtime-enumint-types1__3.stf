@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:40.598
+# Date generated: 2026-02-19-08:34:40.610
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -24,9 +24,8 @@
 # [Control ingress start]
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [MethodCall]: custom_table_0/custom_table.apply();
-# [Table Branch: ingress.custom_table | Key(s): |pktvar_28(bit<48>)|, |pktvar_29(bit<48>)|, |pktvar_30(bit<48>)|, |pktvar_31(bit<8>)|, |pktvar_32(bit<8>)|, |pktvar_33(bit<8>)|, |pktvar_34(bit<8>)|, |pktvar_35(bit<8>)|, |pktvar_36(bit<8>)|, |pktvar_37(bit<8>)|, |pktvar_38(bit<8>)|, |pktvar_39(bit<8>)|, |pktvar_40(bit<8>)|, |pktvar_41(bit<8>)|, |pktvar_42(bit<8>)|, |pktvar_43(bit<8>)|, |pktvar_44(bit<8>)|, |pktvar_45(bit<8>)|, |pktvar_46(bit<8>)|, |pktvar_47(bit<8>)|, |pktvar_48(bit<8>)|, |pktvar_49(bit<8>)|, |pktvar_50(bit<8>)|, |pktvar_51(bit<8>)|, |pktvar_52(bit<8>)|, (int<8>)|pktvar_56(bit<8>)|;| Chosen action: ingress.set_output]
-# [MethodCall]: set_output(|ingress.custom_table_ingress.set_output_arg_out_port(bit<9>)|);
-# [AssignmentStatement]: stdmeta.egress_spec = out_port;| Computed: stdmeta.egress_spec = 0;
+# [Table Branch: ingress.custom_table | Key(s): |pktvar_28(bit<48>)|, |pktvar_29(bit<48>)|, |pktvar_30(bit<48>)|, |pktvar_31(bit<8>)|, |pktvar_32(bit<8>)|, |pktvar_33(bit<8>)|, |pktvar_34(bit<8>)|, |pktvar_35(bit<8>)|, |pktvar_36(bit<8>)|, |pktvar_37(bit<8>)|, |pktvar_38(bit<8>)|, |pktvar_39(bit<8>)|, |pktvar_40(bit<8>)|, |pktvar_41(bit<8>)|, |pktvar_42(bit<8>)|, |pktvar_43(bit<8>)|, |pktvar_44(bit<8>)|, |pktvar_45(bit<8>)|, |pktvar_46(bit<8>)|, |pktvar_47(bit<8>)|, |pktvar_48(bit<8>)|, |pktvar_49(bit<8>)|, |pktvar_50(bit<8>)|, |pktvar_51(bit<8>)|, |pktvar_52(bit<8>)|, (int<8>)|pktvar_56(bit<8>)|;| Chosen action: ingress.my_drop]
+# [MethodCall]: my_drop();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -46,11 +45,11 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.custom_table_ingress.set_output_arg_out_port(bit<9>)|; Result: false
+# [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.custom_table
-add "ingress.custom_table" "hdr.custom.addr0":0x000000000000 "hdr.custom.addr1":0x000000000000 "hdr.custom.addr2":0x000000000000 "hdr.custom.e":0x00 "hdr.custom.e0":0x00 "hdr.custom.e00":0x00 "hdr.custom.e001":0x00 "hdr.custom.e002":0x00 "hdr.custom.e0020010":0x00 "hdr.custom.e0020020":0x00 "hdr.custom.e01":0x00 "hdr.custom.e02":0x00 "hdr.custom.e1":0x00 "hdr.custom.e10":0x00 "hdr.custom.e101":0x00 "hdr.custom.e102":0x00 "hdr.custom.e11":0x00 "hdr.custom.e12":0x00 "hdr.custom.e2":0x00 "hdr.custom.e20":0x00 "hdr.custom.e201":0x00 "hdr.custom.e202":0x00 "hdr.custom.e21":0x00 "hdr.custom.e22":0x00 "hdr.custom.e220":0x00 "hdr.custom.s0":0x00 "ingress.set_output"("out_port":0x000)
+add "ingress.custom_table" "hdr.custom.addr0":0x000000000000 "hdr.custom.addr1":0x000000000000 "hdr.custom.addr2":0x000000000000 "hdr.custom.e":0x00 "hdr.custom.e0":0x00 "hdr.custom.e00":0x00 "hdr.custom.e001":0x00 "hdr.custom.e002":0x00 "hdr.custom.e0020010":0x00 "hdr.custom.e0020020":0x00 "hdr.custom.e01":0x00 "hdr.custom.e02":0x00 "hdr.custom.e1":0x00 "hdr.custom.e10":0x00 "hdr.custom.e101":0x00 "hdr.custom.e102":0x00 "hdr.custom.e11":0x00 "hdr.custom.e12":0x00 "hdr.custom.e2":0x00 "hdr.custom.e20":0x00 "hdr.custom.e201":0x00 "hdr.custom.e202":0x00 "hdr.custom.e21":0x00 "hdr.custom.e22":0x00 "hdr.custom.e220":0x00 "hdr.custom.s0":0x00 "ingress.my_drop"()
 
 
 packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000DEAD000000000000000000000000000000000000000000000000000000000000000000000000000000000000FFFF000000000000000000000000000000000000000000000000000000

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-20-02:10:40.536
+# Date generated: 2026-02-20-02:10:40.542
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -21,10 +21,8 @@
 # [State] callMidle1
 # [AssignmentStatement]: hdr.index = hdr.index + 1;| Computed: hdr.index = 2;
 # [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes[3]);
-# [ExtractSuccess] hdr.srcRoutes[32w3]@163 | Condition: |*packetLen_bits(bit<32>)| >= 180; | Extract Size: 17 -> hdr.srcRoutes[32w3].bos = 0x0 | hdr.srcRoutes[32w3].port = 0x0000
-# [State] parse_srcRouting2
-# [State] stateOutOfBound
-# [P4Testgen MethodCall]: verify(false, 3);
+# [ExtractFailure] hdr.srcRoutes[32w3]@163 | Condition: !(|*packetLen_bits(bit<32>)| >= 180); | Extract Size: 17
+# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -49,6 +47,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000123480000000200000000000000000000000000000000000000000
-expect 0 000000000000000000000000000000000$
+packet 0 000000000000000000000000123480000000200000
+expect 0 *0$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:34.290
+# Date generated: 2026-03-06-08:39:34.296
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -25,17 +25,38 @@
 # [MethodCall]: ipv6_tbl_0/ipv6_tbl.apply();
 # [Table Branch: ingress.ipv6_tbl | Key(s): (bit<1>)(|pktvar_10(bit<128>)|[127:120] == 255);| Chosen action: ingress.set_mcast_grp]
 # [MethodCall]: set_mcast_grp(|ingress.ipv6_tbl_ingress.set_mcast_grp_arg_mcast_grp_1(bit<16>)|, |ingress.ipv6_tbl_ingress.set_mcast_grp_arg_port(bit<9>)|);
-# [AssignmentStatement]: standard_metadata.mcast_grp = mcast_grp;| Computed: standard_metadata.mcast_grp = 32768;
+# [AssignmentStatement]: standard_metadata.mcast_grp = mcast_grp;| Computed: standard_metadata.mcast_grp = 0;
 # [AssignmentStatement]: meta.egress_port = port;| Computed: meta.egress_port = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
-# [P4Testgen If Statement]: Condition: |ingress.ipv6_tbl_ingress.set_mcast_grp_arg_mcast_grp_1(bit<16>)| != 0; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: |ingress.ipv6_tbl_ingress.set_mcast_grp_arg_mcast_grp_1(bit<16>)| != 0; Result: false
+# [P4Testgen MethodCall]: *.copy_in("egress");
+# [Control egress start]
+# [If Statement]: standard_metadata.instance_type == BMV2_V1MODEL_INSTANCE_TYPE_REPLICATION Condition: 0 == 5; Result: false
+# [P4Testgen MethodCall]: *.copy_out("egress");
+# [P4Testgen MethodCall]: *.copy_in("MyComputeChecksum");
+# [Control MyComputeChecksum start]
+# [P4Testgen MethodCall]: *.copy_out("MyComputeChecksum");
+# [P4Testgen MethodCall]: *.copy_in("MyDeparser");
+# [Control MyDeparser start]
+# [MethodCall]: packet.emit<ethernet_t>(hdr.ethernet);
+# [Emit]: {$headerValid:true;;    dstAddr:0;  srcAddr:0;  etherType:34525;  }
+# [MethodCall]: packet.emit<ipv6_t>(hdr.ipv6);
+# [Emit]: {$headerValid:true;;    version:0;  traffic_class:0;  flow_label:0;  payload_length:0;  nextHdr:17;  hopLimit:0;  srcAddr:0;  dstAddr:0;  }
+# [MethodCall]: packet.emit<icmp6_t>(hdr.icmp6);
+# [Invalid emit: { type = TaintedExpression(bit<8>), code = TaintedExpression(bit<8>), checksum = TaintedExpression(bit<16>) }]
+# [MethodCall]: packet.emit<udp_t>(hdr.udp);
+# [Invalid emit: { srcPort = TaintedExpression(bit<16>), dstPort = TaintedExpression(bit<16>), length_ = TaintedExpression(bit<16>), checksum = TaintedExpression(bit<16>) }]
+# [P4Testgen MethodCall]: *.copy_out("MyDeparser");
+# [P4Testgen MethodCall]: *.prepend_emit_buffer();
+# [Prepending the emit buffer to the program packet]
+# [P4Testgen If Statement]: Condition: 511 == 0; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.ipv6_tbl
-add "ingress.ipv6_tbl" "mcast_key":0x0 "ingress.set_mcast_grp"("mcast_grp":0x8000,"port":0x000)
+add "ingress.ipv6_tbl" "mcast_key":0x0 "ingress.set_mcast_grp"("mcast_grp":0x0000,"port":0x000)
 
 
 packet 0 00000000000000000000000086DD0000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000086DD0000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

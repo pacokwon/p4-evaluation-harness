@@ -22,8 +22,8 @@
 # [AssignmentStatement]: dummy_val = 8w255;| Computed: dummy_val_0/dummy_val = 255;
 # [AssignmentStatement]: 32w1 : exact @name("IymcAg") ;| Computed: key_0 = 1;
 # [MethodCall]: simple_table_0/simple_table.apply();
-# [Table Branch: ingress.simple_table | Key(s): 1| Chosen action: NoAction]
-# [MethodCall]: NoAction_1/NoAction();
+# [Table Branch: ingress.simple_table Choosing default action: NoAction_1/NoAction;]
+# [P4Testgen MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -46,9 +46,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table ingress.simple_table
-add "ingress.simple_table" "IymcAg":0x00000001 "NoAction"()
 
 
 packet 0 0000000000000000000000000000

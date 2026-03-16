@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:19.179
+# Date generated: 2026-02-19-08:34:19.186
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -37,17 +37,15 @@
 # [MethodCall]: nexthop_0/nexthop.apply();
 # [Table Branch: ingress.nexthop | Key(s): 0| Chosen action: ingress.set_egress_details]
 # [MethodCall]: set_egress_details(|ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|);
-# [AssignmentStatement]: standard_metadata.egress_spec = egress_spec;| Computed: standard_metadata.egress_spec = 0;
+# [AssignmentStatement]: standard_metadata.egress_spec = egress_spec;| Computed: standard_metadata.egress_spec = 511;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: rewrite_mac_0/rewrite_mac.apply();
-# [Table Branch: egress.rewrite_mac | Key(s): 0| Chosen action: egress.rewrite_src_dst_mac]
-# [MethodCall]: rewrite_src_dst_mac(|egress.rewrite_mac_egress.rewrite_src_dst_mac_arg_smac(bit<48>)|, |egress.rewrite_mac_egress.rewrite_src_dst_mac_arg_dmac(bit<48>)|);
-# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
-# [AssignmentStatement]: hdr.ethernet.dstAddr = dmac;| Computed: hdr.ethernet.dstAddr = 0;
+# [Table Branch: egress.rewrite_mac Choosing default action: NoAction_2/NoAction;]
+# [P4Testgen MethodCall]: NoAction_2/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -62,8 +60,9 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == |ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table ingress.port_mapping
 add "ingress.port_mapping" "standard_metadata.ingress_port":0x000 "ingress.set_bd"("bd":0x0000)
@@ -78,12 +77,8 @@ add "ingress.ipv4_fib" "hdr.ipv4.dstAddr":0xFFFFFFFF "meta.ingress_metadata.vrf"
 add "ingress.ipv4_fib_lpm" 1 "hdr.ipv4.dstAddr":0b11111111111111111111111111111111 "meta.ingress_metadata.vrf":0x000 "ingress.on_miss"()
 
 # Table ingress.nexthop
-add "ingress.nexthop" "meta.ingress_metadata.nexthop_index":0x0000 "ingress.set_egress_details"("egress_spec":0x000)
-
-# Table egress.rewrite_mac
-add "egress.rewrite_mac" "meta.ingress_metadata.nexthop_index":0x0000 "egress.rewrite_src_dst_mac"("smac":0x000000000000,"dmac":0x000000000000)
+add "ingress.nexthop" "meta.ingress_metadata.nexthop_index":0x0000 "ingress.set_egress_details"("egress_spec":0x1FF)
 
 
 packet 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

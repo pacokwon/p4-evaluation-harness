@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-20-02:10:41.412
+# Date generated: 2026-02-20-02:10:41.418
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -7,12 +7,14 @@
 # [State] start
 # [AssignmentStatement]: hdr.index = 0;| Computed: hdr.index = 0;
 # [MethodCall]: packet.extract<ethernet_t>(hdr.ethernet);
-# [ExtractSuccess] hdr.ethernet@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ethernet.dstAddr = 0x0000_0000_0000 | hdr.ethernet.srcAddr = 0x0000_0000_0000 | hdr.ethernet.etherType = 0x0002
-# [State] access2
+# [ExtractSuccess] hdr.ethernet@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ethernet.dstAddr = 0x0000_0000_0000 | hdr.ethernet.srcAddr = 0x0000_0000_0000 | hdr.ethernet.etherType = 0x0001
+# [State] access1
 # [AssignmentStatement]: hdr.index = hdr.index + 1;| Computed: hdr.index = 1;
-# [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes2);
-# [ExtractFailure] hdr.srcRoutes2@112 | Condition: !(|*packetLen_bits(bit<32>)| >= 129); | Extract Size: 17
-# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
+# [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes1);
+# [ExtractSuccess] hdr.srcRoutes1@112 | Condition: |*packetLen_bits(bit<32>)| >= 129; | Extract Size: 17 -> hdr.srcRoutes1.bos = 0x0 | hdr.srcRoutes1.port = 0x0000
+# [State] last
+# [AssignmentStatement]: hdr.index = hdr.index + 1;| Computed: hdr.index = 2;
+# [State] accept
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -37,6 +39,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000002
-expect 0 $
+packet 0 000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 *000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:57.223
+# Date generated: 2026-02-19-08:34:57.229
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -33,13 +33,14 @@
 # [MethodCall]: foo1(|cIngress.t0_cIngress.foo1_arg_dstAddr_1(bit<32>)|);
 # [AssignmentStatement]: hdr.ipv4.dstAddr = dstAddr;| Computed: hdr.ipv4.dstAddr = 0;
 # [MethodCall]: t1_0/t1.apply();
-# [Table Branch: cIngress.t1 | Key(s): |pktvar_16(bit<16>)|| Chosen action: cIngress.foo1]
-# [MethodCall]: foo1_1/foo1(|cIngress.t1_cIngress.foo1_arg_dstAddr_2(bit<32>)|);
-# [AssignmentStatement]: hdr.ipv4.dstAddr = dstAddr;| Computed: hdr.ipv4.dstAddr = 0;
+# [Table Branch: cIngress.t1 | Key(s): |pktvar_16(bit<16>)|| Chosen action: cIngress.foo2]
+# [MethodCall]: foo2_1/foo2(|cIngress.t1_cIngress.foo2_arg_srcAddr_2(bit<32>)|);
+# [AssignmentStatement]: hdr.ipv4.srcAddr = srcAddr;| Computed: hdr.ipv4.srcAddr = 0;
 # [AssignmentStatement]: meta.hash1 = hdr.ipv4.dstAddr[15:0];| Computed: meta.hash1 = 0;
 # [MethodCall]: t2_0/t2.apply();
-# [Table Branch: cIngress.t2 Choosing default action: NoAction_3/NoAction;]
-# [P4Testgen MethodCall]: NoAction_3/NoAction();
+# [Table Branch: cIngress.t2 | Key(s): |pktvar_15(bit<16>)|, |cIngress.t0_cIngress.foo1_arg_dstAddr_1(bit<32>)|[15:0];| Chosen action: cIngress.foo1]
+# [MethodCall]: foo1_2/foo1(|cIngress.t2_cIngress.foo1_arg_dstAddr_3(bit<32>)|);
+# [AssignmentStatement]: hdr.ipv4.dstAddr = dstAddr;| Computed: hdr.ipv4.dstAddr = 0;
 # [P4Testgen MethodCall]: *.copy_out("cIngress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -67,7 +68,10 @@
 add "cIngress.t0" "hdr.tcp.dstPort":0x0000 "cIngress.foo1"("dstAddr":0x00000000)
 
 # Table cIngress.t1
-add "cIngress.t1" "hdr.tcp.dstPort":0x0000 "cIngress.foo1"("dstAddr":0x00000000)
+add "cIngress.t1" "hdr.tcp.dstPort":0x0000 "cIngress.foo2"("srcAddr":0x00000000)
+
+# Table cIngress.t2
+add "cIngress.t2" "hdr.tcp.srcPort":0x0000 "cIngress.foo1"("dstAddr":0x00000000)
 
 
 packet 0 00000000000000000000000008004700000000000000000600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

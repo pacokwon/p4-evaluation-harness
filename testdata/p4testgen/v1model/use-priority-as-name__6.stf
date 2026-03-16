@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:09.208
+# Date generated: 2026-02-19-08:35:09.212
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserImpl");
@@ -36,9 +36,10 @@
 # [P4Testgen MethodCall]: *.copy_in("egressImpl");
 # [Control egressImpl start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egressImpl.send_frame | Key(s): 0| Chosen action: egressImpl.rewrite_mac]
-# [MethodCall]: rewrite_mac(|egressImpl.send_frame_egressImpl.rewrite_mac_arg_smac(bit<48>)|);
-# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
+# [Table Branch: egressImpl.send_frame | Key(s): 0| Chosen action: egressImpl.my_drop]
+# [MethodCall]: my_drop_3/my_drop();
+# [MethodCall]: mark_to_drop(stdmeta);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("egressImpl");
 # [P4Testgen MethodCall]: *.copy_in("updateChecksum");
 # [Control updateChecksum start]
@@ -63,7 +64,7 @@ add "ingressImpl.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b000000001111111111111111111
 add "ingressImpl.mac_da" "meta.fwd_metadata.l2ptr":0x00000000 "ingressImpl.my_drop"()
 
 # Table egressImpl.send_frame
-add "egressImpl.send_frame" "meta.fwd_metadata.out_bd":0x000000 "egressImpl.rewrite_mac"("smac":0x000000000000)
+add "egressImpl.send_frame" "meta.fwd_metadata.out_bd":0x000000 "egressImpl.my_drop"()
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

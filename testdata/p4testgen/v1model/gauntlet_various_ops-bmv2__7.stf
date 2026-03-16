@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:25.402
+# Date generated: 2026-03-06-08:39:25.404
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -12,9 +12,7 @@
 # [MethodCall]: pkt.extract<UNDERFLOW>(hdr.underflow);
 # [ExtractSuccess] hdr.underflow@128 | Condition: |*packetLen_bits(bit<32>)| >= 152; | Extract Size: 24 -> hdr.underflow.a = 0x00 | hdr.underflow.b = 0x00 | hdr.underflow.c = 0x00
 # [MethodCall]: pkt.extract<RSH>(hdr.rshift);
-# [ExtractSuccess] hdr.rshift@152 | Condition: |*packetLen_bits(bit<32>)| >= 184; | Extract Size: 32 -> hdr.rshift.a = 0x0 | hdr.rshift.b = 0x0 | hdr.rshift.c = 0x0 | hdr.rshift.d = 0x0 | hdr.rshift.e = 0x0 | hdr.rshift.g = 0x0 | hdr.rshift.h = 0x00
-# [MethodCall]: pkt.extract<LSH>(hdr.lshift);
-# [ExtractFailure] hdr.lshift@184 | Condition: !(|*packetLen_bits(bit<32>)| >= 224); | Extract Size: 40
+# [ExtractFailure] hdr.rshift@152 | Condition: !(|*packetLen_bits(bit<32>)| >= 184); | Extract Size: 32
 # [P4Testgen AssignmentStatement]: sm.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -68,7 +66,7 @@
 # [MethodCall]: pkt.emit<UNDERFLOW>(h.underflow);
 # [Emit]: {$headerValid:true;;    a:0;  b:3;  c:0;  }
 # [MethodCall]: pkt.emit<RSH>(h.rshift);
-# [Emit]: {$headerValid:true;;    a:7;  b:1;  c:3;  d:-2;  e:3;  g:0;  h:15;  }
+# [Invalid emit: { a = TaintedExpression(bit<4>), b = TaintedExpression(int<4>), c = TaintedExpression(bit<4>), d = TaintedExpression(int<4>), e = TaintedExpression(bit<4>), g = TaintedExpression(bit<4>), h = TaintedExpression(bit<8>) }]
 # [MethodCall]: pkt.emit<LSH>(h.lshift);
 # [Invalid emit: { a = TaintedExpression(bit<8>), b = TaintedExpression(bit<8>), c = TaintedExpression(bit<8>), d = TaintedExpression(bit<8>), e = TaintedExpression(bit<8>) }]
 # [MethodCall]: pkt.emit<MOD>(h.mod);
@@ -86,6 +84,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000000000000000000000000
-expect 0 0000000000000000000000000000FF03000300713E300F$
+packet 0 00000000000000000000000000000000000000000000
+expect 0 0000000000000000000000000000FF03000300000000$
 

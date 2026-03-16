@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:30.481
+# Date generated: 2026-02-19-08:34:30.450
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -26,8 +26,9 @@
 # [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 383;
 # [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl + 8w255;| Computed: hdr.ipv4.ttl = 255;
 # [MethodCall]: forward_0/forward.apply();
-# [Table Branch: ingress.forward Choosing default action: NoAction_4/NoAction;]
-# [P4Testgen MethodCall]: NoAction_4/NoAction();
+# [Table Branch: ingress.forward | Key(s): |ingress.ipv4_lpm_set_nhop_arg_nhop_ipv4_1(bit<32>)|| Chosen action: set_dmac]
+# [MethodCall]: set_dmac(|ingress.forward_set_dmac_arg_dmac(bit<48>)|);
+# [AssignmentStatement]: hdr.ethernet.dstAddr = dmac;| Computed: hdr.ethernet.dstAddr = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 383;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -55,6 +56,9 @@
 
 # Table ingress.ipv4_lpm
 add "ingress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "set_nhop"("nhop_ipv4":0x00000000,"port":0x17F)
+
+# Table ingress.forward
+add "ingress.forward" "meta.routing_metadata.nhop_ipv4":0x00000000 "set_dmac"("dmac":0x000000000000)
 
 # Table egress.send_frame
 add "egress.send_frame" "standard_metadata.egress_port":0x17F "rewrite_mac"("smac":0x000000000000)

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:28.838
+# Date generated: 2026-02-19-08:34:28.843
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserImpl");
@@ -25,12 +25,10 @@
 # [P4Testgen MethodCall]: *.copy_in("ingressImpl");
 # [Control ingressImpl start]
 # [MethodCall]: t1_0/t1.apply();
-# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_14(bit<32>)|| Chosen action: ingressImpl.set_addr]
-# [MethodCall]: set_addr(|ingressImpl.t1_ingressImpl.set_addr_arg_new_dstAddr(bit<32>)|);
-# [AssignmentStatement]: hdr.ipv4.dstAddr = new_dstAddr;| Computed: hdr.ipv4.dstAddr = 0;
-# [AssignmentStatement]: stdmeta.egress_spec = stdmeta.ingress_port;| Computed: stdmeta.egress_spec = 111;
+# [Table Branch: ingressImpl.t1 | Key(s): |pktvar_14(bit<32>)|| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingressImpl");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 111;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egressImpl");
 # [Control egressImpl start]
@@ -45,13 +43,13 @@
 # [P4Testgen MethodCall]: *.copy_out("deparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |bmv2_ingress_port(bit<9>)|; Result: false
+# [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingressImpl.t1
-add "ingressImpl.t1" "hdr.andycustom.srcAddr":0x00000000 "ingressImpl.set_addr"("new_dstAddr":0x00000000)
+add "ingressImpl.t1" "hdr.andycustom.srcAddr":0x00000000 "NoAction"()
 
 
 packet 111 0000000000000000000000000000000000000000680680000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 111 *00000000000000000000000680680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+expect 0 *00000000000000000000000680680000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

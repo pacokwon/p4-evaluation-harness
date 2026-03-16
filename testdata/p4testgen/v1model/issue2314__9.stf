@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:15.157
+# Date generated: 2026-02-19-08:34:15.163
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -22,13 +22,19 @@
 # [State] start_0
 # [State] i
 # [MethodCall]: b.extract<I>(hdr.i);
-# [ExtractSuccess] hdr.i@144 | Condition: |*packetLen_bits(bit<32>)| >= 160; | Extract Size: 16 -> hdr.i.etherType = 0x0800
+# [ExtractSuccess] hdr.i@144 | Condition: |*packetLen_bits(bit<32>)| >= 160; | Extract Size: 16 -> hdr.i.etherType = 0x8100
+# [AssignmentStatement]: etherType = hdr.i.etherType;| Computed: l3_etherType/etherType = 33024;
+# [State] start_0
+# [State] i
+# [MethodCall]: b.extract<I>(hdr.i);
+# [ExtractSuccess] hdr.i@160 | Condition: |*packetLen_bits(bit<32>)| >= 176; | Extract Size: 16 -> hdr.i.etherType = 0x0800
 # [AssignmentStatement]: etherType = hdr.i.etherType;| Computed: l3_etherType/etherType = 2048;
 # [State] start_0
 # [State] h0
 # [MethodCall]: b.extract<H>(hdr.h);
-# [ExtractFailure] hdr.h@160 | Condition: !(|*packetLen_bits(bit<32>)| >= 168); | Extract Size: 8
-# [P4Testgen AssignmentStatement]: std.parser_error = 1;
+# [ExtractSuccess] hdr.h@176 | Condition: |*packetLen_bits(bit<32>)| >= 184; | Extract Size: 8 -> hdr.h.a = 0x00
+# [State] start
+# [State] accept
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("MyVerifyChecksum");
 # [Control MyVerifyChecksum start]
@@ -49,7 +55,7 @@
 # [MethodCall]: b.emit<ethernet_t>(hdr.ether);
 # [Emit]: {$headerValid:true;;    dstAddr:0;  srcAddr:0;  etherType:33024;  }
 # [MethodCall]: b.emit<H>(hdr.h);
-# [Invalid emit: { a = TaintedExpression(bit<8>) }]
+# [Emit]: {$headerValid:true;;    a:0;  }
 # [MethodCall]: b.emit<I>(hdr.i);
 # [Emit]: {$headerValid:true;;    etherType:2048;  }
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
@@ -59,6 +65,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000008100810081000800
-expect 0 00000000000000000000000081000800$
+packet 0 000000000000000000000000810081008100810008000000000000000000
+expect 0 000000000000000000000000810000080000000000000000$
 

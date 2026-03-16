@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:30.458
+# Date generated: 2026-02-19-08:34:30.461
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -23,14 +23,14 @@
 # [Table Branch: ingress.ipv4_lpm | Key(s): |pktvar_14(bit<32>)|| Chosen action: set_nhop]
 # [MethodCall]: set_nhop(|ingress.ipv4_lpm_set_nhop_arg_nhop_ipv4_1(bit<32>)|, |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|);
 # [AssignmentStatement]: meta.routing_metadata.nhop_ipv4 = nhop_ipv4;| Computed: meta.routing_metadata.nhop_ipv4 = 0;
-# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 0;
 # [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl + 8w255;| Computed: hdr.ipv4.ttl = 255;
 # [MethodCall]: forward_0/forward.apply();
 # [Table Branch: ingress.forward | Key(s): |ingress.ipv4_lpm_set_nhop_arg_nhop_ipv4_1(bit<32>)|| Chosen action: set_dmac]
 # [MethodCall]: set_dmac(|ingress.forward_set_dmac_arg_dmac(bit<48>)|);
 # [AssignmentStatement]: hdr.ethernet.dstAddr = dmac;| Computed: hdr.ethernet.dstAddr = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -50,16 +50,16 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |ingress.ipv4_lpm_set_nhop_arg_port(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.ipv4_lpm
-add "ingress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "set_nhop"("nhop_ipv4":0x00000000,"port":0x1FF)
+add "ingress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "set_nhop"("nhop_ipv4":0x00000000,"port":0x000)
 
 # Table ingress.forward
 add "ingress.forward" "meta.routing_metadata.nhop_ipv4":0x00000000 "set_dmac"("dmac":0x000000000000)
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000008000000000000000000FF0000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

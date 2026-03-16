@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:26.235
+# Date generated: 2026-03-06-08:39:26.236
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -24,9 +24,8 @@
 # [AssignmentStatement]: dummy_val = 8w255;| Computed: dummy_val_0/dummy_val = 255;
 # [AssignmentStatement]: 32w1 : exact @name("IymcAg") ;| Computed: key_0 = 1;
 # [MethodCall]: simple_table_0/simple_table.apply();
-# [Table Branch: ingress.simple_table | Key(s): 1| Chosen action: ingress.simple_action]
-# [MethodCall]: simple_action();
-# [AssignmentStatement]: h.h[0].a = dummy_val;| Computed: h.h[0].a = 255;
+# [Table Branch: ingress.simple_table | Key(s): 1| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -41,7 +40,7 @@
 # [MethodCall]: pkt.emit<ethernet_t>(h.eth_hdr);
 # [Emit]: {$headerValid:true;;    dst_addr:0;  src_addr:0;  eth_type:0;  }
 # [MethodCall]: pkt.emit<H>(h.h[0]);
-# [Emit]: {$headerValid:true;;    a:255;  }
+# [Emit]: {$headerValid:true;;    a:0;  }
 # [MethodCall]: pkt.emit<H>(h.h[1]);
 # [Invalid emit: { a = TaintedExpression(bit<8>) }]
 # [P4Testgen MethodCall]: *.copy_out("deparser");
@@ -51,9 +50,9 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.simple_table
-add "ingress.simple_table" "IymcAg":0x00000001 "ingress.simple_action"()
+add "ingress.simple_table" "IymcAg":0x00000001 "NoAction"()
 
 
 packet 0 000000000000000000000000000000
-expect 0 0000000000000000000000000000FF$
+expect 0 000000000000000000000000000000$
 

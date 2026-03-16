@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:23.268
+# Date generated: 2026-03-06-08:39:23.269
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -21,13 +21,8 @@
 # [MethodCall]: packet.extract<data_t>(hdr.h3);
 # [ExtractSuccess] hdr.h3@16 | Condition: |*packetLen_bits(bit<32>)| >= 24; | Extract Size: 8 -> hdr.h3.f = 0x00
 # [MethodCall]: packet.extract<data_t>(p_shdr_h1);
-# [ExtractSuccess] p_shdr_h1@24 | Condition: |*packetLen_bits(bit<32>)| >= 32; | Extract Size: 8 -> p_shdr_h1.f = 0x00
-# [State] Subparser_sp1_true
-# [MethodCall]: phdr_0_h1.setValid();
-# [AssignmentStatement]: inout_hdr.h1 = shdr.h1;| Computed: phdr_0_h1.f = 0;
-# [State] Subparser_sp1_join
-# [State] p0
-# [State] accept
+# [ExtractFailure] p_shdr_h1@24 | Condition: !(|*packetLen_bits(bit<32>)| >= 32); | Extract Size: 8
+# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("ParserImpl");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -63,6 +58,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 00010000000000
-expect 3 0100000000$
+packet 0 000100
+expect 3 0100$
 

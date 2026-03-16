@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:35.575
+# Date generated: 2026-03-06-08:39:35.576
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -32,7 +32,7 @@
 # [Table Branch: ingress.test1 | Key(s): |pktvar_0(bit<32>)|| Chosen action: ingress.setb1]
 # [MethodCall]: setb1(|ingress.test1_ingress.setb1_arg_port(bit<9>)|, |ingress.test1_ingress.setb1_arg_val(bit<8>)|);
 # [AssignmentStatement]: hdrs.data.b1 = val;| Computed: hdrs.data.b1 = 0;
-# [AssignmentStatement]: meta.egress_spec = port;| Computed: meta.egress_spec = 511;
+# [AssignmentStatement]: meta.egress_spec = port;| Computed: meta.egress_spec = 0;
 # [MethodCall]: ex1_0/ex1.apply();
 # [Table Branch: ingress.ex1 | Key(s): |pktvar_5(bit<16>)|| Chosen action: ingress.act3]
 # [MethodCall]: act3(|ingress.ex1_ingress.act3_arg_val_11(bit<8>)|);
@@ -42,7 +42,7 @@
 # [Table Branch: ingress.tbl3 Choosing default action: noop_4/noop;]
 # [MethodCall]: noop_4/noop();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -65,16 +65,16 @@
 # [P4Testgen MethodCall]: *.copy_out("deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.test1_ingress.setb1_arg_port(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |ingress.test1_ingress.setb1_arg_port(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.test1
-add "ingress.test1" 1 "hdrs.data.f1":0b******************************** "ingress.setb1"("port":0x1FF,"val":0x00)
+add "ingress.test1" 1 "hdrs.data.f1":0b******************************** "ingress.setb1"("port":0x000,"val":0x00)
 
 # Table ingress.ex1
 add "ingress.ex1" 1 "hdrs.extra[0].h":0b**************** "ingress.act3"("val":0x00)
 
 
 packet 0 00FFFFFF000000000000000000FF0080000000800000008000000080
+expect 0 00FFFFFF000000000000000000FF0080000000800000008000000080$
 

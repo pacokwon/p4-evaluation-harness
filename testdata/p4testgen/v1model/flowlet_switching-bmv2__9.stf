@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:00.626
+# Date generated: 2026-02-19-08:35:00.636
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -48,16 +48,19 @@
 # [MethodCall]: mark_to_drop(standard_metadata);
 # [mark_to_drop executed.]
 # [MethodCall]: forward_0/forward.apply();
-# [Table Branch: ingress.forward | Key(s): 0| Chosen action: NoAction]
-# [MethodCall]: NoAction_6/NoAction();
+# [Table Branch: ingress.forward | Key(s): 0| Chosen action: ingress._drop]
+# [MethodCall]: _drop_4/_drop();
+# [MethodCall]: mark_to_drop(standard_metadata);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egress.send_frame Choosing default action: NoAction_2/NoAction;]
-# [MethodCall]: NoAction_2/NoAction();
+# [Table Branch: egress.send_frame | Key(s): 511| Chosen action: egress.rewrite_mac]
+# [MethodCall]: rewrite_mac(|egress.send_frame_egress.rewrite_mac_arg_smac(bit<48>)|);
+# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -88,7 +91,10 @@ add "ingress.ecmp_group" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111
 add "ingress.ecmp_nhop" "meta.ingress_metadata.ecmp_offset":0x0000 "ingress._drop"()
 
 # Table ingress.forward
-add "ingress.forward" "meta.ingress_metadata.nhop_ipv4":0x00000000 "NoAction"()
+add "ingress.forward" "meta.ingress_metadata.nhop_ipv4":0x00000000 "ingress._drop"()
+
+# Table egress.send_frame
+add "egress.send_frame" "standard_metadata.egress_port":0x1FF "egress.rewrite_mac"("smac":0x000000000000)
 
 
 packet 0 000000000000000000000000080000000000000000000006FEFA0000000000FFFFFF0000000000000000000000000000000000000000

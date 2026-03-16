@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-04:14:09.117
+# Date generated: 2026-03-12-04:14:09.119
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -30,7 +30,7 @@
 # [MethodCall]: set_priority_3/set_priority();
 # [AssignmentStatement]: meta.priority = value;| Computed: meta.priority = 10;
 # [MethodCall]: ipv4_lpm.apply();
-# [Table Branch: MyIngress.ipv4_lpm | Key(s): |pktvar_14(bit<32>)|, |pktvar_11(bit<8>)|| Chosen action: MyIngress.drop]
+# [Table Branch: MyIngress.ipv4_lpm Choosing default action: drop_0/drop;]
 # [MethodCall]: drop_0/drop();
 # [MethodCall]: mark_to_drop(standard_metadata);
 # [mark_to_drop executed.]
@@ -76,9 +76,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 4; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table MyIngress.ipv4_lpm
-add "MyIngress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b11111111111111111111111111111111 "hdr.ipv4.protocol":0x00 "MyIngress.drop"()
 
 
 packet 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF00

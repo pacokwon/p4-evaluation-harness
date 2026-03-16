@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:10.729
+# Date generated: 2026-02-19-08:35:10.732
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -26,8 +26,8 @@
 # [If Statement]: h.h[h.i.index] Condition: |pktvar_9(bit<32>)| >= 1; Result: true
 # [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = 0;
 # [MethodCall]: t_0/t.apply();
-# [Table Branch: ingress.t | Key(s): 0| Chosen action: ingress.set_data]
-# [MethodCall]: set_data();
+# [Table Branch: ingress.t Choosing default action: NoAction_1/NoAction;]
+# [P4Testgen MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -52,9 +52,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table ingress.t
-add "ingress.t" "h.h[h.i.index].a":0x00000000 "ingress.set_data"()
 
 
 packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

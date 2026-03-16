@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:21.463
+# Date generated: 2026-02-19-08:34:21.477
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -13,7 +13,7 @@
 # [ExtractSuccess] hdr.ethernet@8 | Condition: |*packetLen_bits(bit<32>)| >= 120; | Extract Size: 112 -> hdr.ethernet.dst_addr = 0xFFFF_FFFF_FFFF | hdr.ethernet.src_addr = 0xFFFF_FFFF_FFFF | hdr.ethernet.ether_type = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(hdr.ipv4);
-# [ExtractSuccess] hdr.ipv4@120 | Condition: |*packetLen_bits(bit<32>)| >= 280; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.dscp = 0x00 | hdr.ipv4.ecn = 0x0 | hdr.ipv4.total_len = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.frag_offset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.proto = 0x11 | hdr.ipv4.checksum = 0xFEEE | hdr.ipv4.src_addr = 0xFFFF_FFFF | hdr.ipv4.dst_addr = 0xFFFF_FFFF
+# [ExtractSuccess] hdr.ipv4@120 | Condition: |*packetLen_bits(bit<32>)| >= 280; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.dscp = 0x00 | hdr.ipv4.ecn = 0x0 | hdr.ipv4.total_len = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.frag_offset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.proto = 0x11 | hdr.ipv4.checksum = 0xFFEE | hdr.ipv4.src_addr = 0xFFFF_FFFF | hdr.ipv4.dst_addr = 0xFFFF_FFFF
 # [State] parse_udp
 # [MethodCall]: packet.extract<udp_t>(hdr.udp);
 # [ExtractSuccess] hdr.udp@280 | Condition: |*packetLen_bits(bit<32>)| >= 344; | Extract Size: 64 -> hdr.udp.sport = 0x0000 | hdr.udp.dport = 0x2693 | hdr.udp.len = 0x0000 | hdr.udp.checksum = 0x0000
@@ -68,17 +68,14 @@
 # [MethodCall]: Acl_acls/acls.apply();
 # [Table Branch: PreQosPipe.Acl.acls | Key(s): |bmv2_ingress_port(bit<9>)|, 0, |pktvar_2(bit<48>)|, |pktvar_1(bit<48>)|, |pktvar_3(bit<16>)|, |pktvar_15(bit<32>)|, |pktvar_16(bit<32>)|, |pktvar_13(bit<8>)|, |pktvar_27(bit<16>)|, |pktvar_28(bit<16>)|| Chosen action: PreQosPipe.Acl.set_port]
 # [MethodCall]: Acl_set_port_0/set_port(|PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)|);
-# [AssignmentStatement]: std_meta.egress_spec = port;| Computed: std_meta.egress_spec = 255;
+# [AssignmentStatement]: std_meta.egress_spec = port;| Computed: std_meta.egress_spec = 511;
 # [P4Testgen MethodCall]: *.copy_out("PreQosPipe");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 255;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("PostQosPipe");
 # [Control PostQosPipe start]
 # [MethodCall]: post_qos_counter_0/post_qos_counter.count(local_meta.ctr_idx);
-# [If Statement]: std_meta.egress_port == 255 Condition: |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)| == 255; Result: true
-# [MethodCall]: hdr.packet_in.setValid();
-# [AssignmentStatement]: hdr.packet_in.ingress_port = local_meta.preserved_ingress_port;| Computed: hdr.packet_in.ingress_port = 255;
-# [Exit]
+# [If Statement]: std_meta.egress_port == 255 Condition: |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)| == 255; Result: false
 # [P4Testgen MethodCall]: *.copy_out("PostQosPipe");
 # [P4Testgen MethodCall]: *.copy_in("ComputeChecksumImpl");
 # [Control ComputeChecksumImpl start]
@@ -88,7 +85,7 @@
 # [P4Testgen MethodCall]: *.copy_in("DeparserImpl");
 # [Control DeparserImpl start]
 # [MethodCall]: packet.emit<packet_in_t>(hdr.packet_in);
-# [Emit]: {$headerValid:true;;    ingress_port:255;  _pad:0;  }
+# [Invalid emit: { ingress_port = TaintedExpression(bit<9>), _pad = TaintedExpression(bit<7>) }]
 # [MethodCall]: packet.emit<ethernet_t>(hdr.ethernet);
 # [Emit]: {$headerValid:true;;    dst_addr:281474976710655;  src_addr:281474976710655;  ether_type:2048;  }
 # [MethodCall]: packet.emit<ipv4_t>(hdr.ipv4);
@@ -116,13 +113,13 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)|; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)|; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table PreQosPipe.Acl.acls
-add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "PreQosPipe.Acl.set_port"("port":0x0FF)
+add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "PreQosPipe.Acl.set_port"("port":0x1FF)
 
 
 packet 255 00FFFFFFFFFFFFFFFFFFFFFFFF080000000000000000000011FFEEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 255 7F**FFFFFFFFFFFFFFFFFFFFFFFF08000000000000000000FF1100EEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

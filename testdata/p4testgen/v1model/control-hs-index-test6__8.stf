@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:10.737
+# Date generated: 2026-02-19-08:35:10.743
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -10,9 +10,7 @@
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[0]);
 # [ExtractSuccess] hdr.h[0]@112 | Condition: |*packetLen_bits(bit<32>)| >= 208; | Extract Size: 96 -> hdr.h[0].a = 0x0000_0000 | hdr.h[0].b = 0x0000_0000 | hdr.h[0].c = 0x0000_0000
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[1]);
-# [ExtractSuccess] hdr.h[1]@208 | Condition: |*packetLen_bits(bit<32>)| >= 304; | Extract Size: 96 -> hdr.h[1].a = 0x0000_0000 | hdr.h[1].b = 0x0000_0000 | hdr.h[1].c = 0x0000_0000
-# [MethodCall]: pkt.extract<h_index>(hdr.i);
-# [ExtractFailure] hdr.i@304 | Condition: !(|*packetLen_bits(bit<32>)| >= 336); | Extract Size: 32
+# [ExtractFailure] hdr.h[1]@208 | Condition: !(|*packetLen_bits(bit<32>)| >= 304); | Extract Size: 96
 # [P4Testgen AssignmentStatement]: sm.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -24,7 +22,7 @@
 # [Tainted If Statement]: 
 # [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = 0;
 # [Tainted If Statement]: 
-# [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = 0;
+# [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = "Taint";
 # [Tainted If Statement]: 
 # [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = 0;
 # [MethodCall]: t_0/t.apply();
@@ -46,7 +44,7 @@
 # [MethodCall]: pkt.emit<h_stack>(h.h[0]);
 # [Emit]: {$headerValid:true;;    a:0;  b:0;  c:0;  }
 # [MethodCall]: pkt.emit<h_stack>(h.h[1]);
-# [Emit]: {$headerValid:true;;    a:0;  b:0;  c:0;  }
+# [Invalid emit: { a = TaintedExpression(bit<32>), b = TaintedExpression(bit<32>), c = TaintedExpression(bit<32>) }]
 # [MethodCall]: pkt.emit<h_index>(h.i);
 # [Invalid emit: { index = TaintedExpression(bit<32>) }]
 # [P4Testgen MethodCall]: *.copy_out("deparser");
@@ -56,6 +54,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 000000000000000000000000000000000000000000000000000000000000000000000000000000$
+packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:48.691
+# Date generated: 2026-02-19-08:34:48.731
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("packet_parser");
@@ -46,7 +46,7 @@
 # [ExtractSuccess] headers.ethernet@16 | Condition: |*packetLen_bits(bit<32>)| >= 128; | Extract Size: 112 -> headers.ethernet.dst_addr = 0xFFFF_FFFF_FFFF | headers.ethernet.src_addr = 0xFFFF_FFFF_FFFF | headers.ethernet.ether_type = 0x0800
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(headers.ipv4);
-# [ExtractSuccess] headers.ipv4@128 | Condition: |*packetLen_bits(bit<32>)| >= 288; | Extract Size: 160 -> headers.ipv4.version = 0x0 | headers.ipv4.ihl = 0x0 | headers.ipv4.dscp = 0x3F | headers.ipv4.ecn = 0x3 | headers.ipv4.total_len = 0x0000 | headers.ipv4.identification = 0x0000 | headers.ipv4.reserved = 0x0 | headers.ipv4.do_not_fragment = 0x0 | headers.ipv4.more_fragments = 0x0 | headers.ipv4.frag_offset = 0x0000 | headers.ipv4.ttl = 0x00 | headers.ipv4.protocol = 0x04 | headers.ipv4.header_checksum = 0xFFFD | headers.ipv4.src_addr = 0xFFFF_FFFE | headers.ipv4.dst_addr = 0xFFFE_FFFF
+# [ExtractSuccess] headers.ipv4@128 | Condition: |*packetLen_bits(bit<32>)| >= 288; | Extract Size: 160 -> headers.ipv4.version = 0x0 | headers.ipv4.ihl = 0x0 | headers.ipv4.dscp = 0x3F | headers.ipv4.ecn = 0x3 | headers.ipv4.total_len = 0x0000 | headers.ipv4.identification = 0x0000 | headers.ipv4.reserved = 0x0 | headers.ipv4.do_not_fragment = 0x0 | headers.ipv4.more_fragments = 0x0 | headers.ipv4.frag_offset = 0x0000 | headers.ipv4.ttl = 0x00 | headers.ipv4.protocol = 0x04 | headers.ipv4.header_checksum = 0xFEFE | headers.ipv4.src_addr = 0xFFFF_FFFE | headers.ipv4.dst_addr = 0xFFFE_FFFF
 # [State] parse_ipv4_in_ip
 # [MethodCall]: packet.extract<ipv4_t>(headers.inner_ipv4);
 # [ExtractSuccess] headers.inner_ipv4@288 | Condition: |*packetLen_bits(bit<32>)| >= 448; | Extract Size: 160 -> headers.inner_ipv4.version = 0x0 | headers.inner_ipv4.ihl = 0x0 | headers.inner_ipv4.dscp = 0x00 | headers.inner_ipv4.ecn = 0x0 | headers.inner_ipv4.total_len = 0x0000 | headers.inner_ipv4.identification = 0x0000 | headers.inner_ipv4.reserved = 0x0 | headers.inner_ipv4.do_not_fragment = 0x0 | headers.inner_ipv4.more_fragments = 0x0 | headers.inner_ipv4.frag_offset = 0x0000 | headers.inner_ipv4.ttl = 0x00 | headers.inner_ipv4.protocol = 0x01 | headers.inner_ipv4.header_checksum = 0x0000 | headers.inner_ipv4.src_addr = 0x0000_0000 | headers.inner_ipv4.dst_addr = 0x0000_0000
@@ -185,12 +185,9 @@
 # [AssignmentStatement]: ip_protocol = headers.ipv4.protocol;| Computed: acl_egress_ip_protocol/ip_protocol = 4;
 # [AssignmentStatement]: headers.ipv4.isValid() || headers.ipv6.isValid(): optional @id(5) @name("is_ip") @sai_field(SAI_ACL_TABLE_ATTR_FIELD_ACL_IP_TYPE / IP);| Computed: key_18 = true;
 # [MethodCall]: acl_egress_acl_egress_table/acl_egress_table.apply();
-# [Table Branch: egress.acl_egress.acl_egress_table | Key(s): |pktvar_17(bit<8>)|, 511, (bit<1>)true;, (bit<1>)true;, (bit<1>)false;, |pktvar_4(bit<48>)|| Chosen action: acl_drop]
-# [MethodCall]: acl_drop_4/acl_drop();
-# [AssignmentStatement]: @proto_id(1) acl_drop(local_metadata);| Computed: local_metadata.acl_drop = true;
-# [P4Testgen If Statement]: Condition: true; Result: true
-# [MethodCall]: mark_to_drop(standard_metadata);
-# [mark_to_drop executed.]
+# [Table Branch: egress.acl_egress.acl_egress_table Choosing default action: NoAction_19/NoAction;]
+# [MethodCall]: NoAction_19/NoAction();
+# [If Statement]: false Condition: false; Result: false
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("compute_ipv4_checksum");
 # [Control compute_ipv4_checksum start]
@@ -272,9 +269,6 @@ add "ingress.acl_ingress.acl_ingress_security_table" 1 "dst_ip":0b**************
 
 # Table ingress.ingress_cloning.ingress_clone_table
 add "ingress.ingress_cloning.ingress_clone_table" 1 "marked_to_copy":0x1 "marked_to_mirror":0x0 "mirror_egress_port":0b********* "ingress.ingress_cloning.ingress_clone"("clone_session":0x00000000)
-
-# Table egress.acl_egress.acl_egress_table
-add "egress.acl_egress.acl_egress_table" 1 "ip_protocol":0b******** "is_ip":0b* "is_ipv4":0b* "is_ipv6":0b* "out_port":0b********* "src_mac":0b************************************************ "acl_drop"()
 
 
 packet 510 0040FFFFFFFFFFFFFFFFFFFFFFFF080000FF0000000000000004FEFEFFFFFFFEFFFEFFFF0000000000000000000100000000000000000000FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

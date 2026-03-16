@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-07:08:19.136
+# Date generated: 2026-03-12-07:08:19.137
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("prs");
@@ -20,7 +20,7 @@
 # [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [MethodCall]: Check_src_ip_0/Check_src_ip.apply();
-# [Table Branch: pipe.Check_src_ip | Key(s): |pktvar_13(bit<32>)|| Chosen action: NoAction]
+# [Table Branch: pipe.Check_src_ip Choosing default action: NoAction_1/NoAction;]
 # [MethodCall]: NoAction_1/NoAction();
 # [SwitchCase]: NoAction
 # [P4Testgen MethodCall]: *.copy_out("pipe");

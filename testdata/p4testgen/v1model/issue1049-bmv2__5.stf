@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:29.612
+# Date generated: 2026-03-06-08:39:29.609
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -24,8 +24,8 @@
 # [MethodCall]: hash<bit<16>, bit<16>, tuple_0, bit<32>>(meta.mystruct1.hash1, 2, 0, {  f0:hdr.ipv4.srcAddr;  f1:hdr.ipv4.dstAddr;  f2:hdr.ipv4.protocol; }, 65535);
 # [AssignmentStatement]: meta.mystruct1.hash_drop = (meta.mystruct1.hash1 < 0x8000);| Computed: meta.mystruct1.hash_drop = true;
 # [MethodCall]: debug_table_0/debug_table.apply();
-# [Table Branch: cIngress.debug_table Choosing default action: NoAction_1/NoAction;]
-# [P4Testgen MethodCall]: NoAction_1/NoAction();
+# [Table Branch: cIngress.debug_table | Key(s): Concolic_*method_hash_346236_0({ meta.mystruct1.hash1; 2 0 {    f0:|pktvar_13(bit<32>)|;    f1:|pktvar_14(bit<32>)|;    f2:|pktvar_11(bit<8>)|; } 65535 }), (bit<1>)(Concolic_*method_hash_346236_0({ meta.mystruct1.hash1 2 0 {    f0:|pktvar_13(bit<32>)|;    f1:|pktvar_14(bit<32>)|;    f2:|pktvar_11(bit<8>)|; } 65535 }) < 32768);| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
 # [If Statement]: meta.mystruct1.hash1 < 0x8000 Condition: Concolic_*method_hash_346236_0({ meta.mystruct1.hash1 2 0 {    f0:|pktvar_13(bit<32>)|;    f1:|pktvar_14(bit<32>)|;    f2:|pktvar_11(bit<8>)|; } 65535 }) < 32768; Result: true
 # [AssignmentStatement]: hdr.ethernet.dstAddr = meta.mystruct1.hash1 ++ 7w0 ++ (bit<1>) meta.mystruct1.hash_drop ++ 8w0 ++ 16w0xdead;| Computed: hdr.ethernet.dstAddr = 16834221;
 # [P4Testgen MethodCall]: *.copy_out("cIngress");
@@ -48,6 +48,9 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
+
+# Table cIngress.debug_table
+add "cIngress.debug_table" "meta.mystruct1.hash1":0x0000 "meta.mystruct1.hash_drop":0x1 "NoAction"()
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

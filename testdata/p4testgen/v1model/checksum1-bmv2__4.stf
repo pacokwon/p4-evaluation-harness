@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:35.283
+# Date generated: 2026-03-06-08:39:35.286
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -15,7 +15,7 @@
 # [P4Testgen AssignmentStatement]: tmp.version = 4;
 # [P4Testgen AssignmentStatement]: tmp.ihl = 7;
 # [MethodCall]: pkt.extract<ipv4_t>(hdr.ipv4, (bit<32>)(((bit<9>)tmp_4[3:0] << 2) + 492 << 3));
-# [ExtractSuccess] hdr.ipv4@112 | Condition: (8 > 112 + ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160) || |*packetLen_bits(bit<32>)| >= 112 + ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160) - 8) && ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) <= 320 && (bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) % 8 == 0) && 224 == (bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160; | Extract Size: 160 -> hdr.ipv4.version = 0x4 | hdr.ipv4.ihl = 0x7 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x06 | hdr.ipv4.hdrChecksum = 0x0000 | hdr.ipv4.srcAddr = 0x0000_0000 | hdr.ipv4.dstAddr = 0x0000_0000 | hdr.ipv4.options = 0x0000_0000_0000_0000
+# [ExtractSuccess] hdr.ipv4@112 | Condition: (8 > 112 + ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160) || |*packetLen_bits(bit<32>)| >= 112 + ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160) - 8) && ((bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) <= 320 && (bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) % 8 == 0) && 224 == (bit<32>)(((bit<9>)|pktvar_3(bit<8>)|[3:0] << 2) + 492 << 3) + 160; | Extract Size: 160 -> hdr.ipv4.version = 0x4 | hdr.ipv4.ihl = 0x7 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x06 | hdr.ipv4.hdrChecksum = 0x4102 | hdr.ipv4.srcAddr = 0x0000_0000 | hdr.ipv4.dstAddr = 0x0000_0000 | hdr.ipv4.options = 0x0000_0000_0000_0000
 # [MethodCall]: verify(hdr.ipv4.version == 4, 8);
 # [MethodCall]: verify(hdr.ipv4.ihl >= 5, 7);
 # [State] parse_tcp
@@ -31,7 +31,7 @@
 # [P4Testgen MethodCall]: *.copy_in("cIngress");
 # [Control cIngress start]
 # [MethodCall]: guh_0/guh.apply();
-# [Table Branch: cIngress.guh | Key(s): |pktvar_16(bit<16>)|| Chosen action: cIngress.foo]
+# [Table Branch: cIngress.guh Choosing default action: foo;]
 # [MethodCall]: foo();
 # [AssignmentStatement]: hdr.tcp.srcPort = hdr.tcp.srcPort + 1;| Computed: hdr.tcp.srcPort = 1;
 # [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl - 1;| Computed: hdr.ipv4.ttl = 255;
@@ -59,9 +59,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table cIngress.guh
-add "cIngress.guh" "hdr.tcp.dstPort":0x0000 "cIngress.foo"()
 
 
 packet 0 00000000000000000000000008004700000000000000000641020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

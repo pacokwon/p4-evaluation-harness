@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:10.714
+# Date generated: 2026-02-19-08:35:10.719
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -12,7 +12,7 @@
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[1]);
 # [ExtractSuccess] hdr.h[1]@208 | Condition: |*packetLen_bits(bit<32>)| >= 304; | Extract Size: 96 -> hdr.h[1].a = 0x0000_0000 | hdr.h[1].b = 0x0000_0000 | hdr.h[1].c = 0x0000_0000
 # [MethodCall]: pkt.extract<h_index>(hdr.i);
-# [ExtractSuccess] hdr.i@304 | Condition: |*packetLen_bits(bit<32>)| >= 336; | Extract Size: 32 -> hdr.i.index = 0x0000_0000
+# [ExtractSuccess] hdr.i@304 | Condition: |*packetLen_bits(bit<32>)| >= 336; | Extract Size: 32 -> hdr.i.index = 0x0000_0001
 # [State] accept
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
@@ -20,12 +20,13 @@
 # [P4Testgen MethodCall]: *.copy_out("vrfy");
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
-# [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: hsiVar = 0;
-# [If Statement]: h.h[h.i.index] Condition: |pktvar_9(bit<32>)| == 0; Result: true
+# [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: hsiVar = 1;
+# [If Statement]: h.h[h.i.index] Condition: |pktvar_9(bit<32>)| == 0; Result: false
+# [If Statement]: h.h[h.i.index] Condition: |pktvar_9(bit<32>)| == 1; Result: true
 # [AssignmentStatement]: key = { h.h[h.i.index].a : exact;}| Computed: key_0 = 0;
 # [MethodCall]: t_0/t.apply();
-# [Table Branch: ingress.t Choosing default action: NoAction_1/NoAction;]
-# [P4Testgen MethodCall]: NoAction_1/NoAction();
+# [Table Branch: ingress.t | Key(s): |pktvar_6(bit<32>)|| Chosen action: ingress.set_data]
+# [MethodCall]: set_data();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -44,14 +45,17 @@
 # [MethodCall]: pkt.emit<h_stack>(h.h[1]);
 # [Emit]: {$headerValid:true;;    a:0;  b:0;  c:0;  }
 # [MethodCall]: pkt.emit<h_index>(h.i);
-# [Emit]: {$headerValid:true;;    index:0;  }
+# [Emit]: {$headerValid:true;;    index:1;  }
 # [P4Testgen MethodCall]: *.copy_out("deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
+# Table ingress.t
+add "ingress.t" "h.h[h.i.index].a":0x00000000 "ingress.set_data"()
 
-packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+
+packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

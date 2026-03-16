@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:19.186
+# Date generated: 2026-02-19-08:34:19.191
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -37,9 +37,9 @@
 # [MethodCall]: nexthop_0/nexthop.apply();
 # [Table Branch: ingress.nexthop | Key(s): 0| Chosen action: ingress.set_egress_details]
 # [MethodCall]: set_egress_details(|ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|);
-# [AssignmentStatement]: standard_metadata.egress_spec = egress_spec;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = egress_spec;| Computed: standard_metadata.egress_spec = 0;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -60,9 +60,8 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |ingress.nexthop_ingress.set_egress_details_arg_egress_spec_1(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.port_mapping
 add "ingress.port_mapping" "standard_metadata.ingress_port":0x000 "ingress.set_bd"("bd":0x0000)
@@ -77,8 +76,9 @@ add "ingress.ipv4_fib" "hdr.ipv4.dstAddr":0xFFFFFFFF "meta.ingress_metadata.vrf"
 add "ingress.ipv4_fib_lpm" 1 "hdr.ipv4.dstAddr":0b11111111111111111111111111111111 "meta.ingress_metadata.vrf":0x000 "ingress.on_miss"()
 
 # Table ingress.nexthop
-add "ingress.nexthop" "meta.ingress_metadata.nexthop_index":0x0000 "ingress.set_egress_details"("egress_spec":0x1FF)
+add "ingress.nexthop" "meta.ingress_metadata.nexthop_index":0x0000 "ingress.set_egress_details"("egress_spec":0x000)
 
 
 packet 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 000000000000000000000000080000000000000000000000000000000000FFFFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:21.787
+# Date generated: 2026-03-06-08:39:21.789
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -11,8 +11,8 @@
 # [MethodCall]: packet.extract<O2>(hdr.u[0].short);
 # [ExtractSuccess] hdr.u[32w0].short@8 | Condition: |*packetLen_bits(bit<32>)| >= 24; | Extract Size: 16 -> hdr.u[32w0].short.data = 0x0000
 # [MethodCall]: packet.extract<O1>(hdr.u[1].byte);
-# [ExtractSuccess] hdr.u[32w1].byte@24 | Condition: |*packetLen_bits(bit<32>)| >= 32; | Extract Size: 8 -> hdr.u[32w1].byte.data = 0x00
-# [State] accept
+# [ExtractFailure] hdr.u[32w1].byte@24 | Condition: !(|*packetLen_bits(bit<32>)| >= 32); | Extract Size: 8
+# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("ParserImpl");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -20,16 +20,15 @@
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
 # [AssignmentStatement]: hdr.u[0].byte.isValid(): exact;| Computed: key_0 = false;
-# [AssignmentStatement]: hdr.u[1].byte.isValid(): exact;| Computed: key_2 = true;
+# [AssignmentStatement]: hdr.u[1].byte.isValid(): exact;| Computed: key_2 = false;
 # [MethodCall]: debug_hdr_0/debug_hdr.apply();
-# [Table Branch: ingress.debug_hdr Choosing default action: NoAction_1/NoAction;]
+# [Table Branch: ingress.debug_hdr | Key(s): |pktvar_0(bit<8>)|, (bit<1>)false;, (bit<1>)true;, (bit<1>)false;, (bit<1>)false;| Chosen action: NoAction]
 # [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [AssignmentStatement]: hdr.u[0].short.data = 0xFFFF;| Computed: hdr.u[0].short.data = 65535;
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen If Statement]: Condition: false; Result: false
-# [P4Testgen If Statement]: Condition: true; Result: true
-# [AssignmentStatement]: hdr.u[1].byte.data = 0xAA;| Computed: hdr.u[1].byte.data = 170;
+# [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen MethodCall]: *.copy_out("ingress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -48,7 +47,7 @@
 # [MethodCall]: packet.emit<O2>(hdr.u[0].short);
 # [Emit]: {$headerValid:true;;    data:65535;  }
 # [MethodCall]: packet.emit<O1>(hdr.u[1].byte);
-# [Emit]: {$headerValid:true;;    data:170;  }
+# [Invalid emit: { data = TaintedExpression(bit<8>) }]
 # [MethodCall]: packet.emit<O2>(hdr.u[1].short);
 # [Invalid emit: { data = TaintedExpression(bit<16>) }]
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
@@ -57,7 +56,10 @@
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
+# Table ingress.debug_hdr
+add "ingress.debug_hdr" "hdr.base.t":0x02 "hdr.u[0].byte.$valid$":0x0 "hdr.u[0].short.$valid$":0x1 "hdr.u[1].byte.$valid$":0x0 "hdr.u[1].short.$valid$":0x0 "NoAction"()
 
-packet 0 02000000000000
-expect 0 02FFFFAA000000$
+
+packet 0 020000
+expect 0 02FFFF$
 

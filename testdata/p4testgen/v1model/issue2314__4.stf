@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:15.134
+# Date generated: 2026-02-19-08:34:15.137
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -17,9 +17,8 @@
 # [State] start_0
 # [State] h0
 # [MethodCall]: b.extract<H>(hdr.h);
-# [ExtractSuccess] hdr.h@128 | Condition: |*packetLen_bits(bit<32>)| >= 136; | Extract Size: 8 -> hdr.h.a = 0x00
-# [State] start
-# [State] accept
+# [ExtractFailure] hdr.h@128 | Condition: !(|*packetLen_bits(bit<32>)| >= 136); | Extract Size: 8
+# [P4Testgen AssignmentStatement]: std.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("MyVerifyChecksum");
 # [Control MyVerifyChecksum start]
@@ -40,7 +39,7 @@
 # [MethodCall]: b.emit<ethernet_t>(hdr.ether);
 # [Emit]: {$headerValid:true;;    dstAddr:0;  srcAddr:0;  etherType:33024;  }
 # [MethodCall]: b.emit<H>(hdr.h);
-# [Emit]: {$headerValid:true;;    a:0;  }
+# [Invalid emit: { a = TaintedExpression(bit<8>) }]
 # [MethodCall]: b.emit<I>(hdr.i);
 # [Emit]: {$headerValid:true;;    etherType:2048;  }
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
@@ -50,6 +49,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000810008000000
-expect 0 000000000000000000000000810000080000$
+packet 0 00000000000000000000000081000800
+expect 0 00000000000000000000000081000800$
 

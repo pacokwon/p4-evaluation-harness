@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-20-02:10:40.046
+# Date generated: 2026-02-20-02:10:40.052
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -12,10 +12,7 @@
 # [ExtractSuccess] hdr.srcRoutes[32w0]@112 | Condition: |*packetLen_bits(bit<32>)| >= 128; | Extract Size: 16 -> hdr.srcRoutes[32w0].bos = 0x0 | hdr.srcRoutes[32w0].port = 0x0000
 # [State] parse_srcRouting1
 # [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes[1]);
-# [ExtractSuccess] hdr.srcRoutes[32w1]@128 | Condition: |*packetLen_bits(bit<32>)| >= 144; | Extract Size: 16 -> hdr.srcRoutes[32w1].bos = 0x0 | hdr.srcRoutes[32w1].port = 0x0000
-# [State] parse_srcRouting2
-# [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes[2]);
-# [ExtractFailure] hdr.srcRoutes[32w2]@144 | Condition: !(|*packetLen_bits(bit<32>)| >= 160); | Extract Size: 16
+# [ExtractFailure] hdr.srcRoutes[32w1]@128 | Condition: !(|*packetLen_bits(bit<32>)| >= 144); | Extract Size: 16
 # [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
@@ -41,6 +38,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000123400000000
-expect 0 $
+packet 0 0000000000000000000000001234000000
+expect 0 00$
 

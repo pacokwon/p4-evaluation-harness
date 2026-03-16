@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:39.671
+# Date generated: 2026-02-19-08:34:39.709
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("dash_parser");
@@ -766,8 +766,8 @@
 # [If Statement]: meta.direction == dash_direction_t.OUTBOUND Condition: 1 == 1; Result: true
 # [MethodCall]: metering_update_stage_meter_bucket_outbound/meter_bucket_outbound.count(meta.meter_bucket_index);
 # [MethodCall]: metering_update_stage_eni_meter/eni_meter.apply();
-# [Table Branch: dash_ingress.metering_update_stage.eni_meter | Key(s): |dash_ingress.eni_lookup_stage.eni_ether_address_map_dash_ingress.eni_lookup_stage.set_eni_arg_eni_id_1(bit<16>)|, 1, (bit<1>)true;| Chosen action: NoAction]
-# [MethodCall]: NoAction_8/NoAction();
+# [Table Branch: dash_ingress.metering_update_stage.eni_meter Choosing default action: NoAction_8/NoAction;]
+# [P4Testgen MethodCall]: NoAction_8/NoAction();
 # [If Statement]: true Condition: true; Result: true
 # [MethodCall]: drop_action();
 # [MethodCall]: mark_to_drop(standard_metadata);
@@ -855,9 +855,6 @@ add "dash_ingress.metering_update_stage.meter_policy" "meta.meter_policy_id":0x0
 
 # Table dash_ingress.metering_update_stage.meter_rule
 add "dash_ingress.metering_update_stage.meter_rule" 1 "hdr.u0_ipv4.dst_addr":0b******************************** "meta.meter_policy_id":0x0000 "dash_ingress.metering_update_stage.set_policy_meter_class"("meter_class":0x0000)
-
-# Table dash_ingress.metering_update_stage.eni_meter
-add "dash_ingress.metering_update_stage.eni_meter" "meta.direction":0x0001 "meta.dropped":0x1 "meta.eni_id":0x0000 "NoAction"()
 
 
 packet 0 00000000000000000000000008004500000000000000001100000000000000000000000012B50000000000000000000000000000000000000000000000000800450000000000000000110000FFFFFFFF00000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

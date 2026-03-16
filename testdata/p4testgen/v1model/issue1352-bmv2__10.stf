@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:30.565
+# Date generated: 2026-02-19-08:35:30.570
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -21,7 +21,7 @@
 # [Table Branch: MyIngress.ipv4_lpm | Key(s): |pktvar_14(bit<32>)|| Chosen action: MyIngress.set_nhop]
 # [MethodCall]: set_nhop(|MyIngress.ipv4_lpm_MyIngress.set_nhop_arg_dstAddr_3(bit<32>)|, |MyIngress.ipv4_lpm_MyIngress.set_nhop_arg_port(bit<9>)|);
 # [AssignmentStatement]: hdr.ipv4.dstAddr = dstAddr;| Computed: hdr.ipv4.dstAddr = 0;
-# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = port;| Computed: standard_metadata.egress_spec = 383;
 # [MethodCall]: forward_0/forward.apply();
 # [Table Branch: MyIngress.forward | Key(s): |MyIngress.ipv4_lpm_MyIngress.set_nhop_arg_dstAddr_3(bit<32>)|| Chosen action: NoAction]
 # [MethodCall]: NoAction_2/NoAction();
@@ -29,7 +29,7 @@
 # [AssignmentStatement]: meta.test_digest.in_mac_srcAddr = hdr.ethernet.srcAddr;| Computed: meta.test_digest.in_mac_srcAddr = 0;
 # [MethodCall]: digest<test_digest_t>(1, meta.test_digest);
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 383;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("MyEgress");
 # [Control MyEgress start]
@@ -50,19 +50,19 @@
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |MyIngress.ipv4_lpm_MyIngress.set_nhop_arg_port(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |MyIngress.ipv4_lpm_MyIngress.set_nhop_arg_port(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table MyIngress.ipv4_lpm
-add "MyIngress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "MyIngress.set_nhop"("dstAddr":0x00000000,"port":0x1FF)
+add "MyIngress.ipv4_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "MyIngress.set_nhop"("dstAddr":0x00000000,"port":0x17F)
 
 # Table MyIngress.forward
 add "MyIngress.forward" "hdr.ipv4.dstAddr":0x00000000 "NoAction"()
 
 # Table MyEgress.send_frame
-add "MyEgress.send_frame" "standard_metadata.egress_port":0x1FF "NoAction"()
+add "MyEgress.send_frame" "standard_metadata.egress_port":0x17F "NoAction"()
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 383 000000000000000000000000080000000000000000000000FFFF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

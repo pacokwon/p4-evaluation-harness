@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-20-02:10:40.504
+# Date generated: 2026-02-20-02:10:40.523
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -17,11 +17,15 @@
 # [ExtractSuccess] hdr.srcRoutes[32w1]@129 | Condition: |*packetLen_bits(bit<32>)| >= 146; | Extract Size: 17 -> hdr.srcRoutes[32w1].bos = 0x0 | hdr.srcRoutes[32w1].port = 0x0000
 # [State] parse_srcRouting1
 # [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes[2]);
-# [ExtractSuccess] hdr.srcRoutes[32w2]@146 | Condition: |*packetLen_bits(bit<32>)| >= 163; | Extract Size: 17 -> hdr.srcRoutes[32w2].bos = 0x1 | hdr.srcRoutes[32w2].port = 0x0000
+# [ExtractSuccess] hdr.srcRoutes[32w2]@146 | Condition: |*packetLen_bits(bit<32>)| >= 163; | Extract Size: 17 -> hdr.srcRoutes[32w2].bos = 0x2 | hdr.srcRoutes[32w2].port = 0x0000
+# [State] callMidle1
+# [AssignmentStatement]: hdr.index = hdr.index + 1;| Computed: hdr.index = 2;
+# [MethodCall]: packet.extract<srcRoute_t>(hdr.srcRoutes[3]);
+# [ExtractSuccess] hdr.srcRoutes[32w3]@163 | Condition: |*packetLen_bits(bit<32>)| >= 180; | Extract Size: 17 -> hdr.srcRoutes[32w3].bos = 0x1 | hdr.srcRoutes[32w3].port = 0x0000
 # [State] parse_ipv4
 # [MethodCall]: packet.extract<ipv4_t>(hdr.ipv4);
-# [ExtractFailure] hdr.ipv4@163 | Condition: !(|*packetLen_bits(bit<32>)| >= 323); | Extract Size: 160
-# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
+# [ExtractSuccess] hdr.ipv4@180 | Condition: |*packetLen_bits(bit<32>)| >= 340; | Extract Size: 160 -> hdr.ipv4.version = 0x0 | hdr.ipv4.ihl = 0x0 | hdr.ipv4.diffserv = 0x00 | hdr.ipv4.totalLen = 0x0000 | hdr.ipv4.identification = 0x0000 | hdr.ipv4.flags = 0x0 | hdr.ipv4.fragOffset = 0x0000 | hdr.ipv4.ttl = 0x00 | hdr.ipv4.protocol = 0x00 | hdr.ipv4.hdrChecksum = 0x0000 | hdr.ipv4.srcAddr = 0x0000_0000 | hdr.ipv4.dstAddr = 0x0000_0000
+# [State] accept
 # [P4Testgen MethodCall]: *.copy_out("MyParser");
 # [P4Testgen MethodCall]: *.copy_in("verifyChecksum");
 # [Control verifyChecksum start]
@@ -46,6 +50,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000001234800000001000000000000000000000000000000000
-expect 0 *00000000000000000000000000000$
+packet 0 00000000000000000000000012348000000020000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

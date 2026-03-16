@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:21.335
+# Date generated: 2026-02-19-08:34:21.354
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -66,16 +66,15 @@
 # [mark_to_drop executed.]
 # [If Statement]: hdr.ethernet.isValid() && hdr.ipv4.isValid() Condition: true && true; Result: true
 # [MethodCall]: Acl_acls/acls.apply();
-# [Table Branch: PreQosPipe.Acl.acls | Key(s): |bmv2_ingress_port(bit<9>)|, 0, |pktvar_2(bit<48>)|, |pktvar_1(bit<48>)|, |pktvar_3(bit<16>)|, |pktvar_15(bit<32>)|, |pktvar_16(bit<32>)|, |pktvar_13(bit<8>)|, |pktvar_27(bit<16>)|, |pktvar_28(bit<16>)|| Chosen action: PreQosPipe.Acl.set_port]
-# [MethodCall]: Acl_set_port_0/set_port(|PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)|);
-# [AssignmentStatement]: std_meta.egress_spec = port;| Computed: std_meta.egress_spec = 479;
+# [Table Branch: PreQosPipe.Acl.acls | Key(s): |bmv2_ingress_port(bit<9>)|, 0, |pktvar_2(bit<48>)|, |pktvar_1(bit<48>)|, |pktvar_3(bit<16>)|, |pktvar_15(bit<32>)|, |pktvar_16(bit<32>)|, |pktvar_13(bit<8>)|, |pktvar_27(bit<16>)|, |pktvar_28(bit<16>)|| Chosen action: NoAction]
+# [MethodCall]: NoAction_4/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("PreQosPipe");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 479;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("PostQosPipe");
 # [Control PostQosPipe start]
 # [MethodCall]: post_qos_counter_0/post_qos_counter.count(local_meta.ctr_idx);
-# [If Statement]: std_meta.egress_port == 255 Condition: |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)| == 255; Result: false
+# [If Statement]: std_meta.egress_port == 255 Condition: 511 == 255; Result: false
 # [P4Testgen MethodCall]: *.copy_out("PostQosPipe");
 # [P4Testgen MethodCall]: *.copy_in("ComputeChecksumImpl");
 # [Control ComputeChecksumImpl start]
@@ -113,13 +112,13 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |PreQosPipe.Acl.acls_PreQosPipe.Acl.set_port_arg_port(bit<9>)|; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == 511; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table PreQosPipe.Acl.acls
-add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "PreQosPipe.Acl.set_port"("port":0x1DF)
+add "PreQosPipe.Acl.acls" 1 "eth_dst":0b************************************************ "eth_src":0b************************************************ "eth_type":0b**************** "inport":0b********* "ipv4_dst":0b******************************** "ipv4_proto":0b******** "ipv4_src":0b******************************** "l4_dport":0b**************** "l4_sport":0b**************** "src_iface":0b******** "NoAction"()
 
 
 packet 255 00FFFFFFFFFFFFFFFFFFFFFFFF080000000000000000000111FEEEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 479 FFFFFFFFFFFFFFFFFFFFFFFF080000000000000000000011FFEEFFFFFFFFFFFFFFFF000026930000000000000000000000000011FFEE0000000000000000FFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:48.498
+# Date generated: 2026-02-19-08:34:48.507
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("packet_parser");
@@ -40,7 +40,7 @@
 # [State] start_join
 # [State] parse_packet_out_header
 # [MethodCall]: packet.extract<packet_out_header_t>(headers.packet_out_header);
-# [ExtractSuccess] headers.packet_out_header@0 | Condition: |*packetLen_bits(bit<32>)| >= 16; | Extract Size: 16 -> headers.packet_out_header.egress_port = 0x1FF | headers.packet_out_header.submit_to_ingress = 0x0 | headers.packet_out_header.unused_pad = 0x00
+# [ExtractSuccess] headers.packet_out_header@0 | Condition: |*packetLen_bits(bit<32>)| >= 16; | Extract Size: 16 -> headers.packet_out_header.egress_port = 0x000 | headers.packet_out_header.submit_to_ingress = 0x0 | headers.packet_out_header.unused_pad = 0x00
 # [State] parse_ethernet
 # [MethodCall]: packet.extract<ethernet_t>(headers.ethernet);
 # [ExtractSuccess] headers.ethernet@16 | Condition: |*packetLen_bits(bit<32>)| >= 128; | Extract Size: 112 -> headers.ethernet.dst_addr = 0x0000_0000_0000 | headers.ethernet.src_addr = 0x0000_0000_0000 | headers.ethernet.ether_type = 0x0800
@@ -62,12 +62,12 @@
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
 # [If Statement]: headers.packet_out_header.isValid() && headers.packet_out_header.submit_to_ingress == 0 Condition: true && |pktvar_1(bit<1>)| == 0; Result: true
-# [AssignmentStatement]: standard_metadata.egress_spec = (bit<9>)headers.packet_out_header.egress_port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = (bit<9>)headers.packet_out_header.egress_port;| Computed: standard_metadata.egress_spec = 0;
 # [AssignmentStatement]: local_metadata.bypass_ingress = true;| Computed: local_metadata.bypass_ingress = true;
 # [MethodCall]: headers.packet_out_header.setInvalid();
 # [If Statement]: true Condition: true; Result: true
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -139,10 +139,10 @@
 # [P4Testgen MethodCall]: *.copy_out("packet_deparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == (bit<9>)|pktvar_0(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == (bit<9>)|pktvar_0(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 510 FF80000000000000000000000000080000000000000000000104FEFB00000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+packet 510 0000000000000000000000000000080000000000000000000104FEFB00000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 000000000000000000000000080000000000000000000104FEFB00000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:10.024
+# Date generated: 2026-02-19-08:35:10.027
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -26,9 +26,9 @@
 # [MethodCall]: v4_networks_0/v4_networks.apply();
 # [Table Branch: MyIngress.v4_networks | Key(s): |pktvar_15(bit<32>)|| Chosen action: MyIngress.set_egress_port]
 # [MethodCall]: set_egress_port_1/set_egress_port(|MyIngress.v4_networks_MyIngress.set_egress_port_arg_out_port_1(bit<9>)|);
-# [AssignmentStatement]: standard_metadata.egress_spec = out_port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = out_port;| Computed: standard_metadata.egress_spec = 0;
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("MyEgress");
 # [Control MyEgress start]
@@ -59,13 +59,13 @@
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |MyIngress.v4_networks_MyIngress.set_egress_port_arg_out_port_1(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |MyIngress.v4_networks_MyIngress.set_egress_port_arg_out_port_1(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table MyIngress.v4_networks
-add "MyIngress.v4_networks" 1 "hdr.ipv4.dst_addr":0b00000000111111111111111111111111 "MyIngress.set_egress_port"("out_port":0x1FF)
+add "MyIngress.v4_networks" 1 "hdr.ipv4.dst_addr":0b00000000111111111111111111111111 "MyIngress.set_egress_port"("out_port":0x000)
 
 
 packet 0 00000000000000000000000008000000000000000000000600000000000000FFFFFF00000000000000000000000000000000000000
+expect 0 00000000000000000000000008000000000000000000000600000000000000FFFFFF00000000000000000000000000000000000000$
 

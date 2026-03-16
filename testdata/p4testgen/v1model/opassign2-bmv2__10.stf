@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:22.581
+# Date generated: 2026-03-06-08:39:22.583
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -20,9 +20,7 @@
 # [MethodCall]: b.extract<word_t>(hdr.rest[5]);
 # [ExtractSuccess] hdr.rest[32w5]@288 | Condition: |*packetLen_bits(bit<32>)| >= 320; | Extract Size: 32 -> hdr.rest[32w5].x = 0x0000_0000
 # [MethodCall]: b.extract<word_t>(hdr.rest[6]);
-# [ExtractSuccess] hdr.rest[32w6]@320 | Condition: |*packetLen_bits(bit<32>)| >= 352; | Extract Size: 32 -> hdr.rest[32w6].x = 0x0000_0000
-# [MethodCall]: b.extract<word_t>(hdr.rest[7]);
-# [ExtractFailure] hdr.rest[32w7]@352 | Condition: !(|*packetLen_bits(bit<32>)| >= 384); | Extract Size: 32
+# [ExtractFailure] hdr.rest[32w6]@320 | Condition: !(|*packetLen_bits(bit<32>)| >= 352); | Extract Size: 32
 # [P4Testgen AssignmentStatement]: stdmeta.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vc");
@@ -57,7 +55,7 @@
 # [MethodCall]: packet.emit<word_t>(hdr.rest[5]);
 # [Emit]: {$headerValid:true;;    x:0;  }
 # [MethodCall]: packet.emit<word_t>(hdr.rest[6]);
-# [Emit]: {$headerValid:true;;    x:0;  }
+# [Invalid emit: { x = TaintedExpression(bit<32>) }]
 # [MethodCall]: packet.emit<word_t>(hdr.rest[7]);
 # [Invalid emit: { x = TaintedExpression(bit<32>) }]
 # [P4Testgen MethodCall]: *.copy_out("deparser");
@@ -67,6 +65,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-expect 0 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
+packet 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

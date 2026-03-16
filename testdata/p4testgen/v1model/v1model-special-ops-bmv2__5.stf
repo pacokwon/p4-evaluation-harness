@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:29.058
+# Date generated: 2026-03-06-08:39:29.060
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -30,10 +30,10 @@
 # [MethodCall]: set_bd_dmac_intf(|ingress.mac_da_ingress.set_bd_dmac_intf_arg_bd(bit<24>)|, |ingress.mac_da_ingress.set_bd_dmac_intf_arg_dmac(bit<48>)|, |ingress.mac_da_ingress.set_bd_dmac_intf_arg_intf(bit<9>)|);
 # [AssignmentStatement]: meta.fwd.out_bd = bd;| Computed: meta.fwd.out_bd = 0;
 # [AssignmentStatement]: hdr.ethernet.dstAddr = dmac;| Computed: hdr.ethernet.dstAddr = 0;
-# [AssignmentStatement]: standard_metadata.egress_spec = intf;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = intf;| Computed: standard_metadata.egress_spec = 0;
 # [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl - 1;| Computed: hdr.ipv4.ttl = 255;
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -61,19 +61,21 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |ingress.mac_da_ingress.set_bd_dmac_intf_arg_intf(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |ingress.mac_da_ingress.set_bd_dmac_intf_arg_intf(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 # Table ingress.ipv4_da_lpm
 add "ingress.ipv4_da_lpm" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "ingress.set_l2ptr"("l2ptr":0x01000000)
 
 # Table ingress.mac_da
-add "ingress.mac_da" "meta.fwd.l2ptr":0x01000000 "ingress.set_bd_dmac_intf"("bd":0x000000,"dmac":0x000000000000,"intf":0x1FF)
+add "ingress.mac_da" "meta.fwd.l2ptr":0x01000000 "ingress.set_bd_dmac_intf"("bd":0x000000,"dmac":0x000000000000,"intf":0x000)
 
 # Table egress.send_frame
 add "egress.send_frame" "meta.fwd.out_bd":0x000000 "egress.do_clone_e2e"("smac":0x000000000000)
 
 
+mirroring_add 11 2
 packet 0 000000000000000000000000080005000000000000000000FA000000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 2
+expect 0 00000000000000000000000008000500000000000000FF00FAFF0000000000FFFFFF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

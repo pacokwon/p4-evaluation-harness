@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:25.520
+# Date generated: 2026-02-19-08:34:25.524
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -18,7 +18,7 @@
 # [P4Testgen MethodCall]: *.copy_in("cIngress");
 # [Control cIngress start]
 # [MethodCall]: guh_0/guh.apply();
-# [Table Branch: cIngress.guh | Key(s): |pktvar_1(bit<48>)|| Chosen action: cIngress.foo]
+# [Table Branch: cIngress.guh Choosing default action: foo;]
 # [MethodCall]: foo();
 # [AssignmentStatement]: meta.b = meta.b + 5;| Computed: meta.b = 5;
 # [P4Testgen MethodCall]: *.copy_out("cIngress");
@@ -39,9 +39,6 @@
 # [Prepending the emit buffer to the program packet]
 # [P4Testgen If Statement]: Condition: 511 == 0; Result: false
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
-
-# Table cIngress.guh
-add "cIngress.guh" "hdr.ethernet.srcAddr":0x000000000000 "cIngress.foo"()
 
 
 packet 0 00000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

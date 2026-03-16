@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-06-08:39:40.999
+# Date generated: 2026-03-06-08:39:41.007
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("parserI");
@@ -20,18 +20,18 @@
 # [MethodCall]: verify(hdr.ipv4.ihl >= 5, 7);
 # [AssignmentStatement]: meta.l4Len = hdr.ipv4.totalLen - (bit<16>)(hdr.ipv4.ihl)*4;| Computed: meta.l4Len = 65508;
 # [State] parse_tcp
-# [Lookahead result]: 377789318629571617095808
+# [Lookahead result]: 528905046081400263934080
 # [Lookahead Condition: |*packetLen_bits(bit<32>)| >= 440;]
-# [AssignmentStatement]: (4 * (bit<9>) (pkt.lookahead<tcp_upto_data_offset_only_h>().dataOffset)| Computed: tmp_10 = 377789318629571617095808;
+# [AssignmentStatement]: (4 * (bit<9>) (pkt.lookahead<tcp_upto_data_offset_only_h>().dataOffset)| Computed: tmp_10 = 528905046081400263934080;
 # [P4Testgen MethodCall]: tmp_4.setValid();
 # [P4Testgen AssignmentStatement]: tmp_4.srcPort = 0;
-# [P4Testgen AssignmentStatement]: tmp_4.dstPort = 80;
+# [P4Testgen AssignmentStatement]: tmp_4.dstPort = 112;
 # [P4Testgen AssignmentStatement]: tmp_4.seqNo = 0;
 # [P4Testgen AssignmentStatement]: tmp_4.ackNo = 0;
 # [P4Testgen AssignmentStatement]: tmp_4.dataOffset = 8;
 # [P4Testgen AssignmentStatement]: tmp_4.dontCare = 0;
 # [MethodCall]: pkt.extract<tcp_t>(hdr.tcp, (bit<32>)(((bit<9>)tmp_10[7:4] << 2) + 492 << 3));
-# [ExtractSuccess] hdr.tcp@336 | Condition: (104 > 336 + ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160) || |*packetLen_bits(bit<32>)| >= 336 + ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160) - 104) && ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) <= 320 && (bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) % 8 == 0) && 256 == (bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160; | Extract Size: 160 -> hdr.tcp.srcPort = 0x0000 | hdr.tcp.dstPort = 0x0050 | hdr.tcp.seqNo = 0x0000_0000 | hdr.tcp.ackNo = 0x0000_0000 | hdr.tcp.dataOffset = 0x8 | hdr.tcp.res = 0x0 | hdr.tcp.ecn = 0x0 | hdr.tcp.ctrl = 0x00 | hdr.tcp.window = 0x0000 | hdr.tcp.checksum = 0x0000 | hdr.tcp.urgentPtr = 0x0000 | hdr.tcp.options = 0x0000_0000_0000_0000_0000_0000
+# [ExtractSuccess] hdr.tcp@336 | Condition: (104 > 336 + ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160) || |*packetLen_bits(bit<32>)| >= 336 + ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160) - 104) && ((bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) <= 320 && (bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) % 8 == 0) && 256 == (bit<32>)(((bit<9>)|pktvar_15(bit<104>)|[7:4] << 2) + 492 << 3) + 160; | Extract Size: 160 -> hdr.tcp.srcPort = 0x0000 | hdr.tcp.dstPort = 0x0070 | hdr.tcp.seqNo = 0x0000_0000 | hdr.tcp.ackNo = 0x0000_0000 | hdr.tcp.dataOffset = 0x8 | hdr.tcp.res = 0x0 | hdr.tcp.ecn = 0x0 | hdr.tcp.ctrl = 0x00 | hdr.tcp.window = 0x0000 | hdr.tcp.checksum = 0x0C03 | hdr.tcp.urgentPtr = 0x0000 | hdr.tcp.options = 0x0000_0000_0000_0000_0000_0000
 # [MethodCall]: verify(hdr.tcp.dataOffset >= 5, 8);
 # [State] accept
 # [P4Testgen MethodCall]: *.copy_out("parserI");
@@ -46,11 +46,8 @@
 # [Control cIngress start]
 # [P4Testgen If Statement]: Condition: true; Result: true
 # [MethodCall]: guh_0/guh.apply();
-# [Constant Table Branch: cIngress.guh | Key(s): |pktvar_15(bit<104>)|[87:72]; | Chosen action: foot()]
-# [MethodCall]: foot();
-# [AssignmentStatement]: hdr.tcp.srcPort = hdr.tcp.srcPort + 1;| Computed: hdr.tcp.srcPort = 1;
-# [AssignmentStatement]: hdr.ipv4.ttl = hdr.ipv4.ttl - 1;| Computed: hdr.ipv4.ttl = 255;
-# [AssignmentStatement]: hdr.ipv4.dstAddr = hdr.ipv4.dstAddr + 4;| Computed: hdr.ipv4.dstAddr = 4;
+# [Table Branch: cIngress.guh Choosing default action: NoAction_1/NoAction;]
+# [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen If Statement]: Condition: false; Result: false
 # [P4Testgen MethodCall]: *.copy_out("cIngress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
@@ -69,9 +66,9 @@
 # [MethodCall]: packet.emit<ethernet_t>(hdr.ethernet);
 # [Emit]: {$headerValid:true;;    dstAddr:0;  srcAddr:0;  etherType:2048;  }
 # [MethodCall]: packet.emit<ipv4_t>(hdr.ipv4);
-# [Emit]: {$headerValid:true;;    version:4;  ihl:7;  diffserv:0;  totalLen:0;  identification:0;  flags:0;  fragOffset:0;  ttl:255;  protocol:6;  hdrChecksum:0;  srcAddr:0;  dstAddr:4;  options:0;  }
+# [Emit]: {$headerValid:true;;    version:4;  ihl:7;  diffserv:0;  totalLen:0;  identification:0;  flags:0;  fragOffset:0;  ttl:0;  protocol:6;  hdrChecksum:0;  srcAddr:0;  dstAddr:0;  options:0;  }
 # [MethodCall]: packet.emit<tcp_t>(hdr.tcp);
-# [Emit]: {$headerValid:true;;    srcPort:1;  dstPort:80;  seqNo:0;  ackNo:0;  dataOffset:8;  res:0;  ecn:0;  ctrl:0;  window:0;  checksum:0;  urgentPtr:0;  options:0;  }
+# [Emit]: {$headerValid:true;;    srcPort:0;  dstPort:112;  seqNo:0;  ackNo:0;  dataOffset:8;  res:0;  ecn:0;  ctrl:0;  window:0;  checksum:0;  urgentPtr:0;  options:0;  }
 # [MethodCall]: packet.emit<udp_t>(hdr.udp);
 # [Invalid emit: { srcPort = TaintedExpression(bit<16>), dstPort = TaintedExpression(bit<16>), length_ = TaintedExpression(bit<16>), checksum = TaintedExpression(bit<16>) }]
 # [P4Testgen MethodCall]: *.copy_out("DeparserI");
@@ -81,6 +78,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000000000000000000000080047000000000000000006B8F900000000000000000000000000000000000000500000000000000000800000000C030000000000000000000000000000
-expect 0 00000000000000000000000008004700000000000000FF06B9F400000000000000040000000000000000000100500000000000000000800000007FBF0000000000000000000000000000$
+packet 0 000000000000000000000000080047000000000000000006B8F900000000000000000000000000000000000000700000000000000000800000000C630000000000000000000000000000
+expect 0 000000000000000000000000080047000000000000000006B8F900000000000000000000000000000000000000700000000000000000800000007FA40000000000000000000000000000$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-07:08:20.010
+# Date generated: 2026-03-12-07:08:20.011
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("prs");
@@ -25,7 +25,7 @@
 # [P4Testgen AssignmentStatement]: pass = false;
 # [P4Testgen AssignmentStatement]: address_0 = 0;
 # [MethodCall]: c1_Check_ip/Check_ip.apply();
-# [Table Branch: pipe.c1.Check_ip | Key(s): |pktvar_14(bit<32>)|| Chosen action: NoAction]
+# [Table Branch: pipe.c1.Check_ip Choosing default action: NoAction_1/NoAction;]
 # [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen AssignmentStatement]: pass = false;
 # [P4Testgen MethodCall]: *.copy_out("pipe");
@@ -34,6 +34,6 @@
 # [Packet marked dropped]
 
 # Table pipe.c1.Check_ip
-add pipe.c1.Check_ip address:0x00000000 NoAction()
+add pipe.c1.Check_ip address:0x00000000 pipe.c1.Reject()
 
 packet 0 000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

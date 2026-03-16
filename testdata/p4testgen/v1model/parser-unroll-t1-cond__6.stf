@@ -1,16 +1,17 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:49.578
+# Date generated: 2026-02-19-08:34:49.589
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser_0");
 # [Parser] MyParser_0
 # [State] start
 # [MethodCall]: pkt.extract<ethernet_h>(hdr.ethernet);
-# [ExtractSuccess] hdr.ethernet@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ethernet.dst = 0x0000_0000_0000 | hdr.ethernet.src = 0x0000_0000_0000 | hdr.ethernet.type = 0x0800
-# [State] parse_ipv4
-# [MethodCall]: pkt.extract<ipv4_t>(hdr.ipv4);
-# [ExtractFailure] hdr.ipv4@112 | Condition: !(|*packetLen_bits(bit<32>)| >= 272); | Extract Size: 160
-# [P4Testgen AssignmentStatement]: standard_metadata.parser_error = 1;
+# [ExtractSuccess] hdr.ethernet@0 | Condition: |*packetLen_bits(bit<32>)| >= 112; | Extract Size: 112 -> hdr.ethernet.dst = 0x0000_0000_0000 | hdr.ethernet.src = 0x0000_0000_0000 | hdr.ethernet.type = 0x86DD
+# [State] parse_ipv6
+# [MethodCall]: pkt.extract<ipv6_h>(hdr.ipv6);
+# [ExtractSuccess] hdr.ipv6@112 | Condition: |*packetLen_bits(bit<32>)| >= 432; | Extract Size: 320 -> hdr.ipv6.version = 0x0 | hdr.ipv6.tc = 0x00 | hdr.ipv6.fl = 0x0000_0000 | hdr.ipv6.plen = 0x0000 | hdr.ipv6.nh = 0x11 | hdr.ipv6.hl = 0x00 | hdr.ipv6.src = 0x0000_0000_0000_0000_0000_0000_0000_0000 | hdr.ipv6.dst = 0x0000_0000_0000_0000_0000_0000_0000_0000
+# [State] parseOther
+# [State] accept
 # [P4Testgen MethodCall]: *.copy_out("MyParser_0");
 # [P4Testgen MethodCall]: *.copy_in("MyVerifyChecksum");
 # [Control MyVerifyChecksum start]
@@ -35,6 +36,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 0000000000000000000000000800000000000000000000000000000000000000
-expect 0 000000000000000000000000000000000000$
+packet 0 00000000000000000000000086DD0000000000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000$
 

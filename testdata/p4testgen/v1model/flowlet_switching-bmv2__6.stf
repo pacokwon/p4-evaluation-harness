@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:00.605
+# Date generated: 2026-02-19-08:35:00.612
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -56,9 +56,8 @@
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
 # [MethodCall]: send_frame_0/send_frame.apply();
-# [Table Branch: egress.send_frame | Key(s): 511| Chosen action: egress.rewrite_mac]
-# [MethodCall]: rewrite_mac(|egress.send_frame_egress.rewrite_mac_arg_smac(bit<48>)|);
-# [AssignmentStatement]: hdr.ethernet.srcAddr = smac;| Computed: hdr.ethernet.srcAddr = 0;
+# [Table Branch: egress.send_frame | Key(s): 511| Chosen action: NoAction]
+# [MethodCall]: NoAction_2/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("egress");
 # [P4Testgen MethodCall]: *.copy_in("computeChecksum");
 # [Control computeChecksum start]
@@ -92,7 +91,7 @@ add "ingress.ecmp_nhop" "meta.ingress_metadata.ecmp_offset":0x0000 "ingress._dro
 add "ingress.forward" "meta.ingress_metadata.nhop_ipv4":0x00000000 "NoAction"()
 
 # Table egress.send_frame
-add "egress.send_frame" "standard_metadata.egress_port":0x1FF "egress.rewrite_mac"("smac":0x000000000000)
+add "egress.send_frame" "standard_metadata.egress_port":0x1FF "NoAction"()
 
 
 packet 0 000000000000000000000000080000000000000000000006FEFA0000000000FFFFFF0000000000000000000000000000000000000000

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:31.537
+# Date generated: 2026-02-19-08:35:31.540
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -59,9 +59,9 @@
 # [AssignmentStatement]: tmp = hdr.ethernet.dstAddr;| Computed: tmp_5/tmp = 0;
 # [AssignmentStatement]: hdr.ethernet.dstAddr = hdr.ethernet.srcAddr;| Computed: hdr.ethernet.dstAddr = 0;
 # [AssignmentStatement]: hdr.ethernet.srcAddr = tmp;| Computed: hdr.ethernet.srcAddr = 0;
-# [AssignmentStatement]: standard_metadata.egress_spec = standard_metadata.ingress_port;| Computed: standard_metadata.egress_spec = 511;
+# [AssignmentStatement]: standard_metadata.egress_spec = standard_metadata.ingress_port;| Computed: standard_metadata.egress_spec = 0;
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("MyEgress");
 # [Control MyEgress start]
@@ -79,10 +79,10 @@
 # [P4Testgen MethodCall]: *.copy_out("MyDeparser");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == |bmv2_ingress_port(bit<9>)|; Result: true
-# [P4Testgen MethodCall]: *.drop_and_exit();
-# [Packet marked dropped]
+# [P4Testgen If Statement]: Condition: 511 == |bmv2_ingress_port(bit<9>)|; Result: false
+# [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 511 00000000000000000000000012345034017C0000000000000000000000000000000000000000000000000000000000000000000000
+packet 0 00000000000000000000000012345034017C0000000000000000000000000000000000000000000000000000000000000000000000
+expect 0 00000000000000000000000012345034017C00000000000000002144DF1C0000000000000000000000000000000000000000000000$
 

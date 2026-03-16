@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-03-12-04:14:09.305
+# Date generated: 2026-03-12-04:14:09.289
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("MyParser");
@@ -26,8 +26,10 @@
 # [MethodCall]: mark_to_drop(standard_metadata);
 # [mark_to_drop executed.]
 # [MethodCall]: ecmp_nhop_0/ecmp_nhop.apply();
-# [Table Branch: MyIngress.ecmp_nhop Choosing default action: NoAction_3/NoAction;]
-# [P4Testgen MethodCall]: NoAction_3/NoAction();
+# [Table Branch: MyIngress.ecmp_nhop | Key(s): 0| Chosen action: MyIngress.drop]
+# [MethodCall]: drop_2/drop();
+# [MethodCall]: mark_to_drop(standard_metadata);
+# [mark_to_drop executed.]
 # [P4Testgen MethodCall]: *.copy_out("MyIngress");
 # [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
@@ -60,6 +62,9 @@
 
 # Table MyIngress.ecmp_group
 add "MyIngress.ecmp_group" 1 "hdr.ipv4.dstAddr":0b00000000111111111111111111111111 "MyIngress.drop"()
+
+# Table MyIngress.ecmp_nhop
+add "MyIngress.ecmp_nhop" "meta.ecmp_select":0x0000 "MyIngress.drop"()
 
 # Table MyEgress.send_frame
 add "MyEgress.send_frame" "standard_metadata.egress_port":0x1FF "MyEgress.drop"()

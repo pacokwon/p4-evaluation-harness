@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:35:26.257
+# Date generated: 2026-02-19-08:35:26.261
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("p");
@@ -17,8 +17,8 @@
 # [AssignmentStatement]: hdr.i.counter = hdr.i.counter + 1;| Computed: hdr.i.counter = 2;
 # [State] mixed_finite_loop1
 # [MethodCall]: pkt.extract<h_stack>(hdr.h[1]);
-# [ExtractSuccess] hdr.h[32w1]@32 | Condition: |*packetLen_bits(bit<32>)| >= 48; | Extract Size: 16 -> hdr.h[32w1].i1 = 0x00 | hdr.h[32w1].i2 = 0x00
-# [NoMatch]: Parser select expression did not match any alternatives.
+# [ExtractFailure] hdr.h[32w1]@32 | Condition: !(|*packetLen_bits(bit<32>)| >= 48); | Extract Size: 16
+# [P4Testgen AssignmentStatement]: sm.parser_error = 1;
 # [P4Testgen MethodCall]: *.copy_out("p");
 # [P4Testgen MethodCall]: *.copy_in("vrfy");
 # [Control vrfy start]
@@ -39,7 +39,7 @@
 # [MethodCall]: pkt.emit<h_stack>(h.h[0]);
 # [Emit]: {$headerValid:true;;    i1:0;  i2:1;  }
 # [MethodCall]: pkt.emit<h_stack>(h.h[1]);
-# [Emit]: {$headerValid:true;;    i1:0;  i2:0;  }
+# [Invalid emit: { i1 = TaintedExpression(bit<8>), i2 = TaintedExpression(bit<8>) }]
 # [MethodCall]: pkt.emit<h_index>(h.i);
 # [Emit]: {$headerValid:true;;    index:0;  counter:2;  }
 # [P4Testgen MethodCall]: *.copy_out("deparser");
@@ -49,6 +49,6 @@
 # [P4Testgen MethodCall]: *.invoke_traffic_manager();
 
 
-packet 0 000000010000
-expect 0 000100000002$
+packet 0 00000001
+expect 0 00010002$
 

@@ -1,5 +1,5 @@
 # p4testgen seed: none
-# Date generated: 2026-02-19-08:34:24.391
+# Date generated: 2026-02-19-08:34:24.374
 # Current node coverage: 0
 # Traces
 # [P4Testgen MethodCall]: *.copy_in("ParserImpl");
@@ -16,13 +16,15 @@
 # [P4Testgen MethodCall]: *.copy_in("ingress");
 # [Control ingress start]
 # [MethodCall]: m_table_0/m_table.apply();
-# [Table Branch: ingress.m_table | Key(s): |pktvar_1(bit<48>)|| Chosen action: NoAction]
-# [MethodCall]: NoAction_2/NoAction();
+# [Table Branch: ingress.m_table | Key(s): |pktvar_1(bit<48>)|| Chosen action: ingress.m_action_2]
+# [MethodCall]: m_action_0(|ingress.m_table_ingress.m_action_2_arg_meter_idx(bit<9>)|);
+# [AssignmentStatement]: standard_metadata.egress_spec = meter_idx;| Computed: standard_metadata.egress_spec = 511;
+# [MethodCall]: my_meter.read(meta.meta.meter_tag);
 # [MethodCall]: m_filter_0/m_filter.apply();
-# [Table Branch: ingress.m_filter | Key(s): 0| Chosen action: ingress._nop]
-# [MethodCall]: _nop();
+# [Table Branch: ingress.m_filter | Key(s): 0| Chosen action: NoAction]
+# [MethodCall]: NoAction_1/NoAction();
 # [P4Testgen MethodCall]: *.copy_out("ingress");
-# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 0;
+# [P4Testgen AssignmentStatement]: *standard_metadata.egress_port = 511;
 # [P4Testgen If Statement]: Condition: 0 != 0; Result: false
 # [P4Testgen MethodCall]: *.copy_in("egress");
 # [Control egress start]
@@ -37,16 +39,16 @@
 # [P4Testgen MethodCall]: *.copy_out("DeparserImpl");
 # [P4Testgen MethodCall]: *.prepend_emit_buffer();
 # [Prepending the emit buffer to the program packet]
-# [P4Testgen If Statement]: Condition: 511 == 0; Result: false
-# [P4Testgen MethodCall]: *.invoke_traffic_manager();
+# [P4Testgen If Statement]: Condition: 511 == |ingress.m_table_ingress.m_action_2_arg_meter_idx(bit<9>)|; Result: true
+# [P4Testgen MethodCall]: *.drop_and_exit();
+# [Packet marked dropped]
 
 # Table ingress.m_table
-add "ingress.m_table" "hdr.ethernet.srcAddr":0x000000000000 "NoAction"()
+add "ingress.m_table" "hdr.ethernet.srcAddr":0x000000000000 "ingress.m_action_2"("meter_idx":0x1FF)
 
 # Table ingress.m_filter
-add "ingress.m_filter" "meta.meta.meter_tag":0x00000000 "ingress._nop"()
+add "ingress.m_filter" "meta.meta.meter_tag":0x00000000 "NoAction"()
 
 
 packet 0 000000000000000000000000000000000000000000
-expect 0 000000000000000000000000000000000000000000$
 
