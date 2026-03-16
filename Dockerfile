@@ -57,12 +57,4 @@ WORKDIR /
 COPY ./testdata /
 COPY ./p4include /
 
-# ========= Test Suite =========
-RUN cp -R testdata /petr4 && \
-    cp -R testdata/p4c/v1model /HOL4P4/hol/p4_from_json/p4c-v1model && \
-    cp -R testdata/p4c/ebpf /HOL4P4/hol/p4_from_json/p4c-ebpf && \
-    cp -R testdata/p4testgen/v1model /HOL4P4/hol/p4_from_json/p4testgen-v1model && \
-    cp -R testdata/p4testgen/ebpf /HOL4P4/hol/p4_from_json/p4testgen-ebpf && \
-    cp -R testdata/excludes /HOL4P4/hol/p4_from_json/excludes
-
 ENTRYPOINT ["/bin/bash", "--login"]
