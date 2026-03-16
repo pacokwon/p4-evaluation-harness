@@ -54,8 +54,8 @@ RUN opam switch create 5.1.0 && \
     make release
 
 WORKDIR /
-COPY ./testdata /
-COPY ./p4include /
-COPY ./scripts /
+COPY testdata/ /testdata/
+COPY p4include/ /p4include/
+COPY scripts /scripts/
 
 ENTRYPOINT ["/bin/bash", "--login"]
