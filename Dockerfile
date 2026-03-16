@@ -55,6 +55,7 @@ RUN opam switch create 5.1.0 && \
 
 WORKDIR /
 COPY ./testdata /
+COPY ./p4include /
 
 # ========= Test Suite =========
 RUN cp -R testdata /petr4 && \
