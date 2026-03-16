@@ -54,11 +54,10 @@ RUN opam switch create 5.1.0 && \
     make release
 
 WORKDIR /
+COPY ./testdata /
 
 # ========= Test Suite =========
-RUN wget 'https://raw.githubusercontent.com/pacokwon/testgen-history/refs/heads/main/testdata.tar.gz' && \
-    tar xzf testdata.tar.gz && \
-    cp -R testdata /petr4 && \
+RUN cp -R testdata /petr4 && \
     cp -R testdata/p4c/v1model /HOL4P4/hol/p4_from_json/p4c-v1model && \
     cp -R testdata/p4c/ebpf /HOL4P4/hol/p4_from_json/p4c-ebpf && \
     cp -R testdata/p4testgen/v1model /HOL4P4/hol/p4_from_json/p4testgen-v1model && \
