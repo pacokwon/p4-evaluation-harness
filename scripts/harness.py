@@ -176,6 +176,63 @@ def is_exclude_pair(excludes: set[str], pair: tuple[str, str]) -> bool:
     return (Path(p4_path).name in excludes) or (Path(stf_path).name in excludes)
 
 
+############################### STATIC ###############################
+
+
+def run_p4spectec_static(
+    test_suite: TestSuite, typ: StaticTestType
+) -> StaticTestRecord:
+    excluded = test_suite.excluded
+
+    results: StaticTestRecord = []
+
+    project_root = "/p4-spectec"
+
+    for p4_path in test_suite.programs:
+        if is_exclude_program(excluded, p4_path):
+            results.append((p4_path, TestResult.SKIP))
+            print(f"[SKIP] {p4_path}")
+            continue
+
+        watsup_files = sorted(glob.glob("/p4-spectec/spec-concrete/*/*.watsup"))
+        command = (
+            [
+                "./p4spectec",
+                "run",
+            ]
+            + watsup_files
+            + ["-i", "p4c/p4include", "-rel", "Program_inst", "-sl", "-p", p4_path]
+        )
+
+        result = subprocess.run(
+            command,
+            cwd=project_root,
+            stdout=subprocess.DEVNULL,
+        )
+
+        # 42 on success, 6 on failure
+        if typ == StaticTestType.POS:
+            if result.returncode == 42:
+                results.append((p4_path, TestResult.PASS))
+                print(f"[PASS] {p4_path}")
+            else:
+                results.append((p4_path, TestResult.FAIL))
+                print(f"[FAIL] {p4_path}")
+        else:
+            if result.returncode == 6:
+                results.append((p4_path, TestResult.PASS))
+                print(f"[PASS] {p4_path}")
+            else:
+                results.append((p4_path, TestResult.FAIL))
+                print(f"[FAIL] {p4_path}")
+
+    print(len(results))
+
+    dump_json(results, project_root, f"typecheck-{typ.value}-")
+
+    return results
+
+
 def run_petr4_static(test_suite: TestSuite, typ: StaticTestType) -> StaticTestRecord:
     excluded = test_suite.excluded
 
@@ -201,24 +258,26 @@ def run_petr4_static(test_suite: TestSuite, typ: StaticTestType) -> StaticTestRe
         if typ == StaticTestType.POS:
             if result.returncode == 42:
                 results.append((p4_path, TestResult.PASS))
-                print("[PASS]")
+                print(f"[PASS] {p4_path}")
             else:
                 results.append((p4_path, TestResult.FAIL))
-                print("[FAIL]")
+                print(f"[FAIL] {p4_path}")
         else:
             if result.returncode == 6:
                 results.append((p4_path, TestResult.PASS))
-                print("[PASS]")
+                print(f"[PASS] {p4_path}")
             else:
                 results.append((p4_path, TestResult.FAIL))
-                print("[FAIL]")
+                print(f"[FAIL] {p4_path}")
 
-    print(results)
     print(len(results))
 
-    dump_json(results, project_root, "typecheck-" + typ.value)
+    dump_json(results, project_root, f"typecheck-{typ.value}-")
 
     return results
+
+
+############################### DYNAMIC ###############################
 
 
 def hol4p4_collect_test_results(dir: str, test_suite: TestSuite) -> DynamicTestRecord:
@@ -408,8 +467,13 @@ negative_test_suite_petr4 = read_test_suite(
     additional_list=["/petr4/petr4.exclude"],
 )
 
-run_petr4_static(positive_test_suite, StaticTestType.POS)
-run_petr4_static(negative_test_suite_petr4, StaticTestType.NEG)
+
+def run_static():
+    run_p4spectec_static(positive_test_suite, StaticTestType.POS)
+    run_p4spectec_static(negative_test_suite, StaticTestType.NEG)
+    run_petr4_static(positive_test_suite, StaticTestType.POS)
+    run_petr4_static(negative_test_suite_petr4, StaticTestType.NEG)
+
 
 # v1model_test_suite = read_test_suite("/testdata/p4testgen/v1model", "/testdata/excludes", ["static/bug"])
 # run_p4spectec_dynamic(v1model_test_suite, "v1model")
