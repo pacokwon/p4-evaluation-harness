@@ -51,7 +51,8 @@ RUN opam switch create 5.1.0 && \
     opam update && \
     opam install dune bignum 'menhir=20240715' 'menhirLib=20240715' core core_unix bisect_ppx yojson ppx_deriving_yojson -y && \
     eval $(opam env) && \
-    make release
+    make release && \
+    make spec-test
 
 WORKDIR /
 COPY testdata/ /testdata/
