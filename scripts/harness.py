@@ -41,6 +41,8 @@ def dump_json(data, dir: str, label=""):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
+    print(f"JSON dumped to {filename}")
+
 
 @dataclass
 class TestSuite:
@@ -271,7 +273,6 @@ def run_petr4_static(test_suite: TestSuite, typ: StaticTestType) -> StaticTestRe
                 print(f"[FAIL] {p4_path}")
 
     print(len(results))
-
     dump_json(results, project_root, f"typecheck-{typ.value}-")
 
     return results
@@ -346,22 +347,20 @@ def run_hol4p4_dynamic(test_suite_start_dir: str):
     )
 
 
-def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch):
+def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch, log_label=""):
     arch = arch_.value.lower()
 
     tests = test_suite.pairs
     excluded = test_suite.excluded
 
-    results = []
+    results: DynamicTestRecord = []
 
     project_root = "/p4-spectec"
 
     for p4_path, stf_path in tests:
-        print(f"{p4_path}\t{stf_path}", end=" ")
-
         if is_exclude_pair(excluded, (p4_path, stf_path)):
             results.append((p4_path, stf_path, TestResult.SKIP))
-            print("[SKIP]")
+            print(f"[SKIP] {p4_path}\t{stf_path}")
             continue
 
         watsup_files = sorted(glob.glob("/p4-spectec/spec-concrete/*/*.watsup"))
@@ -388,52 +387,43 @@ def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch):
             stdout=subprocess.DEVNULL,
         )
 
-        if result.returncode == 0:
+        # 42 on success, 6 on failure
+        if result.returncode == 42:
             results.append((p4_path, stf_path, TestResult.PASS))
-            print("[PASS]")
+            print(f"[PASS] {p4_path}\t{stf_path}")
         else:
             results.append((p4_path, stf_path, TestResult.FAIL))
-            print("[FAIL]")
+            print(f"[FAIL] {p4_path}\t{stf_path}")
 
-    print(results)
     print(len(results))
+    dump_json(results, project_root, log_label)
+
+    return results
 
 
-def run_petr4_dynamic(test_suite: TestSuite):
-    pass
-
+def run_petr4_dynamic(test_suite: TestSuite, log_label=""):
     tests = test_suite.pairs
     excluded = test_suite.excluded
 
-    results = []
+    results: DynamicTestRecord = []
 
-    project_root = "/p4-spectec"
+    project_root = "/petr4"
 
     for p4_path, stf_path in tests:
-        print(f"{p4_path}\t{stf_path}", end=" ")
-
         if is_exclude_pair(excluded, (p4_path, stf_path)):
             results.append((p4_path, stf_path, TestResult.SKIP))
-            print("[SKIP]")
+            print(f"[SKIP] {p4_path}\t{stf_path}")
             continue
 
-        watsup_files = sorted(glob.glob("/p4-spectec/spec-concrete/*/*.watsup"))
-
-        command = (
-            ["./p4spectec", "sim"]
-            + watsup_files
-            + [
-                "-i",
-                "/p4include",
-                "-arch",
-                arch,
-                "-sl",
-                "-p",
-                p4_path,
-                "-stf",
-                stf_path,
-            ]
-        )
+        command = [
+            "./_opam/bin/petr4",
+            "stf",
+            "-I",
+            "/p4include",
+            p4_path,
+            "-stf",
+            stf_path,
+        ]
 
         result = subprocess.run(
             command,
@@ -441,15 +431,18 @@ def run_petr4_dynamic(test_suite: TestSuite):
             stdout=subprocess.DEVNULL,
         )
 
-        if result.returncode == 0:
+        # 42 on success, 6 on failure
+        if result.returncode == 42:
             results.append((p4_path, stf_path, TestResult.PASS))
-            print("[PASS]")
+            print(f"[PASS] {p4_path}\t{stf_path}")
         else:
             results.append((p4_path, stf_path, TestResult.FAIL))
-            print("[FAIL]")
+            print(f"[FAIL] {p4_path}\t{stf_path}")
 
-    print(results)
     print(len(results))
+    dump_json(results, project_root, log_label)
+
+    return results
 
 
 positive_test_suite = read_test_suite(
@@ -467,12 +460,37 @@ negative_test_suite_petr4 = read_test_suite(
     additional_list=["/petr4/petr4.exclude"],
 )
 
+p4c_v1model_test_suite = read_test_suite(
+    "/testdata/p4c/v1model", "/testdata/excludes", ignore_list=["static/bug/"]
+)
+
+p4c_ebpf_test_suite = read_test_suite(
+    "/testdata/p4c/ebpf", "/testdata/excludes", ignore_list=["static/bug/"]
+)
+
+p4testgen_v1model_test_suite = read_test_suite(
+    "/testdata/p4c/ebpf", "/testdata/excludes", ignore_list=["static/bug/"]
+)
+
+p4testgen_ebpf_test_suite = read_test_suite(
+    "/testdata/p4c/ebpf", "/testdata/excludes", ignore_list=["static/bug/"]
+)
+
 
 def run_static():
     run_p4spectec_static(positive_test_suite, StaticTestType.POS)
     run_p4spectec_static(negative_test_suite, StaticTestType.NEG)
     run_petr4_static(positive_test_suite, StaticTestType.POS)
     run_petr4_static(negative_test_suite_petr4, StaticTestType.NEG)
+
+
+def run_dynamic():
+    run_p4spectec_dynamic(p4c_v1model_test_suite, Arch.V1MODEL, "p4c-v1model")
+    run_p4spectec_dynamic(p4c_ebpf_test_suite, Arch.EBPF, "p4c-ebpf")
+    run_p4spectec_dynamic(
+        p4testgen_v1model_test_suite, Arch.V1MODEL, "p4testgen-v1model"
+    )
+    run_p4spectec_dynamic(p4testgen_ebpf_test_suite, Arch.EBPF, "p4testgen-ebpf")
 
 
 # v1model_test_suite = read_test_suite("/testdata/p4testgen/v1model", "/testdata/excludes", ["static/bug"])
@@ -483,3 +501,5 @@ def run_static():
 
 # test_suite = read_test_suite_("/testdata/p4testgen/v1model/", "/testdata/excludes", ignore_list=["static/bug"], additional_list=["/HOL4P4/hol4p4.exclude"])
 # print(len(test_suite.excluded))
+
+run_dynamic()
