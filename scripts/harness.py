@@ -22,6 +22,15 @@ class Arch(Enum):
     EBPF = "EBPF"
 
 
+class StaticTestType(Enum):
+    POS = "POS"
+    NEG = "NEG"
+
+
+StaticTestRecord = list[tuple[str, TestResult]]
+DynamicTestRecord = list[tuple[str, str, TestResult]]
+
+
 def get_time():
     return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -35,8 +44,10 @@ def dump_json(data, dir: str, label=""):
 
 @dataclass
 class TestSuite:
-    # absolute path to p4 file, absolute path to stf file
-    tests: set[tuple[str, str]] = field(default_factory=set)
+    # absolute path to p4 file, absolute path to stf file (only populated in dynamic)
+    pairs: set[tuple[str, str]] = field(default_factory=set)
+    # set of p4 programs
+    programs: set[str] = field(default_factory=set)
     # basename of excluded file
     excluded: set[str] = field(default_factory=set)
 
@@ -68,7 +79,7 @@ def read_test_suite(
     excludes_dir: str,
     ignore_list: list[str] | None = None,
     additional_list: list[str] | None = None,
-):
+) -> TestSuite:
     test_suite_path = Path(test_suite_dir).resolve()
     exclude_root = Path(excludes_dir).resolve()
 
@@ -147,24 +158,78 @@ def read_test_suite(
                         excluded_full_paths.add(suite_files[full_name])
 
     excluded = {Path(path).name for path in excluded_full_paths}
-    tests = get_p4_stf_pairs(test_suite_dir)
 
-    return TestSuite(tests=tests, excluded=excluded)
+    pairs = get_p4_stf_pairs(test_suite_dir)
+
+    programs = set(suite_files.values())
+
+    return TestSuite(programs=programs, pairs=pairs, excluded=excluded)
 
 
-def is_exclude(excludes: set[str], pair: tuple[str, str]):
+def is_exclude_program(excludes: set[str], program: str) -> bool:
+    return Path(program).name in excludes
+
+
+def is_exclude_pair(excludes: set[str], pair: tuple[str, str]) -> bool:
     p4_path, stf_path = pair
 
     return (Path(p4_path).name in excludes) or (Path(stf_path).name in excludes)
 
 
-def hol4p4_collect_test_results(dir: str, test_suite: TestSuite):
+def run_petr4_static(test_suite: TestSuite, typ: StaticTestType) -> StaticTestRecord:
+    excluded = test_suite.excluded
+
+    results: StaticTestRecord = []
+
+    project_root = "/petr4"
+
+    for p4_path in test_suite.programs:
+        if is_exclude_program(excluded, p4_path):
+            results.append((p4_path, TestResult.SKIP))
+            print("[SKIP]")
+            continue
+
+        command = ["./_opam/bin/petr4", "typecheck", "-I", "/p4include", p4_path]
+
+        result = subprocess.run(
+            command,
+            cwd=project_root,
+            stdout=subprocess.DEVNULL,
+        )
+
+        # 42 on success, 6 on failure
+        if typ == StaticTestType.POS:
+            if result.returncode == 42:
+                results.append((p4_path, TestResult.PASS))
+                print("[PASS]")
+            else:
+                results.append((p4_path, TestResult.FAIL))
+                print("[FAIL]")
+        else:
+            if result.returncode == 6:
+                results.append((p4_path, TestResult.PASS))
+                print("[PASS]")
+            else:
+                results.append((p4_path, TestResult.FAIL))
+                print("[FAIL]")
+
+    print(results)
+    print(len(results))
+
+    dump_json(results, project_root, "typecheck-" + typ.value)
+
+    return results
+
+
+def hol4p4_collect_test_results(dir: str, test_suite: TestSuite) -> DynamicTestRecord:
     target_dir = Path(dir)
     obj_dir = target_dir / ".hol" / "objs"
     results = []
 
-    for p4_file, stf_file in test_suite.tests:
-        if is_exclude(test_suite.excluded, (p4_file, stf_file)):
+    for p4_file, stf_file in test_suite.pairs:
+        print(f"{p4_file}\t{stf_file}")
+
+        if is_exclude_pair(test_suite.excluded, (p4_file, stf_file)):
             results.append((p4_file, stf_file, TestResult.SKIP))
             continue
 
@@ -178,6 +243,8 @@ def hol4p4_collect_test_results(dir: str, test_suite: TestSuite):
             results.append((p4_file, stf_file, TestResult.PASS))
         else:
             results.append((p4_file, stf_file, TestResult.FAIL))
+
+    return results
 
 
 def run_hol4p4_dynamic(test_suite_start_dir: str):
@@ -215,13 +282,15 @@ def run_hol4p4_dynamic(test_suite_start_dir: str):
     )
 
     results = hol4p4_collect_test_results(test_suite_path, test_suite)
-    dump_json(results, "/HOL4P4", test_suite_path)
+    dump_json(
+        results, "/HOL4P4", test_suite_start_dir.removeprefix("/").replace("/", "-")
+    )
 
 
 def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch):
     arch = arch_.value.lower()
 
-    tests = test_suite.tests
+    tests = test_suite.pairs
     excluded = test_suite.excluded
 
     results = []
@@ -231,7 +300,7 @@ def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch):
     for p4_path, stf_path in tests:
         print(f"{p4_path}\t{stf_path}", end=" ")
 
-        if is_exclude(excluded, (p4_path, stf_path)):
+        if is_exclude_pair(excluded, (p4_path, stf_path)):
             results.append((p4_path, stf_path, TestResult.SKIP))
             print("[SKIP]")
             continue
@@ -271,14 +340,81 @@ def run_p4spectec_dynamic(test_suite: TestSuite, arch_: Arch):
     print(len(results))
 
 
-def run_petr4(test_suite_dir: str):
+def run_petr4_dynamic(test_suite: TestSuite):
     pass
 
+    tests = test_suite.pairs
+    excluded = test_suite.excluded
+
+    results = []
+
+    project_root = "/p4-spectec"
+
+    for p4_path, stf_path in tests:
+        print(f"{p4_path}\t{stf_path}", end=" ")
+
+        if is_exclude_pair(excluded, (p4_path, stf_path)):
+            results.append((p4_path, stf_path, TestResult.SKIP))
+            print("[SKIP]")
+            continue
+
+        watsup_files = sorted(glob.glob("/p4-spectec/spec-concrete/*/*.watsup"))
+
+        command = (
+            ["./p4spectec", "sim"]
+            + watsup_files
+            + [
+                "-i",
+                "/p4include",
+                "-arch",
+                arch,
+                "-sl",
+                "-p",
+                p4_path,
+                "-stf",
+                stf_path,
+            ]
+        )
+
+        result = subprocess.run(
+            command,
+            cwd=project_root,
+            stdout=subprocess.DEVNULL,
+        )
+
+        if result.returncode == 0:
+            results.append((p4_path, stf_path, TestResult.PASS))
+            print("[PASS]")
+        else:
+            results.append((p4_path, stf_path, TestResult.FAIL))
+            print("[FAIL]")
+
+    print(results)
+    print(len(results))
+
+
+positive_test_suite = read_test_suite(
+    "/testdata/p4_16_samples", "/testdata/excludes/static", ignore_list=["bug/"]
+)
+
+negative_test_suite = read_test_suite(
+    "/testdata/p4_16_errors", "/testdata/excludes/static", ignore_list=["bug/"]
+)
+
+negative_test_suite_petr4 = read_test_suite(
+    "/testdata/p4_16_errors",
+    "/testdata/excludes/static",
+    ignore_list=["bug/"],
+    additional_list=["/petr4/petr4.exclude"],
+)
+
+run_petr4_static(positive_test_suite, StaticTestType.POS)
+run_petr4_static(negative_test_suite_petr4, StaticTestType.NEG)
 
 # v1model_test_suite = read_test_suite("/testdata/p4testgen/v1model", "/testdata/excludes", ["static/bug"])
 # run_p4spectec_dynamic(v1model_test_suite, "v1model")
 
-run_hol4p4_dynamic("/testdata/p4testgen/v1model")
+# run_hol4p4_dynamic("/testdata/p4c/ebpf")
 # v1model_test_suite = read_test_suite("/testdata/p4testgen/v1model", "/testdata/excludes", ["static/bug"])
 
 # test_suite = read_test_suite_("/testdata/p4testgen/v1model/", "/testdata/excludes", ignore_list=["static/bug"], additional_list=["/HOL4P4/hol4p4.exclude"])
